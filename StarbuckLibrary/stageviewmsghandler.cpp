@@ -112,9 +112,9 @@ int StageViewMsgHandler::historyPosition()
 	return stageWebview()->historyPosition();
 }
 
-void StageViewMsgHandler::refresh()
+void StageViewMsgHandler::reload()
 {
-    //stageWebview()->refresh();
+    stageWebview()->reload();
 }
 
 void StageViewMsgHandler::historyPosition(int position)
