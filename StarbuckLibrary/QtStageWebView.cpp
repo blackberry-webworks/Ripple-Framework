@@ -27,8 +27,9 @@ QtStageWebView::QtStageWebView(QWidget *p) : QWebView(p),
      m_nextScrollStepLength(0,0), 
      m_eventHandler(new NormalEventHandler(this))
 {	
-    //Turn off context menu's (i.e. menu when right clicking)
-	//this->setContextMenuPolicy(Qt::NoContextMenu);
+    //Turn off context menu's (i.e. menu when right clicking, you will need to uncommment this if you want to use web inspector,
+    //there is currently a conflict between the context menus when using two QWebView's
+    //this->setContextMenuPolicy(Qt::NoContextMenu);
 
 	// Connect signals for events
 	connect(this, SIGNAL(urlChanged(const QUrl&)), this, SLOT(notifyUrlChanged(const QUrl&)));
@@ -76,31 +77,30 @@ void QtStageWebView::notifyJavaScriptWindowObjectCleared()
   registerEventbus();
   QEventLoop loop;
   QObject::connect(this, SIGNAL(jsLoaded()), &loop, SLOT(quit()));
-	emit javaScriptWindowObjectCleared();
-  if ( waitForJsLoad )
-  {
-    loop.exec();
-  }
+    emit javaScriptWindowObjectCleared();
+
+  if (waitForJsLoad)
+      loop.exec();
 }
 
 void QtStageWebView::registerEventbus()
 {
-  QWebFrame* frame = page()->mainFrame();
-  frame->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame));
-  frame->evaluateJavaScript(BlackBerry::Starbuck::eventbusSource);
+    QWebFrame* frame = page()->mainFrame();
+    frame->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame));
+    frame->evaluateJavaScript(BlackBerry::Starbuck::eventbusSource);
 
-  // check for iframes, if found add to window object
-  for(int i = 0; i < frame->childFrames().length(); i++)
-  {
-      frame->childFrames()[i]->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame->childFrames()[i]));
-      frame->childFrames()[i]->evaluateJavaScript(BlackBerry::Starbuck::eventbusSource);
+    // check for iframes, if found add to window object
+    for(int i = 0; i < frame->childFrames().length(); i++)
+    {
+        frame->childFrames()[i]->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame->childFrames()[i]));
+        frame->childFrames()[i]->evaluateJavaScript(BlackBerry::Starbuck::eventbusSource);
   }
 }
 
 void QtStageWebView::continueLoad()
 {
-  emit jsLoaded();
-  waitForJsLoad = false;
+    emit jsLoaded();
+    waitForJsLoad = false;
 }
 
 
@@ -111,7 +111,7 @@ bool QtStageWebView::enableCrossSiteXHR()
 
 void QtStageWebView::enableCrossSiteXHR(bool xhr)
 {
-   return this->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, xhr);
+    return this->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, xhr);
 }
 
 QVariant QtStageWebView::executeJavaScript(QString script)
@@ -171,7 +171,8 @@ void QtStageWebView::customHTTPHeaders(char *headers[], unsigned int headersSize
 {
 	_headers = new char*[headersSize];
 	
-	for (unsigned int i = 0; i < headersSize; i++){
+	for (unsigned int i = 0; i < headersSize; i++)
+    {
         _headers[i] = new char[strlen(headers[i]) + 1];
 		strcpy(_headers[i], headers[i]);
 	}
@@ -194,7 +195,7 @@ void QtStageWebView::visible(bool enable)
 	if (this->isVisible() == enable)
 		return;
 
-	(enable)? this->show():this->hide();
+	(enable) ? this->show():this->hide();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

@@ -23,7 +23,7 @@ using namespace BlackBerry::Starbuck;
 QMap<QString, QList<CallbackInfo>*> BlackBerryBus::_listener;
 
 BlackBerryBus::BlackBerryBus(QObject *parent, QWebFrame *webFrame)
-  : QObject(parent), m_pWebFrame(webFrame)
+  : QObject(parent), m_pWebFrame(webFrame), _async(false)
 {
     // seed the random generator
     qsrand(QTime::currentTime().msec());
@@ -53,30 +53,31 @@ QString BlackBerryBus::generateRandomFunctionName()
 void BlackBerryBus::trigger(QString eventName, QString jsonData, bool async)
 {
     if (async)
-    {
-      if (_listener[eventName]) 
-      {
-        QList<CallbackInfo>* info = _listener[eventName];
-        for(int i = 0; i < (*info).length(); i++)
-        {
-          CallbackInfo callback = (*info)[i];
-          QVariant res = callback.frame->evaluateJavaScript("setTimeout(\"" + callback.function + "('"  + jsonData + "')\", 1)");
-        }
-      }
-    }
-    else
-        trigger(eventName, jsonData);
+        _async = true;
+    
+    trigger(eventName, jsonData);
 }
 
 void BlackBerryBus::trigger(QString eventName, QString jsonData)
 {
-  if (_listener[eventName]) 
+  if (_listener.contains(eventName)) 
   {
     QList<CallbackInfo>* info = _listener[eventName];
     for(int i = 0; i < (*info).length(); i++)
     {
       CallbackInfo callback = (*info)[i];
-      QVariant res = callback.frame->evaluateJavaScript(callback.function + "('"  + jsonData + "')");
+      QString evalString("eventbus.internal('" + eventName + "', '" + "" + ")");
+
+      if (_async)
+      {
+          callback.frame->evaluateJavaScript("setTimeout(\"" + evalString + "\", 1)");
+          _async = false;
+      }
+      else
+      {
+          callback.frame->evaluateJavaScript(evalString);
+      }
+
     }
   }
 }
@@ -97,7 +98,6 @@ QString BlackBerryBus::on(QString eventName, QString jsonCallback)
   info->append(callback);
 
   _listener.insert(eventName, info);
-  this->m_pWebFrame->evaluateJavaScript("var " + callback.function + " = "  + jsonCallback);
 
   return callback.function;
 }

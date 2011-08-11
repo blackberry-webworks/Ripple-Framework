@@ -11,7 +11,7 @@ SET(STARBUCKLIBRARY_INCLUDE_DIRECTORIES
 LIST(APPEND STARBUCKLIBRARY_SOURCES
     ConfigData.cpp
     QtStageWebView.cpp
-    stageviewmsghandler.cpp
+    StageViewMsgHandler.cpp
     xhrmsghandler.cpp
     BlackBerryBus.cpp
     RequestObject.cpp
@@ -22,7 +22,7 @@ LIST(APPEND STARBUCKLIBRARY_SOURCES
 
 SET(STARBUCKLIBRARY_MOC_HEADERS
     QtStageWebView.h
-    stageviewmsghandler.h
+    StageViewMsgHandler.h
     xhrmsghandler.h
     BlackBerryBus.h
     RequestObject.h
