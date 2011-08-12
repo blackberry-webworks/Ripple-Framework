@@ -312,28 +312,29 @@ TEST (QtStageWebView, CanSetInvisable){
 
 TEST (QtStageWebView, CanAddCustomHeader){
 	QtStageWebView webview;
-	char* key = "MyHeaderKey";
-	char* value = "MyHeaderValue";
 
-	webview.customHTTPHeaders(QString::fromStdString(key), QString::fromStdString(value));
+	QString key = "MyHeaderKey";
+	QString value = "MyHeaderValue";
 
-	char** returnArray = webview.customHTTPHeaders();
-	
-	EXPECT_EQ(*returnArray[0], *key);
-	EXPECT_EQ(*returnArray[1], *value);
+	webview.customHTTPHeaders(key, value);
+
+	QStringList return_array = webview.customHTTPHeaders();
+	EXPECT_EQ(key.toStdString(), return_array.at(0).toStdString());
+	EXPECT_EQ(value.toStdString(), return_array.at(1).toStdString());
 }
 
 TEST (QtStageWebView, CanAddCustomHeaderArray){
 	QtStageWebView webview;
-	char *headersArray[2];
-	headersArray[0] = "MyHeaderKey";
-	headersArray[1] = "MyHeaderValue";
+
+	QStringList headers_array;
+	headers_array.append("MyHeaderKey");
+	headers_array.append("MyHeaderValue");
 	
-	webview.customHTTPHeaders(headersArray, 2);
-	char** returnArray = webview.customHTTPHeaders();
+	webview.customHTTPHeaders(headers_array);
+	QStringList return_array = webview.customHTTPHeaders();
 	
-	EXPECT_EQ(*returnArray[0], *headersArray[0]);
-	EXPECT_EQ(*returnArray[1], *headersArray[1]);
+	EXPECT_EQ(headers_array.at(0).toStdString(), return_array.at(0).toStdString());
+	EXPECT_EQ(headers_array.at(1).toStdString(), return_array.at(1).toStdString());
 }
 
 TEST(QtStageWebView, CanEnableCrossOrigin)
@@ -415,18 +416,75 @@ TEST(QtStageWebView, CanReloadPage)
 	QtStageWebView webview;
 	webview.continueLoad();
 
-	webview.loadURL("http://www.google.ca");
-
     // Create an event loop to wait for the loadFinished when loading webpages
 	QEventLoop loop;
-    QTimer::singleShot(5000, &loop, SLOT(quit()));
+	QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
+
+	webview.loadURL("http://www.google.ca");
+	QTimer::singleShot(5000, &loop, SLOT(quit()));
+	loop.exec();
 
     // Change the document title, this should get reset when we reload the page
     webview.executeJavaScript("document.title = 'testing'");
 
     webview.reload();
+	QTimer::singleShot(5000, &loop, SLOT(quit()));
+	loop.exec();
 
     QVariant result = webview.executeJavaScript("document.title");
 
-    EXPECT_NE(result.toString(), "testing");
+	EXPECT_NE(result.toString().toStdString(), "testing");
+}
+
+TEST(QtStageWebView, CanSetMultipleTraits)
+{
+	QtStageWebView webview;
+	webview.continueLoad();
+
+	// Setting up the window geometry
+	QRect window_rect(200, 100, 360, 480);
+	QVariantMap window_geometry;
+	window_geometry.insert("x", window_rect.x());
+	window_geometry.insert("y", window_rect.y());
+	window_geometry.insert("w", window_rect.width());
+	window_geometry.insert("h", window_rect.height());
+
+	// Setting up the custom HTTP headers
+	QString header_key("TestHeaderKey");
+	QString header_value("TestHeaderValue");
+
+	QVariantMap custom_header;
+	custom_header.insert("key", header_key);
+	custom_header.insert("value", header_value);
+
+	QVariantList headers_list;
+	headers_list.append(custom_header);
+
+	// Setting up the URL
+	QString location("http://www.google.ca/");
+
+	// Add all settings to the QVariantMap/JSON object
+	QVariantMap settings;
+	settings.insert("windowGeometry", window_geometry);
+	settings.insert("visible", false);
+	settings.insert("URL", location);
+	settings.insert("crossOrigin", true);
+	settings.insert("customHTTPHeaders", headers_list);
+
+	// Set up event loop to wait for loadFinished, since we will be loading a url
+	QEventLoop loop;
+	QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
+
+	webview.setTraits(settings);
+	QTimer::singleShot(5000, &loop, SLOT(quit()));
+	loop.exec();
+
+	EXPECT_TRUE(webview.enableCrossSiteXHR());
+	EXPECT_FALSE(webview.isVisible());
+	EXPECT_EQ(location.toStdString(), webview.location().toStdString());
+	EXPECT_EQ(window_rect, webview.geometry());
+		
+	QStringList return_array = webview.customHTTPHeaders();
+	EXPECT_EQ(header_key.toStdString(), return_array.at(0).toStdString());
+	EXPECT_EQ(header_value.toStdString(), return_array.at(1).toStdString());
 }

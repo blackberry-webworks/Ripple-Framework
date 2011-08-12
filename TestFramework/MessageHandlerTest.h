@@ -35,6 +35,7 @@ public:
 	MockRIMStageWebView() {}
 	virtual ~MockRIMStageWebView() {}
 
+	MOCK_METHOD1(setTraits, void(const QVariantMap&));
 	MOCK_METHOD1(loadURL, void(QString));
 	MOCK_METHOD1(enableCrossSiteXHR, void(bool));
 	MOCK_METHOD1(executeJavaScript, QVariant(QString));

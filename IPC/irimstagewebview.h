@@ -16,12 +16,15 @@
 
 #pragma once
 
+#include <QVariant>
+
 namespace BlackBerry {
 namespace Starbuck {
 namespace IPCChannel {
 class IStarbuckWebView
 {
 public:
+	virtual void setTraits(const QVariantMap& settings) = 0;
 	virtual void loadURL(QString url) = 0;
 	virtual void enableCrossSiteXHR(bool crossSiteXHR) = 0;
 	virtual QVariant executeJavaScript(QString script) = 0;

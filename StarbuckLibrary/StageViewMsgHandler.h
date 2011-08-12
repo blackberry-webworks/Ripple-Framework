@@ -38,6 +38,8 @@ public:
 //stagewebview APIs
 public slots:
 	void loadUrl(const QString& url);
+	void setTraits(const QVariantMap& settings);
+
 	void executeJavaScript(const QString& script);
 	void crossOrigin(const bool allow);
 	void customHTTPHeader(const QString& key, const QString& value);

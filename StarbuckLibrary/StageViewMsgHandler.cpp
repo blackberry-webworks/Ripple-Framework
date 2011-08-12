@@ -45,6 +45,11 @@ void StageViewMsgHandler::loadUrl(const QString& url)
 	stageWebview()->loadURL(url);
 }
 
+void StageViewMsgHandler::setTraits(const QVariantMap& settings)
+{
+	stageWebview()->setTraits(settings);
+}
+
 void StageViewMsgHandler::executeJavaScript(const QString& script)
 {
 	stageWebview()->executeJavaScript(script);

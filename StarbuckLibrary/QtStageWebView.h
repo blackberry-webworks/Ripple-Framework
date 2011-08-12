@@ -23,6 +23,7 @@
 #include <QPoint>
 #include <QNetworkRequest>
 #include <QTimer>
+#include <QVariant>
 #include <QObject>
 #include <QWebView>
 #include <QWebHistory>
@@ -38,6 +39,11 @@ class QtStageWebView :	public QWebView, public IStarbuckWebView
 public:
 	QtStageWebView(QWidget *parent = 0);
 	~QtStageWebView(void);
+
+	/**
+	 * Configure all settings for the webview at once
+	 */
+	void setTraits(const QVariantMap& settings);
 
   /**
 	 * Loads the page at the specified URL.
@@ -308,9 +314,9 @@ public:
 	 *
 	 * <p>The default value of this property is <code>nul</code>.</p>
 	 */
-	void customHTTPHeaders(char *headers[], unsigned int headersSize);
+	void customHTTPHeaders(const QStringList& headers);
 	void customHTTPHeaders(QString key, QString value);
-	char** customHTTPHeaders();
+	QStringList& customHTTPHeaders();
 	
 	/**
      * Clears the following browsing data:
@@ -602,9 +608,8 @@ signals:
 private:
 //	QObject *locationChangeListenerObj;
 //	char *locationChangeListenerMethod;
-	char **_headers;
-	unsigned int _headersSize;
-  bool waitForJsLoad;
+	QStringList _headers;
+	bool waitForJsLoad;
   
   void registerEventbus();
 

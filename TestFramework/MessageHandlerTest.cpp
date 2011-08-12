@@ -242,3 +242,19 @@ TEST(StageViewMsgHandler, CanSignalJavaScriptWindowCleared)
 
 	EXPECT_EQ(1, spy.count());
 }
+
+TEST(StageViewMsgHandler, CanSetMultipleTraits)
+{
+	TestStageViewMsgHandler test_handler;
+	MockRIMStageWebView mock_webview;
+	QVariantMap settings;
+	settings.insert("testingkey", "testingvalue");
+
+	EXPECT_CALL(test_handler, stageWebview())
+		.WillRepeatedly(Return(&mock_webview));
+
+	EXPECT_CALL(mock_webview, setTraits(settings))
+		.Times(1);
+
+	test_handler.setTraits(settings);
+}

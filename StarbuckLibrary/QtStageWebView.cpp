@@ -34,9 +34,6 @@ QtStageWebView::QtStageWebView(QWidget *p) : QWebView(p), waitForJsLoad(true)
         connect(page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(notifyJavaScriptWindowObjectCleared()));
     }
 
-	//Initialize headers to 0
-	_headersSize = 0;
-
 	//enable web inspector
 	this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 }
@@ -45,13 +42,77 @@ QtStageWebView::~QtStageWebView(void)
 {
 }
 
+void QtStageWebView::setTraits(const QVariantMap& settings)
+{
+	if (settings.contains("windowGeometry"))
+	{
+		QVariantMap window_geometry = settings.value("windowGeometry").toMap();
+		
+		if (window_geometry.contains("x") && window_geometry.contains("y") &&
+			window_geometry.contains("w") && window_geometry.contains("h"))
+		{
+			setWindowGeometry(	window_geometry.value("x").toInt(), window_geometry.value("y").toInt(),
+								window_geometry.value("w").toInt(), window_geometry.value("h").toInt());
+		}
+	}
+
+	if (settings.contains("visible"))
+	{
+		visible(settings.value("visible").toBool());
+	}
+
+	// We should always process this before loading the url.
+	if (settings.contains("crossOrigin"))
+	{
+		enableCrossSiteXHR(settings.value("crossOrigin").toBool());
+	}
+
+	// We should always process this before loading the url.
+	if (settings.contains("customHTTPHeaders"))
+	{
+		// The customHTTPHeaders are stored as an array of key/value pairs.  We must
+		// first convert the array into a QVariantList.  For each item in the list,
+		// we convert the key/value object into a QVariantMap.  We then retrieve the
+		// key and value strings from the map.
+
+		QVariantList custom_headers = settings.value("customHTTPHeaders").toList();
+				
+		if (custom_headers.size())
+		{
+			QStringList headers_list;
+
+			for (int i = 0; i < custom_headers.size(); i++)
+			{
+				QVariantMap header = custom_headers.at(i).toMap();
+
+				if (header.contains("key") && header.contains("value"))
+				{
+					headers_list.append(header.value("key").toString());
+					headers_list.append(header.value("value").toString());
+				}
+			}
+
+			customHTTPHeaders(headers_list);
+		}
+	}
+
+	if (settings.contains("URL"))
+	{
+		loadURL(settings.value("URL").toString());
+	}
+}
+
 void QtStageWebView::loadURL(QString url)
 {
 	QNetworkRequest request(url);
 
 	//Add custom headers
-	for (unsigned int i = 0; i + 1 < _headersSize; i += 2)
-		request.setRawHeader(_headers[i], _headers[i + 1]);
+	for (int i = 0; i + 1 < _headers.size(); i += 2)
+	{
+		QByteArray key = _headers.at(i).toAscii();
+		QByteArray value = _headers.at(i + 1).toAscii();
+		request.setRawHeader(key, value);
+	}
 
 	load(request);
 }
@@ -155,34 +216,24 @@ void QtStageWebView::historyPosition(int position)
 	}
 }
 
-char** QtStageWebView::customHTTPHeaders()
+QStringList& QtStageWebView::customHTTPHeaders()
 {
 	return _headers;
 }
 
-void QtStageWebView::customHTTPHeaders(char *headers[], unsigned int headersSize)
+void QtStageWebView::customHTTPHeaders(const QStringList& headers)
 {
-	_headers = new char*[headersSize];
-	
-	for (unsigned int i = 0; i < headersSize; i++)
-    {
-        _headers[i] = new char[strlen(headers[i]) + 1];
-		strcpy(_headers[i], headers[i]);
-	}
-
-	_headersSize = headersSize;
+	_headers.clear();
+	_headers = headers;
 }
 
 void QtStageWebView::customHTTPHeaders(QString key, QString value)
 {
-	QByteArray mKey = key.toAscii();
-	QByteArray mValue = value.toAscii();
+	QStringList headers_list;
+	headers_list.append(key);
+	headers_list.append(value);
 	
-	char *headersArray[2];
-	headersArray[0] = mKey.data();
-	headersArray[1] = mValue.data();
-	
-	customHTTPHeaders( headersArray, 2);
+	customHTTPHeaders(headers_list);
 }
 
 void QtStageWebView::visible(bool enable)
