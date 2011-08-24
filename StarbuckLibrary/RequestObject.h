@@ -36,7 +36,7 @@ public:
 public slots:
     void allow();
     void deny();
-    void respond(QString code, QString url);
+    void respond(int code, const QString& responseText);
 private:
     QString m_url;
     QWebFrame* m_pWebFrame;

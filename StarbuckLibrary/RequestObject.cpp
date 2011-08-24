@@ -49,9 +49,9 @@ void RequestObject::deny()
     m_pWebFrame->setAllowAccess(false);
 }
 
-void RequestObject::respond(QString code, QString url)
+void RequestObject::respond(int code, const QString& responseText)
 {
-    qDebug() << "respond code: " << code << "responde message:" << url;
-    //TODO: write response text and set the response code
+    qDebug() << "respond to: " << m_url << "code: " << code << "respons text: " << responseText;
+    m_pWebFrame->respond(code, responseText);
 }
 
