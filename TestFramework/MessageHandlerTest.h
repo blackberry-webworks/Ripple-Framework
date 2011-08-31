@@ -16,7 +16,6 @@
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "MessageSignalSpy.h"
 #include "StageViewMsgHandler.h"
 #include "irimstagewebview.h"
 #include <QSignalSpy>
