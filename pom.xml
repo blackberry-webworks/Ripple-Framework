@@ -81,6 +81,7 @@
         <QT_SRC>${env.QTDIR}/src/3rdparty/webkit</QT_SRC>
         <QTWEBKIT_TMP>${project.build.sourceDirectory}/build/qtwebkit</QTWEBKIT_TMP>
         <ASSEMBLY_DESCRIPTOR>${project.build.sourceDirectory}/dist-windows.xml</ASSEMBLY_DESCRIPTOR>
+        <BUILD_TESTS>no</BUILD_TESTS>
       </properties>
       <build>
         <plugins>
@@ -196,6 +197,7 @@
                     <argument>cmake</argument>
                     <argument>..</argument>
                     <argument>-DCMAKE_BUILD_TYPE=Release</argument>
+                    <argument>-DBUILD_TESTS=${BUILD_TESTS}</argument>
                     <argument>-G</argument>
                     <argument>NMake Makefiles</argument>
                   </arguments>
@@ -318,6 +320,42 @@
       </build>
     </profile>
 	
+	<!-- UnitTestsOnWindows profile runs the unit tests in the TestFramework project -->
+	<profile>
+      <id>Unit_Tests_on_Windows</id>
+      <activation>
+        <property>
+          <name>runUnitTestsOnWindows</name>
+          <value>yes</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+              <execution>
+                <id>Run Unit Tests on Windows</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>test</phase>
+                <configuration>
+				  <workingDirectory>${project.build.sourceDirectory}/build/bin</workingDirectory>
+                  <executable>TestFramework.exe</executable>
+                  <arguments>
+                    <argument>--gtest_output=xml:test_output.xml</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+	
 	<profile>
       <id>mac</id>
       <activation>
@@ -330,6 +368,7 @@
         <QT_HEADER>${env.QTDIR}/include/QtWebKit</QT_HEADER>
         <QTWEBKIT_TMP>${project.build.sourceDirectory}/build/qtwebkit</QTWEBKIT_TMP>
         <ASSEMBLY_DESCRIPTOR>dist-mac.xml</ASSEMBLY_DESCRIPTOR>
+        <BUILD_TESTS>no</BUILD_TESTS>
       </properties>
       <build>
         <plugins>
@@ -421,6 +460,7 @@
                   <arguments>
                     <argument>..</argument>
                     <argument>-DCMAKE_BUILD_TYPE=Release</argument>
+                    <argument>-DBUILD_TESTS=${BUILD_TESTS}</argument>
                   </arguments>
                 </configuration>
               </execution>
@@ -524,6 +564,42 @@
                   <executable>touch</executable>
                   <arguments>
                     <argument>Framework_CI_Build_Finished</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+	
+	<!-- UnitTestsOnMac profile runs the unit tests in the TestFramework project -->
+	<profile>
+      <id>Unit_Tests_on_Mac</id>
+      <activation>
+        <property>
+          <name>runUnitTestsOnMac</name>
+          <value>yes</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+              <execution>
+                <id>Run Unit Tests on Windows</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>test</phase>
+                <configuration>
+				  <workingDirectory>${project.build.sourceDirectory}/build/bin</workingDirectory>
+                  <executable>TestFramework</executable>
+                  <arguments>
+                    <argument>--gtest_output=xml:test_output.xml</argument>
                   </arguments>
                 </configuration>
               </execution>
