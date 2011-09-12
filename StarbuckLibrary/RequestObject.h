@@ -24,6 +24,8 @@
 namespace BlackBerry {
 namespace Starbuck {
 
+static const QString jsCodeDefineSetOnRequest("(function(){var cb=null;window.__defineGetter__(\"onRequest\",function(){return cb;});window.__defineSetter__(\"onRequest\",function(value){if(cb!=null)stagewebview.onRequest.disconnect(cb);cb=value;stagewebview.onRequest.connect(cb);});})();");
+
 class RequestObject : public QObject
 {
     Q_OBJECT

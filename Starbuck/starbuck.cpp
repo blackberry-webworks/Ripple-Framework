@@ -105,6 +105,7 @@ void Starbuck::registerAPIs()
     //register StageWebViewMsgHandler as JS object named stagewebview
     QWebFrame* frame = webView->page()->mainFrame();
     frame->addToJavaScriptWindowObject(QString("stagewebview"), m_pStageViewHandler);
+    frame->evaluateJavaScript(BlackBerry::Starbuck::jsCodeDefineSetOnRequest);
     frame->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame));
     frame->evaluateJavaScript(BlackBerry::Starbuck::eventbusSource);
 }

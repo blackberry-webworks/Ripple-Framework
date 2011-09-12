@@ -52,6 +52,6 @@ void RequestObject::deny()
 void RequestObject::respond(int code, const QString& responseText)
 {
     qDebug() << "respond to: " << m_url << "code: " << code << "respons text: " << responseText;
-    m_pWebFrame->respond(code, responseText);
+    m_pWebFrame->respond(code, responseText, m_url);
 }
 
