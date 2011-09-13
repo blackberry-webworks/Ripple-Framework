@@ -1,0 +1,8 @@
+Large Window:
+
+    msg div should say "Hello World!"
+
+Small Window:
+
+    msg div should say "Hello World!"
+    song div should say "Where the buffalo roam"

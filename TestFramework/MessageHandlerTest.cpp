@@ -233,12 +233,12 @@ TEST(StageViewMsgHandler, CanGoForwardToSpecificPage)
 	test_handler.historyPosition(history_position);
 }
 
-TEST(StageViewMsgHandler, CanSignalJavaScriptWindowCleared)
+TEST(StageViewMsgHandler, CanSignalDocumentCreated)
 {
 	StageViewMsgHandler test_handler;
-	QSignalSpy spy(&test_handler, SIGNAL(javaScriptWindowCleared()));
+	QSignalSpy spy(&test_handler, SIGNAL(onDocumentCreated()));
 
-	test_handler.javaScriptWindowObjectCleared();
+	test_handler.documentCreated();
 
 	EXPECT_EQ(1, spy.count());
 }

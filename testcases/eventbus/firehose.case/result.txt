@@ -1,0 +1,7 @@
+Large Window:
+
+    the msg div should count up to 10,000
+
+Small Window:
+
+    the msg div should count up to 10,000

@@ -1,0 +1,20 @@
+<html>
+	<body style="background-color:Red;">
+    ui window
+        <script type="text/javascript">
+          stagewebview.onDocumentCreated.connect(function () {
+            stagewebview.javaScriptInjected();
+          });
+
+          window.onRequest = function (request) {
+              if ( request.url == "http://www.rim.com/assets/images/boldTorchSmartphones.jpg" )
+                window.setTimeout(request.allow(), 15000); //has the same effect as direct call allow/deny
+            };
+
+            window.addEventListener("load", function () {
+              stagewebview.loadUrl("http://localhost/testcases/onrequest/procrastination.case/frame.html");
+              stagewebview.setWindowGeometry(100, 100, 360, 480);
+            });
+        </script>
+	</body>
+</html>

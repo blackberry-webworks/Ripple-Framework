@@ -596,12 +596,10 @@ public:
 	//fullscreenNativeInit
 	//fullscreenExited
 signals:
-	void urlChanged(QString);
-	void javaScriptWindowObjectCleared();
-  void jsLoaded();
+    void urlChanged(QString);
+    void documentElementAvailable();
+    void jsLoaded();
 private:
-//	QObject *locationChangeListenerObj;
-//	char *locationChangeListenerMethod;
 	char **_headers;
 	unsigned int _headersSize;
   bool waitForJsLoad;
@@ -612,6 +610,6 @@ private:
     void continueLoad();
 private slots:
 	void notifyUrlChanged(const QUrl& url);
-	void notifyJavaScriptWindowObjectCleared();
+	void notifyDocumentElementAvailable();
 };
 #endif //QTSTAGEWEBVIEW_H

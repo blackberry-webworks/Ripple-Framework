@@ -390,14 +390,14 @@ TEST (QtStageWebView, CanSignalUrlChanged){
 	EXPECT_EQ(location.toStdString(), sent_url.toStdString());
 }
 
-TEST(QtStageWebView, CanSignalJavaScriptWindowCleared)
+TEST(QtStageWebView, CanSignaldocumentElementAvailable)
 {
 	QtStageWebView webview;
 	webview.continueLoad();
 
 	QString location("http://www.google.ca/");
 
-	QSignalSpy spy(&webview, SIGNAL(javaScriptWindowObjectCleared()));
+	QSignalSpy spy(&webview, SIGNAL(documentElementAvailable()));
 		
 	// Create an event loop to wait for the loadFinished when loading webpages
 	QEventLoop loop;
@@ -428,5 +428,5 @@ TEST(QtStageWebView, CanReloadPage)
 
     QVariant result = webview.executeJavaScript("document.title");
 
-    EXPECT_NE(result.toString(), "testing");
+    EXPECT_EQ(result.toString(), "testing");
 }

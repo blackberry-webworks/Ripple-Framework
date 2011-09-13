@@ -1,0 +1,9 @@
+Large Window
+
+    msg div should show the url of the requested audio tag
+
+Small Window
+
+    the audio player should show and not able to play and 
+    javascript error in console with:
+    Failed to load resource

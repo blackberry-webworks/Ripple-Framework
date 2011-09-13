@@ -1,0 +1,7 @@
+Large Window:
+
+    the msg div should update by 1 every second, starting at 0
+
+Small Window:
+
+    no changes to the DOM

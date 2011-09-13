@@ -1,0 +1,22 @@
+<html>
+    <body>
+        <div id="msg"> </div>
+
+        <script type="text/javascript">
+        
+            window.addEventListener("load", function () {
+                stagewebview.loadUrl("frame.html");
+            });
+
+            (function () {
+                var stuff = [];
+
+                blackberry.bus.on("evt", function (data) {
+                    stuff.push(data);
+                    document.getElementById("msg").innerHTML = stuff.length;
+                });
+            })();
+        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,10 @@
+<html>
+	<body>
+        <script type="text/javascript">
+            window.setInterval(function () {
+                //trigger async
+                blackberry.bus.trigger("evt", [new Date()], true);
+            }, 1000);
+        </script>
+	</body>
+</html>

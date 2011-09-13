@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <div id="msg"> </div>
+
+        <script type="text/javascript">
+            window.addEventListener("load", function () {
+                stagewebview.loadUrl("frame.html");
+            });
+
+            for (var x = 0; x < 10000; x++) {
+                blackberry.bus.on("ping", pong.push);
+            }
+
+            blackberry.bus.on("check", function () {
+                    document.getElementById("msg").innerHTML = pong.reduce(function (s, v) { return s + v; }, 0);
+            });
+        </script>
+    </body>
+</html>

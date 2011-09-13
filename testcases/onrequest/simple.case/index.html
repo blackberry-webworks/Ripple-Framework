@@ -1,0 +1,20 @@
+<html>
+	<body style="background-color:Red;">
+        <div id="msg"></div>
+        <script type="text/javascript">
+          stagewebview.onDocumentCreated.connect(function () {
+            stagewebview.javaScriptInjected();
+          });
+
+            window.onRequest = function (request) {
+                document.getElementById("msg").innerText = request.url;
+                request.allow();
+            };
+
+            window.addEventListener("load", function () {
+              stagewebview.loadUrl("http://localhost/testcases/onrequest/simple.case/frame.html");
+              stagewebview.setWindowGeometry(100, 200, 360, 480);
+            });
+        </script>
+	</body>
+</html>

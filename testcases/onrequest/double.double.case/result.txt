@@ -1,0 +1,7 @@
+Large Window
+
+    there should not be an alert.
+
+Small Window
+
+    the image should show

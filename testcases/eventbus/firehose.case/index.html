@@ -1,0 +1,25 @@
+<html>
+    <body>
+        <div id="msg"> </div>
+
+        <script type="text/javascript">
+        
+            window.addEventListener("load", function () {
+                stagewebview.loadUrl("frame.html");
+
+                for (var x = 0; x < 10000; x++) {
+                    blackberry.bus.trigger("fire1");
+                }
+            });
+
+            var fire2 = 0;
+        
+            blackberry.bus.on("fire2", function () {
+                fire2 += 1;
+                document.getElementById("msg").innerHTML = fire2;
+            });
+
+        
+        </script>
+    </body>
+</html>

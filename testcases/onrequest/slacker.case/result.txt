@@ -1,0 +1,7 @@
+Large Window
+
+    msg div should show the url of the requested img
+
+Small Window
+
+    the image should not show

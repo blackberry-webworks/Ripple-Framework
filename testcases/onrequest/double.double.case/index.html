@@ -1,0 +1,23 @@
+<html>
+	<body style="background-color:Red;">
+        <script type="text/javascript">
+          stagewebview.onDocumentCreated.connect(function () {
+            stagewebview.javaScriptInjected();
+          });
+
+            window.onRequest = function (request) {
+                alert("we should never see this!");
+                request.deny();
+            };
+
+            window.onRequest = function (request) {
+                request.allow();
+            };
+
+            window.addEventListener("load", function () {
+              stagewebview.loadUrl("http://localhost/testcases/onrequest/double.double.case/frame.html");
+              stagewebview.setWindowGeometry(100, 100, 360, 480);
+            });
+        </script>
+	</body>
+</html>

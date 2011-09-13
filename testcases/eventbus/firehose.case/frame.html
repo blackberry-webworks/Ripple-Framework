@@ -1,0 +1,19 @@
+<html>
+	<body>
+        <div id="msg"> </div>
+        <script type="text/javascript">
+
+            var fire1 = 0;
+
+            blackberry.bus.on("fire1", function () {
+                fire1 += 1;
+                document.getElementById("msg").innerHTML = fire1
+            });
+
+            for (var x = 0; x < 10000; x++) {
+                blackberry.bus.trigger("fire2");
+            }
+            
+        </script>
+	</body>
+</html>

@@ -20,7 +20,7 @@
 
 using namespace BlackBerry::Starbuck;
 
-QtStageWebView::QtStageWebView(QWidget *p) : QWebView(p), waitForJsLoad(true)
+QtStageWebView::QtStageWebView(QWidget *p) : QWebView(p), _headersSize(0), waitForJsLoad(true)
 {	
     //Turn off context menu's (i.e. menu when right clicking, you will need to uncommment this if you want to use web inspector,
     //there is currently a conflict between the context menus when using two QWebView's
@@ -31,11 +31,8 @@ QtStageWebView::QtStageWebView(QWidget *p) : QWebView(p), waitForJsLoad(true)
 
 	if (page() && page()->mainFrame())
     {
-        connect(page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(notifyJavaScriptWindowObjectCleared()));
+        connect(page()->mainFrame(), SIGNAL(documentElementAvailable()), this, SLOT(notifyDocumentElementAvailable()));
     }
-
-	//Initialize headers to 0
-	_headersSize = 0;
 
 	//enable web inspector
 	this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
@@ -66,12 +63,12 @@ void QtStageWebView::notifyUrlChanged(const QUrl& url)
 	emit urlChanged(url.toString());
 }
 
-void QtStageWebView::notifyJavaScriptWindowObjectCleared()
+void QtStageWebView::notifyDocumentElementAvailable()
 {
   registerEventbus();
   QEventLoop loop;
   QObject::connect(this, SIGNAL(jsLoaded()), &loop, SLOT(quit()));
-    emit javaScriptWindowObjectCleared();
+    emit documentElementAvailable();
 
   if (waitForJsLoad)
       loop.exec();

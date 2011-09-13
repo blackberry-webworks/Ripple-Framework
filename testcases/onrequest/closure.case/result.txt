@@ -1,0 +1,7 @@
+Large Window
+
+    no changes to the dom
+
+Small Window
+
+    should get an alert with "got it!"

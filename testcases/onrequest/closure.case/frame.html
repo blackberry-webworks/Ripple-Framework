@@ -1,0 +1,16 @@
+<html>
+    <body  style="background-color:Green;">
+      send xhr to get index.html
+        <script type="text/javascript">
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "index.html");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    alert("got it!");
+                }
+            };
+            xhr.send();
+        
+        </script>
+    </body>
+</html>

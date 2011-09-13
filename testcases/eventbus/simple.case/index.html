@@ -1,0 +1,28 @@
+<html>
+    <body>
+        <div id="msg"> </div>
+
+        <script type="text/javascript">
+            stagewebview.javaScriptInjected();
+        
+            window.addEventListener("load", function () {
+                stagewebview.loadUrl("http://localhost/starbuck/frame.html");
+            });
+
+            blackberry.bus.on("foo", function(msg) {
+                document.getElementById("msg").innerHTML = msg;
+                var what = {
+                    give: {
+                        me: {
+                            a: {
+                                home: "Where the buffalo roam"
+                            }
+                        }
+                    }
+                };
+                blackberry.bus.trigger("range", JSON.stringify(what));
+            });
+        
+        </script>
+    </body>
+</html>

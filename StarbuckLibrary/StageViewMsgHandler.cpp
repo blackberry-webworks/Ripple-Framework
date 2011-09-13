@@ -34,9 +34,9 @@ StageViewMsgHandler::~StageViewMsgHandler()
 void StageViewMsgHandler::registerEvents()
 {
 	connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-	connect(rimStageWebview(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(javaScriptWindowObjectCleared()));
     connect(rimStageWebview()->page()->mainFrame(), SIGNAL(networkResourceRequest(QNetworkRequest*)), this, SLOT(resourceRequest(QNetworkRequest*)));
     connect(rimStageWebview()->page()->mainFrame(), SIGNAL(networkResourceReply(QNetworkReply*)), this, SLOT(resourceReply(QNetworkReply*)));
+    connect(rimStageWebview(), SIGNAL(documentElementAvailable()), this, SLOT(documentCreated()));
     connect(this, SIGNAL(javaScriptInjected()), rimStageWebview(), SLOT(continueLoad()));
 }
 
@@ -126,11 +126,6 @@ void StageViewMsgHandler::urlChanged(const QString& url)
     emit locationChanged(url);
 }
 
-void StageViewMsgHandler::javaScriptWindowObjectCleared()
-{
-	emit javaScriptWindowCleared();
-}
-
 void StageViewMsgHandler::processMessage(Message* pMsg)
 {
 	emit messageProcessed(pMsg);
@@ -150,4 +145,9 @@ void StageViewMsgHandler::resourceReply(QNetworkReply* reply)
   //qDebug() << "emit stagewebview.OnResponse(), url:" << reply->url().toString();
   emit onResponse(this);
   //qDebug() << " stagewebview.onResponse() emitted";
+}
+
+void StageViewMsgHandler::documentCreated()
+{
+    emit onDocumentCreated();
 }
