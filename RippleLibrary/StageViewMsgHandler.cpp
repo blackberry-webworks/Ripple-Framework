@@ -18,10 +18,10 @@
 #include "StageViewMsgHandler.h"
 
 using namespace BlackBerry::Ripple;
-using namespace BlackBerry::Ripple::IPCChannel;
+using namespace BlackBerry::Ripple::TCPChannel;
 
 StageViewMsgHandler::StageViewMsgHandler(QObject *parent)
-	: QObject(parent),m_pWebView(0), _buildServerPort(0)
+	: MessageHandler(parent),  _buildServerPort(0)
 {
 }
 
@@ -29,12 +29,40 @@ StageViewMsgHandler::~StageViewMsgHandler()
 {
 }
 
+void StageViewMsgHandler::processMessage(Message* pMsg)
+{
+   //Process message
+   int msgID = pMsg->ID();   
+   switch(msgID)
+   {
+   //case IPCChannel_MESSAGE_TEST1:
+   //  {
+   //    QString data;
+   //    QBuffer b(pMsg->Data());
+   //    b.open(QIODevice::ReadOnly);
+   //    QDataStream in(&b);
+   //    in >> data;
+   //    qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << data << " received!";
+   //    break;
+   //  }
+   //case IPCChannel_MESSAGE_TEST2:
+   //  {
+   //    QString data;
+   //    QBuffer b(pMsg->Data());
+   //    b.open(QIODevice::ReadOnly);
+   //    QDataStream in(&b);
+   //    in >> data;
+   //    qDebug() << "Message TEST2 received, ID:" << msgID << "Data:" << data << " received!";
+   //    break;
+   //  }
+   }   
+   emit messageProcessed(pMsg);
+}
+
 void StageViewMsgHandler::registerEvents()
 {
 	connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
 	connect(rimStageWebview(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(javaScriptWindowObjectCleared()));
-//	connect(rimStageWebview()->page()->mainFrame(), SIGNAL(networkResourceRequest(QNetworkRequest*)), this, SLOT(resourceRequest(QNetworkRequest*)));
-//	connect(rimStageWebview()->page()->mainFrame(), SIGNAL(networkResourceReply(QNetworkReply*)), this, SLOT(resourceReply(QNetworkReply*)));
     connect(this, SIGNAL(javaScriptInjected()), rimStageWebview(), SLOT(continueLoad()));
 }
 

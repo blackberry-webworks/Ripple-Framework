@@ -18,24 +18,24 @@
 
 namespace BlackBerry {
 namespace Ripple {
-namespace IPCChannel {
+namespace TCPChannel {
 class IRippleWebView
 {
 public:
-	virtual void loadURL(QString url) = 0;
-	virtual void enableCrossSiteXHR(bool crossSiteXHR) = 0;
-	virtual QVariant executeJavaScript(QString script) = 0;
-	virtual QString location() = 0;
-	virtual void historyBack() = 0;
-	virtual void historyForward() = 0;
-	virtual bool isHistoryBackEnabled() = 0;
-	virtual bool isHistoryForwardEnabled() = 0;
-	virtual int historyLength() = 0;
-	virtual int historyPosition() = 0;
-	virtual void historyPosition(int position) = 0;
-	virtual void setWindowGeometry(int x, int y, int w, int h) = 0;
+    virtual void loadURL(QString url) = 0;
+    virtual void enableCrossSiteXHR(bool crossSiteXHR) = 0;
+    virtual QVariant executeJavaScript(QString script) = 0;
+    virtual QString location() = 0;
+    virtual void historyBack() = 0;
+    virtual void historyForward() = 0;
+    virtual bool isHistoryBackEnabled() = 0;
+    virtual bool isHistoryForwardEnabled() = 0;
+    virtual int historyLength() = 0;
+    virtual int historyPosition() = 0;
+    virtual void historyPosition(int position) = 0;
+    virtual void setWindowGeometry(int x, int y, int w, int h) = 0;
     virtual void reload() = 0;
-  virtual void setZoom(float zoom) = 0;
-  virtual float zoom() = 0;
+    virtual void setZoom(float zoom) = 0;
+    virtual float zoom() = 0;
 };
 }}}

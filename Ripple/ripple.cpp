@@ -19,12 +19,13 @@
 #include "BuildServerManager.h"
 #include <QGLWidget>
 #include "ScrollHandler.h"
+#include "TCPChannel/tcpbridge.h"
 
 using namespace BlackBerry::Ripple;
 
 const int Ripple::PROGRESS_BAR_HEIGHT = 23;
 
-Ripple::Ripple(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags)
+Ripple::Ripple(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags), m_pStageViewHandler(0),m_pTcpMessageHandler(0)
 {
     init();
 }
@@ -113,24 +114,14 @@ void Ripple::init(void)
   
     //stagewebview interfaces
     m_pStageViewHandler = new StageViewMsgHandler(this);
-    m_pStageViewHandler->Register(webViewInternal->qtStageWebView());
-    
-    //start build server
-    connect(BuildServerManager::getInstance(), SIGNAL(findUsablePort(int)), m_pStageViewHandler, SLOT(setServerPort(int))); 
+    m_pStageViewHandler->Register(webViewInternal->qtStageWebView());   
 
-    QFile cmd(_config->buildServiceCommand());
-    if (cmd.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        QTextStream in(&cmd);
-        m_pStageViewHandler->setServerPort(BuildServerManager::getInstance()->start(in.readLine(), _config->buildServicePort()));
-        cmd.close();
-    }
-    else
-    {
-        qDebug() << "Can not open file:" << cmd.fileName() << "Error:" << cmd.error();
-        cmd.close();
-    }
-
+    //start tcp server
+    m_pTcpMessageHandler = new TcpMessagehandler(this);
+    m_pTcpMessageHandler->Register(webViewInternal->qtStageWebView());
+    TCPBridge* tcpbridge = new TCPBridge(this);
+    tcpbridge->RegisterMessageHandler(m_pTcpMessageHandler);
+    tcpbridge->Start();
 }
 
 void Ripple::closeEvent(QCloseEvent *event)
@@ -141,7 +132,6 @@ void Ripple::closeEvent(QCloseEvent *event)
     _config->windowState((this->windowState() == Qt::WindowMaximized) ? 1 : 0);
     _config->writeSettings();
     event->accept();
-    BuildServerManager::getInstance()->stop();
 }
 
 void Ripple::registerAPIs()

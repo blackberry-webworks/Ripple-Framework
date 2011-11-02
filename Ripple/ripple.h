@@ -24,9 +24,10 @@
 #include "ConfigData.h"
 #include <qwebinspector.h>
 #include "StageViewMsgHandler.h"
+#include "TCPChannel/tcpmessagehandler.h"
 #include "QtStageWebView.h"
 
-using namespace BlackBerry::Ripple::IPCChannel;
+using namespace BlackBerry::Ripple::TCPChannel;
 
 namespace BlackBerry 
 {
@@ -56,6 +57,7 @@ namespace BlackBerry
         QProgressBar* progressBar;
         ConfigData *_config;
         StageViewMsgHandler* m_pStageViewHandler;
+        TcpMessagehandler* m_pTcpMessageHandler;
 
         void init(void);    
     };

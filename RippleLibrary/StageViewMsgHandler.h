@@ -17,13 +17,14 @@
 #ifndef STAGEVIEWMSGHANDLER_H
 #define STAGEVIEWMSGHANDLER_H
 #include "QtStageWebView.h"
+#include "TCPChannel/messagehandler.h"
 
-using namespace BlackBerry::Ripple::IPCChannel;
+using namespace BlackBerry::Ripple::TCPChannel;
 
 namespace BlackBerry {
 namespace Ripple {
 
-class StageViewMsgHandler : public QObject
+class StageViewMsgHandler : public MessageHandler
 {
   Q_OBJECT
   Q_PROPERTY(int serverPort READ getServerPort)
@@ -32,34 +33,30 @@ public:
     StageViewMsgHandler(QObject *parent = 0);
     ~StageViewMsgHandler();
    
-    void Register(IRippleWebView* pWebView)
-    {
-      m_pWebView = pWebView;
-      registerEvents();
-    }
 
 //stagewebview APIs
 public slots:
-	void loadUrl(const QString& url);
-	void executeJavaScript(const QString& script);
-	void crossOrigin(const bool allow);
-	void customHTTPHeader(const QString& key, const QString& value);
-	void setVisable(const bool isVisible);
-	void setWindowGeometry(int x, int y, int w, int h);
-	QString location();
-	void historyBack();
-	void historyForward();
-	bool isHistoryBackEnabled();
-	bool isHistoryForwardEnabled();
-	int historyLength();
-	int historyPosition();
-	void historyPosition(int position);
-  void setServerPort(int port);
-  void setZoomFactor(float zoom);
-  float zoomFactor();
+    void loadUrl(const QString& url);
+    void executeJavaScript(const QString& script);
+    void crossOrigin(const bool allow);
+    void customHTTPHeader(const QString& key, const QString& value);
+    void setVisable(const bool isVisible);
+    void setWindowGeometry(int x, int y, int w, int h);
+    QString location();
+    void historyBack();
+    void historyForward();
+    bool isHistoryBackEnabled();
+    bool isHistoryForwardEnabled();
+    int historyLength();
+    int historyPosition();
+    void historyPosition(int position);
+    void setServerPort(int port);
+    void setZoomFactor(float zoom);
+    float zoomFactor();
+  
+   void processMessage(Message* pMsg);
  
     //following slots are used internal for emit signals which will be connected from js side
-private slots:
     void urlChanged(const QString& url);
 	void javaScriptWindowObjectCleared();
 	void reload();
@@ -92,7 +89,6 @@ private:
     }
 
 private:
-	IRippleWebView* m_pWebView;
     int _buildServerPort;
 };
 }}

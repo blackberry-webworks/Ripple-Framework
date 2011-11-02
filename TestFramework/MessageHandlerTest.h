@@ -18,18 +18,19 @@
 #include "gtest/gtest.h"
 #include "MessageSignalSpy.h"
 #include "StageViewMsgHandler.h"
-#include "irimstagewebview.h"
+#include "qtstagewebview.h"
 #include <QSignalSpy>
+#include "TCPChannel/tcpmessagehandler.h"
 
 using ::testing::Return;
 using ::testing::Invoke;
 
 using namespace BlackBerry::Ripple;
-using namespace BlackBerry::Ripple::IPCChannel;
+using namespace BlackBerry::Ripple::TCPChannel;
 
 //Q_DECLARE_METATYPE(Message *);
 
-class MockRIMStageWebView : public IRippleWebView
+class MockRIMStageWebView : public QtStageWebView
 {
 public:
 	MockRIMStageWebView() {}
@@ -58,4 +59,12 @@ public:
 	virtual ~TestStageViewMsgHandler() {}
 
 	MOCK_METHOD0(stageWebview, IRippleWebView*());
+};
+
+class TestTcpMsgHandler : public TcpMessagehandler
+{
+public:
+	TestTcpMsgHandler() {}
+	virtual ~TestTcpMsgHandler() {}
+	MOCK_METHOD1(processMessage, void(Message*));
 };

@@ -11,6 +11,11 @@ LIST(APPEND RIPPLELIBRARY_HEADERS
     ConfigData.h
     PortScanner.h
     RemoteDebugger.h
+    TCPChannel/tcpbridge.h
+    TCPChannel/tcpbridgeworker.h
+    TCPChannel/message.h
+    TCPChannel/messagehandler.h
+    TCPChannel/tcpmessagehandler.h
 )
 
 LIST(APPEND RIPPLELIBRARY_SOURCES
@@ -19,20 +24,30 @@ LIST(APPEND RIPPLELIBRARY_SOURCES
     QtStageWebView.cpp
     StageViewMsgHandler.cpp
     stdafx.cpp
-    RequestObject.cpp
-    BuildServerManager.cpp
+#   RequestObject.cpp
+#   BuildServerManager.cpp
     PortScanner.cpp
     ScrollHandler.cpp
     RemoteDebugger.cpp
+    TCPChannel/tcpbridge.cpp
+    TCPChannel/tcpbridgeworker.cpp
+    TCPChannel/message.cpp
+    TCPChannel/messagehandler.cpp
+    TCPChannel/tcpmessagehandler.cpp
 )
 
 SET(RIPPLELIBRARY_MOC_HEADERS
     QtStageWebView.h
     StageViewMsgHandler.h
-    RequestObject.h
-    BuildServerManager.h
+ #  RequestObject.h
+ #  BuildServerManager.h
     ScrollHandler.h
     RemoteDebugger.h
+    TCPChannel/tcpbridge.h
+    TCPChannel/tcpbridgeworker.h
+    TCPChannel/message.h
+    TCPChannel/messagehandler.h
+    TCPChannel/tcpmessagehandler.h
 )
 
 QT4_WRAP_CPP(RIPPLELIBRARY_MOC_SRCS ${RIPPLELIBRARY_MOC_HEADERS})
@@ -49,4 +64,3 @@ ADD_LIBRARY(RippleLibrary ${RIPPLELIBRARY_SOURCES})
 TARGET_LINK_LIBRARIES(RippleLibrary ${QT_LIBRARIES} ${optionalLibs})
 
 INSTALL(TARGETS RippleLibrary DESTINATION ${CMAKE_BINARY_DIR}/bin)
-

@@ -242,3 +242,11 @@ TEST(StageViewMsgHandler, CanSignalJavaScriptWindowCleared)
 
 	EXPECT_EQ(1, spy.count());
 }
+
+TEST(TcpMessagehandler, CanProcessMessage)
+{
+    TestTcpMsgHandler test_handler;
+    QByteArray data("hello world");
+    Message* pMsg = new Message(TCPChannel_MESSAGE_TEST2, data.length(), &data);
+    test_handler.processMessage(pMsg);
+}
