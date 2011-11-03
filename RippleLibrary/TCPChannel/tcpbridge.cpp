@@ -49,6 +49,5 @@ void TCPBridge::Stop()
 
 void TCPBridge::RegisterMessageHandler(MessageHandler* pHandler)
 {
-    //connect(pHandler, SIGNAL(messageSent(Message*)), m_pMsgQueue, SLOT(addMessage(Message*)));
     m_pMsgHandler = pHandler;
 }

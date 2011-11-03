@@ -25,7 +25,7 @@ using namespace BlackBerry::Ripple;
 
 const int Ripple::PROGRESS_BAR_HEIGHT = 23;
 
-Ripple::Ripple(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags), m_pStageViewHandler(0),m_pTcpMessageHandler(0)
+Ripple::Ripple(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags), m_pStageViewHandler(0),m_pTcpMessageHandler(0),isTcpServerUp(false)
 {
     init();
 }
@@ -111,17 +111,24 @@ void Ripple::init(void)
 
     //register webview
     connect(webViewInternal->qtStageWebView()->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(registerAPIs()));
-  
+    connect(webViewInternal->qtStageWebView(), SIGNAL(loadStarted()), this, SLOT(startTCP())); 
     //stagewebview interfaces
     m_pStageViewHandler = new StageViewMsgHandler(this);
     m_pStageViewHandler->Register(webViewInternal->qtStageWebView());   
+}
 
-    //start tcp server
-    m_pTcpMessageHandler = new TcpMessagehandler(this);
-    m_pTcpMessageHandler->Register(webViewInternal->qtStageWebView());
-    TCPBridge* tcpbridge = new TCPBridge(this);
-    tcpbridge->RegisterMessageHandler(m_pTcpMessageHandler);
-    tcpbridge->Start();
+void Ripple::startTCP() 
+{
+    if ( !isTcpServerUp )
+    {
+        disconnect(webViewInternal, SIGNAL(loadStarted()));
+        m_pTcpMessageHandler = new TcpMessagehandler(this);
+        m_pTcpMessageHandler->Register(webViewInternal->qtStageWebView());
+        TCPBridge* tcpbridge = new TCPBridge(this);
+        tcpbridge->RegisterMessageHandler(m_pTcpMessageHandler);
+        tcpbridge->Start();
+        isTcpServerUp = true;
+    }
 }
 
 void Ripple::closeEvent(QCloseEvent *event)
