@@ -61,14 +61,14 @@ void TCPBridgeworker::readData()
 {
     if (m_pClientConnection->bytesAvailable())
     {
-        //QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
+        QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
         //QDataStream in(&data,QIODevice::ReadOnly);
-        QDataStream in(m_pClientConnection);
-        QByteArray data;
+        //QDataStream in(m_pClientConnection);
+        //QByteArray data;
         //qint32 msgId; // = TCPChannel_MESSAGE_SETURL;
         //in >> msgId >> data; 
         qint32 msgId = TCPChannel_MESSAGE_SETURL;
-        in >> data;
+        //in >> data;
         Message* pMsg = new Message(msgId, data.length(), &data);
         m_pMsgHandler->processMessage(pMsg);
     }
