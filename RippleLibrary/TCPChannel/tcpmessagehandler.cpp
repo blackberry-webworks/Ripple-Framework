@@ -44,10 +44,10 @@ void TcpMessagehandler::processMessage(Message* pMsg)
        //b.open(QIODevice::ReadOnly);
        //QDataStream in(&b);
        //in >> data;
-         qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << pMsg->Data() << " received!";
-         QString url( *pMsg->Data());
-         m_pWebView->loadURL(url);
-         delete pMsg;
+       QString url( *pMsg->Data());
+       qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << url << " received!";
+       m_pWebView->loadURL(url);
+       delete pMsg;
        break;
      }
    case TCPChannel_MESSAGE_TEST2:

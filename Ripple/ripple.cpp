@@ -111,17 +111,16 @@ void Ripple::init(void)
 
     //register webview
     connect(webViewInternal->qtStageWebView()->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(registerAPIs()));
-    connect(webViewInternal->qtStageWebView(), SIGNAL(loadStarted()), this, SLOT(startTCP())); 
     //stagewebview interfaces
     m_pStageViewHandler = new StageViewMsgHandler(this);
     m_pStageViewHandler->Register(webViewInternal->qtStageWebView());   
+    startTCP();
 }
 
 void Ripple::startTCP() 
 {
     if ( !isTcpServerUp )
     {
-        disconnect(webViewInternal, SIGNAL(loadStarted()));
         m_pTcpMessageHandler = new TcpMessagehandler(this);
         m_pTcpMessageHandler->Register(webViewInternal->qtStageWebView());
         TCPBridge* tcpbridge = new TCPBridge(this);

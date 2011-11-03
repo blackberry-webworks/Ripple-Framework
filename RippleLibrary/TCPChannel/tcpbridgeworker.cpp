@@ -37,7 +37,7 @@ TCPBridgeworker::~TCPBridgeworker()
 
 void TCPBridgeworker::run()
 {
-    m_pTcpServer = new QTcpServer(this);
+    m_pTcpServer = new QTcpServer(0);
     connect(m_pTcpServer, SIGNAL( newConnection()), this, SLOT(newConnection()));
     if ( !m_pTcpServer->listen( *m_pHostAddress, port) )
     {
