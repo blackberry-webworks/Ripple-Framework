@@ -7,65 +7,64 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
     </formats>  
     <includeBaseDirectory>false</includeBaseDirectory> 
 
-	<fileSets>
+    <fileSets>
         <fileSet>            
             <directory>${basedir}</directory>    
-			<outputDirectory>/</outputDirectory>
-			<includes>
-				<include>config.ini</include>
-			</includes>          
+            <outputDirectory>/</outputDirectory>
+                <includes>
+                    <include>config.ini</include>
+                </includes>          
         </fileSet>
-	
+
         <fileSet>            
             <directory>build/bin</directory>    
-			<outputDirectory>win</outputDirectory>
-			<includes>
-				<include>Ripple.exe</include>
-				<include>*.dll</include>
-			</includes>          
+            <outputDirectory>win</outputDirectory>
+            <includes>
+                <include>Ripple.exe</include>
+                <include>*.dll</include>
+            </includes>          
         </fileSet>
         <fileSet>            
             <directory>${env.QTDIR}/bin</directory>                    
             <outputDirectory>win</outputDirectory>
-			<includes>
-				<include>QtGui4.dll</include>
-				<include>QtCore4.dll</include>
-				<include>QtWebKit4.dll</include>
-				<include>QtNetwork4.dll</include>
-				<include>QtXml4.dll</include>
-				<include>QtTest4.dll</include>
-				<include>phonon4.dll</include>
-				<include>QtOpenGL4.dll</include>
-			</includes>
+            <includes>
+                <include>QtGui4.dll</include>
+                <include>QtCore4.dll</include>
+                <include>QtWebKit4.dll</include>
+                <include>QtNetwork4.dll</include>
+                <include>QtXml4.dll</include>
+                <include>QtTest4.dll</include>
+                <include>phonon4.dll</include>
+                <include>QtOpenGL4.dll</include>
+            </includes>
         </fileSet> 
 
-		<!-- openssl-->
+        <!-- openssl-->
         <fileSet>            
-            <directory>${env.QTDIR}/openssl/win/bin</directory>                    
+            <directory>${env.QTDIR}/openssl/win/bin</directory>
             <outputDirectory>win</outputDirectory>
-			<includes>
-				<include>*.dll</include>
-			</includes>
+            <includes>
+                <include>*.dll</include>
+            </includes>
         </fileSet> 
-		
-		<!-- QT mobility-->
+        
+        <!-- QT mobility-->
         <fileSet>            
             <directory>${env.QT_MOBILITY_ROOT}/lib</directory>                    
             <outputDirectory>win</outputDirectory>
-			<includes>
-				<include>QtLocation1.dll</include>
-				<include>QtMultimediaKit1.dll</include>
-				<include>QtSensors1.dll</include>
-			</includes>
+            <includes>
+                <include>QtLocation1.dll</include>
+                <include>QtMultimediaKit1.dll</include>
+                <include>QtSensors1.dll</include>
+            </includes>
         </fileSet> 
-		
+        
         <fileSet>
             <directory>${env.QTDIR}/plugins/imageformats</directory>                    
             <outputDirectory>win/imageformats</outputDirectory>
-			<includes>
-				<include>*.dll</include>
-			</includes>
+            <includes>
+                <include>*.dll</include>
+            </includes>
         </fileSet> 
-		
-	</fileSets>
+    </fileSets>
 </assembly>
