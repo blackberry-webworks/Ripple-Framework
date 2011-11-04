@@ -90,7 +90,8 @@ TEST(StageViewMsgHandler, CanSignalLocationChange)
 
 	QList<QVariant> arguments = spy.takeFirst();
 	QString sent_url = qvariant_cast<QString>(arguments.at(0));
-	EXPECT_EQ(url.toStdString(), sent_url.toStdString());
+    
+    EXPECT_EQ(url, sent_url);
 }
 
 TEST(StageViewMsgHandler, CanRetrieveCurrentLocation)
@@ -105,8 +106,8 @@ TEST(StageViewMsgHandler, CanRetrieveCurrentLocation)
 	EXPECT_CALL(mock_webview, location())
 		.Times(1)
 		.WillOnce(Return(location));
-
-	EXPECT_EQ(location.toStdString(), test_handler.location().toStdString());
+    
+	EXPECT_EQ(location, test_handler.location());
 }
 
 TEST(StageViewMsgHandler, CanGoBackToPreviousPage)
