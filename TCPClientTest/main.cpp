@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
     {
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
-        //out.setVersion(QDataStream::Qt_4_0);
-        //out << 0x0100; 
         out << "http://www.google.ca";
         tcpSocket->write(block);
     }

@@ -54,7 +54,6 @@ void TCPBridgeworker::newConnection()
     m_pClientConnection = m_pTcpServer->nextPendingConnection();
     connect(m_pClientConnection, SIGNAL(disconnected()), m_pClientConnection, SLOT(deleteLater()));
     connect(m_pClientConnection, SIGNAL(readyRead()), this, SLOT(readData()));
-    //clientConnection->disconnectFromHost();
     
     //We might have already misses the readyRead signal
     //call readData just to make sure
@@ -66,13 +65,7 @@ void TCPBridgeworker::readData()
     if (m_pClientConnection && m_pClientConnection->bytesAvailable())
     {
         QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
-        //QDataStream in(&data,QIODevice::ReadOnly);
-        //QDataStream in(m_pClientConnection);
-        //QByteArray data;
-        //qint32 msgId; // = TCPChannel_MESSAGE_SETURL;
-        //in >> msgId >> data; 
         qint32 msgId = TCPChannel_MESSAGE_SETURL;
-        //in >> data;
         Message* pMsg = new Message(msgId, data.length(), &data);
         m_pMsgHandler->processMessage(pMsg);
     }
