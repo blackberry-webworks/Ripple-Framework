@@ -41,11 +41,11 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 
 		<!-- openssl-->
         <fileSet>            
-            <directory>${env.QTDIR}/openssl/win/bin</directory>                    
+            <directory>${env.QTDIR}/openssl/win/bin</directory>
             <outputDirectory>win</outputDirectory>
-			<includes>
-				<include>*.dll</include>
-			</includes>
+            <includes>
+                <include>*.dll</include>
+            </includes>
         </fileSet> 
 		
 		<!-- QT mobility-->
@@ -62,10 +62,9 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
         <fileSet>
             <directory>${env.QTDIR}/plugins/imageformats</directory>                    
             <outputDirectory>win/imageformats</outputDirectory>
-			<includes>
-				<include>*.dll</include>
-			</includes>
+            <includes>
+                <include>*.dll</include>
+            </includes>
         </fileSet> 
-		
 	</fileSets>
 </assembly>
