@@ -38,6 +38,15 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 				<include>QtOpenGL4.dll</include>
 			</includes>
         </fileSet> 
+
+		<!-- openssl-->
+        <fileSet>            
+            <directory>${env.QTDIR}/openssl/win/bin</directory>                    
+            <outputDirectory>win</outputDirectory>
+			<includes>
+				<include>*.dll</include>
+			</includes>
+        </fileSet> 
 		
 		<!-- QT mobility-->
         <fileSet>            
