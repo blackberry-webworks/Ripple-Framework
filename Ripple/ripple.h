@@ -48,6 +48,7 @@ namespace BlackBerry
     private slots:
         void registerAPIs();
         void urlChanged(QUrl &url);
+        void startTCP();
 
     private:
         QGLWidget *_GLWidget;
@@ -58,7 +59,7 @@ namespace BlackBerry
         ConfigData *_config;
         StageViewMsgHandler* m_pStageViewHandler;
         TcpMessagehandler* m_pTcpMessageHandler;
-
+        bool isTcpServerUp;
         void init(void);    
     };
   }

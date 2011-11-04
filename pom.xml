@@ -239,6 +239,17 @@
                   </arguments>
                 </configuration>
               </execution>
+              <execution>
+                <id>runUnitTests</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>test</phase>
+                <configuration>
+                  <workingDirectory>${project.build.sourceDirectory}/build/bin</workingDirectory>
+                  <executable>TestFramework.exe</executable>
+                </configuration>
+              </execution>
             </executions>
           </plugin>
         </plugins>
