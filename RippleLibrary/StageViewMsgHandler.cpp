@@ -21,7 +21,7 @@ using namespace BlackBerry::Ripple;
 using namespace BlackBerry::Ripple::TCPChannel;
 
 StageViewMsgHandler::StageViewMsgHandler(QObject *parent)
-	: MessageHandler(parent),  _buildServerPort(0)
+    : MessageHandler(parent),  _buildServerPort(0)
 {
 }
 
@@ -61,30 +61,30 @@ void StageViewMsgHandler::processMessage(Message* pMsg)
 
 void StageViewMsgHandler::registerEvents()
 {
-	connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-	connect(rimStageWebview(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(javaScriptWindowObjectCleared()));
+    connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
+    connect(rimStageWebview(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(javaScriptWindowObjectCleared()));
     connect(this, SIGNAL(javaScriptInjected()), rimStageWebview(), SLOT(continueLoad()));
 }
 
 void StageViewMsgHandler::loadUrl(const QString& url)
 {
-	stageWebview()->loadURL(url);
+    stageWebview()->loadURL(url);
 }
 
 void StageViewMsgHandler::executeJavaScript(const QString& script)
 {
-	stageWebview()->executeJavaScript(script);
+    stageWebview()->executeJavaScript(script);
 }
 
 void StageViewMsgHandler::crossOrigin(const bool allow)
 {
-	QString allowString;
-	if (allow) {
-		allowString = "true";
-	} else {
-		allowString = "false";
-	}
-	stageWebview()->enableCrossSiteXHR(allow);
+    QString allowString;
+    if (allow) {
+        allowString = "true";
+    } else {
+        allowString = "false";
+    }
+    stageWebview()->enableCrossSiteXHR(allow);
 }
 
 void StageViewMsgHandler::customHTTPHeader(const QString& key, const QString& value)
@@ -94,47 +94,47 @@ void StageViewMsgHandler::customHTTPHeader(const QString& key, const QString& va
 
 void StageViewMsgHandler::setVisable(const bool isVisible)
 {
-	rimStageWebview()->visible(isVisible);
+    rimStageWebview()->visible(isVisible);
 }
 
 void StageViewMsgHandler::setWindowGeometry(int x, int y, int w, int h)
 {
-	stageWebview()->setWindowGeometry(x,y,w,h);
+    stageWebview()->setWindowGeometry(x,y,w,h);
 }
 
 QString StageViewMsgHandler::location()
 {
-	return stageWebview()->location();
+    return stageWebview()->location();
 }
 
 void StageViewMsgHandler::historyBack()
 {
-	return stageWebview()->historyBack();
+    return stageWebview()->historyBack();
 }
 
 void StageViewMsgHandler::historyForward()
 {
-	return stageWebview()->historyForward();
+    return stageWebview()->historyForward();
 }
 
 bool StageViewMsgHandler::isHistoryBackEnabled()
 {
-	return stageWebview()->isHistoryBackEnabled();
+    return stageWebview()->isHistoryBackEnabled();
 }
 
 bool StageViewMsgHandler::isHistoryForwardEnabled()
 {
-	return stageWebview()->isHistoryForwardEnabled();
+    return stageWebview()->isHistoryForwardEnabled();
 }
 
 int StageViewMsgHandler::historyLength()
 {
-	return stageWebview()->historyLength();
+    return stageWebview()->historyLength();
 }
 
 int StageViewMsgHandler::historyPosition()
 {
-	return stageWebview()->historyPosition();
+    return stageWebview()->historyPosition();
 }
 
 void StageViewMsgHandler::reload()
@@ -144,7 +144,7 @@ void StageViewMsgHandler::reload()
 
 void StageViewMsgHandler::historyPosition(int position)
 {
-	return stageWebview()->historyPosition(position);
+    return stageWebview()->historyPosition(position);
 }
 
 void StageViewMsgHandler::urlChanged(const QString& url)
@@ -154,7 +154,7 @@ void StageViewMsgHandler::urlChanged(const QString& url)
 
 void StageViewMsgHandler::javaScriptWindowObjectCleared()
 {
-	emit javaScriptWindowCleared();
+    emit javaScriptWindowCleared();
 }
 
 void StageViewMsgHandler::setZoomFactor(float zoom){
@@ -168,7 +168,7 @@ float StageViewMsgHandler::zoomFactor(){
 #if 0
 void StageViewMsgHandler::processMessage(Message* pMsg)
 {
-	emit messageProcessed(pMsg);
+    emit messageProcessed(pMsg);
 }
 
 void StageViewMsgHandler::resourceRequest(QNetworkRequest* request)

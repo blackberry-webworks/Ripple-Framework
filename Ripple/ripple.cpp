@@ -152,7 +152,7 @@ void Ripple::resizeEvent(QResizeEvent * e )
     QRect vRect(QPoint(0, 0), size());
     webViewInternal->scene()->setSceneRect(vRect);
     webViewInternal->qtStageWebView()->setGeometry(vRect);
-	progressBar->setGeometry(QRect(0, (e->size().height() - PROGRESS_BAR_HEIGHT), e->size().width(), PROGRESS_BAR_HEIGHT));
+    progressBar->setGeometry(QRect(0, (e->size().height() - PROGRESS_BAR_HEIGHT), e->size().width(), PROGRESS_BAR_HEIGHT));
     e->accept();
 }
 

@@ -27,16 +27,16 @@ using namespace BlackBerry::Ripple;
 
 QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false),_headersSize(0), m_inspector(0), m_inspectorProcess(0)
 {
-	// Connect signals for events
-	connect(this, SIGNAL(urlChanged(const QUrl&)), this, SLOT(notifyUrlChanged(const QUrl&)));
+    // Connect signals for events
+    connect(this, SIGNAL(urlChanged(const QUrl&)), this, SLOT(notifyUrlChanged(const QUrl&)));
 
-	if (page() && page()->mainFrame())
+    if (page() && page()->mainFrame())
     {
         connect(page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(notifyJavaScriptWindowObjectCleared()));
     }
 
-	//enable web inspector
-	this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+    //enable web inspector
+    this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 
     m_pScrollHandler = new ScrollHandler(this);
 
@@ -78,23 +78,23 @@ void QtStageWebView::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 void QtStageWebView::loadURL(QString url)
 {
-	QNetworkRequest request(url);
+    QNetworkRequest request(url);
 
-	//Add custom headers
-	for (unsigned int i = 0; i + 1 < _headersSize; i += 2)
-		request.setRawHeader(_headers[i], _headers[i + 1]);
+    //Add custom headers
+    for (unsigned int i = 0; i + 1 < _headersSize; i += 2)
+        request.setRawHeader(_headers[i], _headers[i + 1]);
 
-	load(request);
+    load(request);
 }
 
 void QtStageWebView::reload()
 {
-	QGraphicsWebView::reload();
+    QGraphicsWebView::reload();
 }
 
 void QtStageWebView::notifyUrlChanged(const QUrl& url)
 {
-	emit urlChanged(url.toString());
+    emit urlChanged(url.toString());
   if(m_inspector)
     m_inspector->setPage(page());
 }
@@ -134,7 +134,7 @@ void QtStageWebView::continueLoad()
 
 bool QtStageWebView::enableCrossSiteXHR()
 {
-	return this->settings()->testAttribute(QWebSettings::LocalContentCanAccessRemoteUrls);
+    return this->settings()->testAttribute(QWebSettings::LocalContentCanAccessRemoteUrls);
 }
 
 void QtStageWebView::enableCrossSiteXHR(bool xhr)
@@ -144,88 +144,88 @@ void QtStageWebView::enableCrossSiteXHR(bool xhr)
 
 QVariant QtStageWebView::executeJavaScript(QString script)
 {
-	return page()->mainFrame()->evaluateJavaScript(script);
+    return page()->mainFrame()->evaluateJavaScript(script);
 }
 
 QString QtStageWebView::location()
 {
-	return url().toString();
+    return url().toString();
 }
 
 bool QtStageWebView::isHistoryBackEnabled()
 {
-	return history() ? history()->canGoBack() : false;
+    return history() ? history()->canGoBack() : false;
 }
 
 bool QtStageWebView::isHistoryForwardEnabled()
 {
-	return history() ? history()->canGoForward() : false;
+    return history() ? history()->canGoForward() : false;
 }
 
 void QtStageWebView::historyBack()
 {
-	back();
+    back();
 }
 
 void QtStageWebView::historyForward()
 {
-	forward();
+    forward();
 }
 
 int QtStageWebView::historyLength()
 {
-	return history() ? history()->count() : 0;
+    return history() ? history()->count() : 0;
 }
 
 int QtStageWebView::historyPosition()
 {
-	return history() ? history()->currentItemIndex() : -1;
+    return history() ? history()->currentItemIndex() : -1;
 }
 
 void QtStageWebView::historyPosition(int position)
 {
-	if (history() && position >= 0 && position < history()->count())
-	{
-		history()->goToItem(history()->itemAt(position));
-	}
+    if (history() && position >= 0 && position < history()->count())
+    {
+        history()->goToItem(history()->itemAt(position));
+    }
 }
 
 char** QtStageWebView::customHTTPHeaders()
 {
-	return _headers;
+    return _headers;
 }
 
 void QtStageWebView::customHTTPHeaders(char *headers[], unsigned int headersSize)
 {
-	_headers = new char*[headersSize];
-	
-	for (unsigned int i = 0; i < headersSize; i++)
+    _headers = new char*[headersSize];
+    
+    for (unsigned int i = 0; i < headersSize; i++)
     {
         _headers[i] = new char[strlen(headers[i]) + 1];
-		strcpy(_headers[i], headers[i]);
-	}
+        strcpy(_headers[i], headers[i]);
+    }
 
-	_headersSize = headersSize;
+    _headersSize = headersSize;
 }
 
 void QtStageWebView::customHTTPHeaders(QString key, QString value)
 {
-	QByteArray mKey = key.toAscii();
-	QByteArray mValue = value.toAscii();
-	
-	char *headersArray[2];
-	headersArray[0] = mKey.data();
-	headersArray[1] = mValue.data();
-	
-	customHTTPHeaders( headersArray, 2);
+    QByteArray mKey = key.toAscii();
+    QByteArray mValue = value.toAscii();
+    
+    char *headersArray[2];
+    headersArray[0] = mKey.data();
+    headersArray[1] = mValue.data();
+    
+    customHTTPHeaders( headersArray, 2);
 }
 
 void QtStageWebView::visible(bool enable)
 {
-	if (this->isVisible() == enable)
-		return;
+    if (this->isVisible() == enable)
+        return;
 
-	(enable) ? this->show():this->hide();
+    (enable) ? this->show():this->hide();
 }
 
 void QtStageWebView::setZoom(float zoom) {

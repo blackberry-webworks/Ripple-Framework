@@ -24,43 +24,43 @@ using namespace BlackBerry::Ripple::TCPChannel;
 
 class MessageSignalSpy : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
 
-	MessageSignalSpy(QObject *obj, const char *aSignal)
-		: spy(obj, aSignal)
-	{
-		connect(obj, aSignal, this, SLOT(getArguments(Message *)));
-	}
+    MessageSignalSpy(QObject *obj, const char *aSignal)
+        : spy(obj, aSignal)
+    {
+        connect(obj, aSignal, this, SLOT(getArguments(Message *)));
+    }
 
-	virtual ~MessageSignalSpy() 
-	{
-	}
+    virtual ~MessageSignalSpy() 
+    {
+    }
 
-	int count() const { return spy.count(); }
+    int count() const { return spy.count(); }
 
-	int id() { return _id; }
-	int size() { return _size; }
-	QByteArray& data() { return _data; }
+    int id() { return _id; }
+    int size() { return _size; }
+    QByteArray& data() { return _data; }
 
 private slots:
 
-	void getArguments(Message *messageArgument)
-	{
-		_id = messageArgument->ID();
-		_size = messageArgument->Size();
+    void getArguments(Message *messageArgument)
+    {
+        _id = messageArgument->ID();
+        _size = messageArgument->Size();
 
-		if (messageArgument->Data())
-			_data = *(messageArgument->Data());
-	}
+        if (messageArgument->Data())
+            _data = *(messageArgument->Data());
+    }
 
 private:
-	int		_id;
-	int		_size;
-	QByteArray	_data;
+    int     _id;
+    int     _size;
+    QByteArray  _data;
 
-	QSignalSpy spy;
+    QSignalSpy spy;
 };
 
 #endif //MESSAGESPY_H

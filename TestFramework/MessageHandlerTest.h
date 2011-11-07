@@ -33,38 +33,38 @@ using namespace BlackBerry::Ripple::TCPChannel;
 class MockRIMStageWebView : public QtStageWebView
 {
 public:
-	MockRIMStageWebView() {}
-	virtual ~MockRIMStageWebView() {}
+    MockRIMStageWebView() {}
+    virtual ~MockRIMStageWebView() {}
 
-	MOCK_METHOD1(loadURL, void(QString));
-	MOCK_METHOD1(enableCrossSiteXHR, void(bool));
-	MOCK_METHOD1(executeJavaScript, QVariant(QString));
-	MOCK_METHOD0(location, QString());
-	MOCK_METHOD0(historyBack, void());
-	MOCK_METHOD0(historyForward, void());
-	MOCK_METHOD0(isHistoryBackEnabled, bool());
-	MOCK_METHOD0(isHistoryForwardEnabled, bool());
-	MOCK_METHOD0(historyLength, int());
-	MOCK_METHOD0(historyPosition, int());
-	MOCK_METHOD1(historyPosition, void(int));
-	MOCK_METHOD4(setWindowGeometry, void(int,int,int,int));
+    MOCK_METHOD1(loadURL, void(QString));
+    MOCK_METHOD1(enableCrossSiteXHR, void(bool));
+    MOCK_METHOD1(executeJavaScript, QVariant(QString));
+    MOCK_METHOD0(location, QString());
+    MOCK_METHOD0(historyBack, void());
+    MOCK_METHOD0(historyForward, void());
+    MOCK_METHOD0(isHistoryBackEnabled, bool());
+    MOCK_METHOD0(isHistoryForwardEnabled, bool());
+    MOCK_METHOD0(historyLength, int());
+    MOCK_METHOD0(historyPosition, int());
+    MOCK_METHOD1(historyPosition, void(int));
+    MOCK_METHOD4(setWindowGeometry, void(int,int,int,int));
     MOCK_METHOD0(reload, void());
-//	MOCK_METHOD1(injectJavaScriptObj, void(const QObject *jsObj));
+//  MOCK_METHOD1(injectJavaScriptObj, void(const QObject *jsObj));
 };
 
 class TestStageViewMsgHandler : public StageViewMsgHandler
 {
 public:
-	TestStageViewMsgHandler() {}
-	virtual ~TestStageViewMsgHandler() {}
+    TestStageViewMsgHandler() {}
+    virtual ~TestStageViewMsgHandler() {}
 
-	MOCK_METHOD0(stageWebview, IRippleWebView*());
+    MOCK_METHOD0(stageWebview, IRippleWebView*());
 };
 
 class TestTcpMsgHandler : public TcpMessagehandler
 {
 public:
-	TestTcpMsgHandler() {}
-	virtual ~TestTcpMsgHandler() {}
-	MOCK_METHOD1(processMessage, void(Message*));
+    TestTcpMsgHandler() {}
+    virtual ~TestTcpMsgHandler() {}
+    MOCK_METHOD1(processMessage, void(Message*));
 };

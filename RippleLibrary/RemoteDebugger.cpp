@@ -33,7 +33,7 @@ void RemoteDebugger::init(void)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     debuggerView = new QWebView(this);
-	debuggerView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, false);
+    debuggerView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, false);
     debuggerView->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
     debuggerView->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
     debuggerView->settings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, false);

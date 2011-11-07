@@ -28,7 +28,7 @@ namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
-class TCPBridgeworker :	public QThread
+class TCPBridgeworker : public QThread
 {
   Q_OBJECT
   public:

@@ -22,19 +22,19 @@ class ConfigData
 {
 
 public:
-	static ConfigData* getInstance();	
-	~ConfigData(void);
-	
-	void writeSettings();
-	
-	QString toolingContent();
-	void toolingContent(QString content);
+    static ConfigData* getInstance();   
+    ~ConfigData(void);
+    
+    void writeSettings();
+    
+    QString toolingContent();
+    void toolingContent(QString content);
 
-	QSize windowSize();
-	void windowSize(QSize size);
+    QSize windowSize();
+    void windowSize(QSize size);
 
-	QPoint windowPosition();
-	void windowPosition(QPoint position);
+    QPoint windowPosition();
+    void windowPosition(QPoint position);
 
     unsigned int windowState();
     void windowState(unsigned int state);
@@ -56,19 +56,19 @@ public:
 
 private:
 
-	ConfigData(void);
-	void readSettings();
+    ConfigData(void);
+    void readSettings();
 
-	static const QString CONFIGURATION_FILE_NAME;
-	static const QString APPLICATION_NAME_IN_SETTINGS;
-	static const QString TOOLING_CONTENT_NAME_IN_SETTINGS;
-	static const QString TOOLING_CONTENT_DEFAULT;
-	static const QString MAIN_WINDOW_SIZE_NAME_IN_SETTINGS;
+    static const QString CONFIGURATION_FILE_NAME;
+    static const QString APPLICATION_NAME_IN_SETTINGS;
+    static const QString TOOLING_CONTENT_NAME_IN_SETTINGS;
+    static const QString TOOLING_CONTENT_DEFAULT;
+    static const QString MAIN_WINDOW_SIZE_NAME_IN_SETTINGS;
     static const QString LOCAL_STORAGE_PATH_IN_SETTINGS;
-	static const QSize MAIN_WINDOW_SIZE_DEFAULT;
-	static const QString MAIN_WINDOW_POSITION_NAME_IN_SETTINGS;
+    static const QSize MAIN_WINDOW_SIZE_DEFAULT;
+    static const QString MAIN_WINDOW_POSITION_NAME_IN_SETTINGS;
     static const QString MAIN_WINDOW_STATE_NAME_IN_SETTINGS;
-	static const QPoint MAIN_WINDOW_POSITION_DEFAULT;
+    static const QPoint MAIN_WINDOW_POSITION_DEFAULT;
     static const unsigned int MAIN_WINDOW_STATE_DEFAULT;
     static const QString LOCAL_STORAGE_PATH_DEFAULT;
     static const QString BUILD_SERVICE_COMMAND_IN_SETTINGS;
@@ -80,16 +80,16 @@ private:
     static const QString WEBGL_ENABLED_IN_SETTINGS;
     static const unsigned int WEBGL_ENABLED_DEFAULT;
 
-	static ConfigData* _instance;
-	static bool _instanceFlag;
-	QSettings *_settings;
+    static ConfigData* _instance;
+    static bool _instanceFlag;
+    QSettings *_settings;
 
-	QString _toolingContent;
-	QSize _mainWindowSize;
-	QPoint _mainWindowPosition;
+    QString _toolingContent;
+    QSize _mainWindowSize;
+    QPoint _mainWindowPosition;
     unsigned int _mainWindowState;
     QString _localStoragePath;
-	QString _applicationStoragePath;
+    QString _applicationStoragePath;
     QString _buildServiceCommand;
     QString _buildServicePort;
     unsigned int _hardwareAccelerationEnabled;
