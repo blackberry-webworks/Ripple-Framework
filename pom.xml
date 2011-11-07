@@ -482,7 +482,17 @@
                   </arguments>
                 </configuration>
               </execution>
-			  
+                <execution>
+                    <id>runUnitTests</id>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <phase>test</phase>
+                    <configuration>
+                        <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
+                        <executable>TestFramework/TestFramework</executable>
+                    </configuration>
+                </execution>			  
             </executions>
           </plugin>
         </plugins>
