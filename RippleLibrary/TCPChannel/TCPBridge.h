@@ -17,10 +17,9 @@
 #ifndef TCPBRIDGE_H
 #define TCPBRIDGE_H
 
-#include <QObject>
-#include <QString>
-#include "tcpbridgeworker.h"
-#include "messagehandler.h"
+#include "Global.h"
+#include "MessageHandler.h"
+#include "TCPBridgeWorker.h"
 
 namespace BlackBerry {
 namespace Ripple {

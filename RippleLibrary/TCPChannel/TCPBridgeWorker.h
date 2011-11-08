@@ -22,7 +22,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 
-#include "messagehandler.h"
+#include "MessageHandler.h"
 
 namespace BlackBerry { 
 namespace Ripple {

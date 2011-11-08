@@ -17,12 +17,12 @@
 #ifndef RIPPLE_H
 #define RIPPLE_H
 
-#include <QMainWindow>
-#include <QWebPage>
-#include <QProgressBar>
 #include <QGLWidget>
-#include "ConfigData.h"
+#include <QMainWindow>
+#include <QProgressBar>
 #include <QWebInspector>
+#include <QWebPage>
+#include "ConfigData.h"
 #include "StageViewMsgHandler.h"
 #include "TCPChannel/TCPMessageHandler.h"
 #include "QtStageWebView.h"

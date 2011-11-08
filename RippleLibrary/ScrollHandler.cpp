@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include "global.h"
-#include <ScrollHandler.h>
+#include "Global.h"
+#include "ScrollHandler.h"
 #include <QApplication>
 
 ScrollHandler::ScrollHandler(QtStageWebView *parent)

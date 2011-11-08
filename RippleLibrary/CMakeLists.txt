@@ -7,7 +7,6 @@ SET(RIPPLELIBRARY_INCLUDE_DIRECTORIES
 )
 
 LIST(APPEND RIPPLELIBRARY_HEADERS
-    Global.h
     ConfigData.h
     PortScanner.h
     RemoteDebugger.h
@@ -28,7 +27,7 @@ LIST(APPEND RIPPLELIBRARY_SOURCES
     ScrollHandler.cpp
     RemoteDebugger.cpp
     TCPChannel/TCPBridge.cpp
-    TCPChannel/TCPBridgeworker.cpp
+    TCPChannel/TCPBridgeWorker.cpp
     TCPChannel/Message.cpp
     TCPChannel/MessageHandler.cpp
     TCPChannel/TCPMessageHandler.cpp

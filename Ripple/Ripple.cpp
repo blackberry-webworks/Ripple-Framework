@@ -14,12 +14,11 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
-#include "ripple.h"
+#include "Global.h"
+#include "Ripple.h"
 #include "BuildServerManager.h"
-#include <QGLWidget>
 #include "ScrollHandler.h"
-#include "TCPChannel/tcpbridge.h"
+#include "TCPChannel/TCPBridge.h"
 
 using namespace BlackBerry::Ripple;
 

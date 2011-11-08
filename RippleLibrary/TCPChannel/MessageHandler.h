@@ -19,7 +19,7 @@
 
 #include <QObject>
 #include "Message.h"
-#include "irimstagewebview.h"
+#include "IRIMStageWebView.h"
 
 namespace BlackBerry { 
 namespace Ripple {

@@ -17,7 +17,7 @@
 #ifndef STAGEVIEWMSGHANDLER_H
 #define STAGEVIEWMSGHANDLER_H
 #include "QtStageWebView.h"
-#include "TCPChannel/messagehandler.h"
+#include "TCPChannel/MessageHandler.h"
 
 using namespace BlackBerry::Ripple::TCPChannel;
 

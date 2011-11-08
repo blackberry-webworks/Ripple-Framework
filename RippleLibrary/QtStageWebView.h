@@ -17,13 +17,11 @@
 #ifndef QTSTAGEWEBVIEW_H
 #define QTSTAGEWEBVIEW_H
 
+#include "Global.h"
 #include <QWidget>
-#include <QString>
 #include <QRect>
 #include <QPoint>
 #include <QNetworkRequest>
-#include <QTimer>
-#include <QObject>
 #include <QWebView>
 #include <QWebHistory>
 #include <QWebFrame>
@@ -34,7 +32,7 @@
 #include <QPaintEvent>
 #include <QWebInspector>
 #include <QProcess>
-#include "irimstagewebview.h"
+#include "IRIMStageWebView.h"
 
 class ScrollHandler;
 class RemoteDebugger;

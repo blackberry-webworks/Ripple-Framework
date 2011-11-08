@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
-#include "messagehandler.h"
+#include "Global.h"
+#include "MessageHandler.h"
 
 //static const int IPCChannel_MESSAGE_TEST1                 = 0x0100;
 //static const int IPCChannel_MESSAGE_TEST2                 = 0x0101;
