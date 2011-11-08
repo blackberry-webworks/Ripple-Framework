@@ -14,4 +14,33 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#ifndef TCPBRIDGE_H
+#define TCPBRIDGE_H
+
+#include "Global.h"
+#include "MessageHandler.h"
+#include "TCPBridgeWorker.h"
+
+namespace BlackBerry {
+namespace Ripple {
+namespace TCPChannel {
+
+class TCPBridge : public QObject
+{
+    Q_OBJECT
+public:
+    TCPBridge(QObject* parent = 0);
+    virtual ~TCPBridge();
+public:
+    void Start();
+    void Stop();    
+    void RegisterMessageHandler(MessageHandler* pHandler);
+
+signals:
+
+private:
+    TCPBridgeworker* m_pWorker;
+    MessageHandler* m_pMsgHandler;
+};
+}}}
+#endif // TCPBRIDGE_H

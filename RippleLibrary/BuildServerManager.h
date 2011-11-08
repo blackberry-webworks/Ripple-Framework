@@ -27,7 +27,7 @@ public:
     ~BuildServerManager(void);
 
 public:
-  	static BuildServerManager* getInstance();	
+    static BuildServerManager* getInstance();   
     unsigned short start(QString serverPath, int port);
     void stop();
 signals:

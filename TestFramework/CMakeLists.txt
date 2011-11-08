@@ -6,28 +6,28 @@ SET(TESTFRAMEWORK_INCLUDE_DIRECTORIES
     "${CMAKE_SOURCE_DIR}"
     "${CMAKE_SOURCE_DIR}/RippleLibrary"
     "${CMAKE_CURRENT_SOURCE_DIR}"
-  	"${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0"
-	  "${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0/include"
-	  "${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0/gtest"
-	  "${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0/gtest/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0"
+      "${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0/include"
+      "${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0/gtest"
+      "${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.6.0/gtest/include"
 )
 
 LIST(APPEND TESTFRAMEWORK_HEADERS
-	main.cpp
-	MessageHandlerTest.h
-	QtStageWebViewTest.h
+    Main.cpp
+    MessageHandlerTest.h
+    QtStageWebViewTest.h
 )
 
 LIST(APPEND TESTFRAMEWORK_SOURCES
-	gmock-1.6.0/src/gmock-all.cc
-	gmock-1.6.0/gtest/src/gtest-all.cc
-	main.cpp
-	MessageHandlerTest.cpp
-	QtStageWebViewTest.cpp
+    gmock-1.6.0/src/gmock-all.cc
+    gmock-1.6.0/gtest/src/gtest-all.cc
+    Main.cpp
+    MessageHandlerTest.cpp
+    QtStageWebViewTest.cpp
 )
 
 set(TESTFRAMEWORK_MOC_HEADERS
-	MessageSignalSpy.h
+    MessageSignalSpy.h
 )
 
 QT4_WRAP_CPP(TESTFRAMEWORK_MOC_SRCS ${TESTFRAMEWORK_MOC_HEADERS})

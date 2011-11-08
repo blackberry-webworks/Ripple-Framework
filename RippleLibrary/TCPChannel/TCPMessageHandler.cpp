@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#include "StdAfx.h"
-#include "tcpmessagehandler.h"
+#include "Global.h"
+#include "TCPMessageHandler.h"
 
 using namespace BlackBerry::Ripple::TCPChannel;
 

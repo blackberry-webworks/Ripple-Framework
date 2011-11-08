@@ -17,7 +17,7 @@
 #ifndef STAGEVIEWMSGHANDLER_H
 #define STAGEVIEWMSGHANDLER_H
 #include "QtStageWebView.h"
-#include "TCPChannel/messagehandler.h"
+#include "TCPChannel/MessageHandler.h"
 
 using namespace BlackBerry::Ripple::TCPChannel;
 
@@ -58,12 +58,12 @@ public slots:
  
     //following slots are used internal for emit signals which will be connected from js side
     void urlChanged(const QString& url);
-	void javaScriptWindowObjectCleared();
-	void reload();
+    void javaScriptWindowObjectCleared();
+    void reload();
  
 //stagewebview events
 signals:
-	void locationChanged(const QString& url);
+    void locationChanged(const QString& url);
     void javaScriptWindowCleared();
     void javaScriptInjected();
     void onRequest(QObject* request);
@@ -73,15 +73,15 @@ protected:
     void registerEvents();
 
 private:
-	virtual IRippleWebView* stageWebview()
-	{
-		return dynamic_cast<IRippleWebView*>(m_pWebView);
-	}
+    virtual IRippleWebView* stageWebview()
+    {
+        return dynamic_cast<IRippleWebView*>(m_pWebView);
+    }
 
-	virtual QtStageWebView* rimStageWebview()
-	{
-		return dynamic_cast<QtStageWebView*>(m_pWebView);
-	}
+    virtual QtStageWebView* rimStageWebview()
+    {
+        return dynamic_cast<QtStageWebView*>(m_pWebView);
+    }
 
     int getServerPort()
     {

@@ -17,8 +17,7 @@
 #ifndef Ripple_ScrollHandler_h
 #define Ripple_ScrollHandler_h
 
-#include <QObject>
-#include <QTimer>
+#include "Global.h"
 #include <QMutex>
 #include <QEvent>
 #include "QtStageWebView.h"

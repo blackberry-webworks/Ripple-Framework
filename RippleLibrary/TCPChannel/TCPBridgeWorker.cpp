@@ -14,11 +14,9 @@
 * limitations under the License.
 */
 
-#include "StdAfx.h"
-#include "tcpbridgeworker.h"
-#include "tcpmessagehandler.h"
-#include <QDataStream>
-
+#include "Global.h"
+#include "TCPBridgeWorker.h"
+#include "TCPMessageHandler.h"
 
 using namespace BlackBerry::Ripple::TCPChannel;
 

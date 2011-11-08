@@ -14,12 +14,11 @@
 * limitations under the License.
 */
 
-#ifndef RMOTEDEBUGGER_H
-#define RMOTEDEBUGGER_H
+#ifndef REMOTEDEBUGGER_H
+#define REMOTEDEBUGGER_H
 
 #include <QMainWindow>
 #include <QWebView>
-
 
 class RemoteDebugger : public QMainWindow
 {

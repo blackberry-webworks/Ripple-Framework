@@ -17,7 +17,7 @@
 #ifndef TCPMESSAGEHANDLER_H
 #define TCPMESSAGEHANDLER_H
 
-#include "messagehandler.h"
+#include "MessageHandler.h"
 
 namespace BlackBerry { 
 namespace Ripple {
