@@ -39,7 +39,7 @@ class RemoteDebugger;
 
 using namespace BlackBerry::Ripple::TCPChannel;
 
-class QtStageWebView :  public QGraphicsWebView, public IRippleWebView
+class QtStageWebView : public QGraphicsWebView, public IRippleWebView
 {
     Q_OBJECT
     ScrollHandler *m_pScrollHandler;
@@ -76,28 +76,17 @@ public:
     QVariant executeJavaScript(QString script);
     bool visible();
     void visible(bool enable);
-  void setZoom(float zoom);
-  float zoom ();
-
-    //certificateInfo
-    //fullscreenClientGet
-    //fullscreenClientRelease
-    //fullscreenNativeInit
-    //fullscreenExited
+    void setZoom(float zoom);
+    float zoom();
 signals:
     void urlChanged(QString);
     void javaScriptWindowObjectCleared();
     void jsLoaded();
 private:
-//  QObject *locationChangeListenerObj;
-//  char *locationChangeListenerMethod;
     char **_headers;
     unsigned int _headersSize;
     bool waitForJsLoad;
-  
-//  void registerEventbus();
-
-  public slots:
+public slots:
     void continueLoad();
 private slots:
     void notifyUrlChanged(const QUrl& url);
@@ -120,7 +109,11 @@ public:
     
     };
     QtStageWebView *qtStageWebView() const { return m_pWebView; };
-    void paintEvent(QPaintEvent *pe) { QGraphicsView::paintEvent(pe); qtStageWebView()->lock.unlock(); };
+    void paintEvent(QPaintEvent *pe)
+    {
+        QGraphicsView::paintEvent(pe);
+        qtStageWebView()->lock.unlock();
+    };
 private:
     QtStageWebView *m_pWebView;
 };
