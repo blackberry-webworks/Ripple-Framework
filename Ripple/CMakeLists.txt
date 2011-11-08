@@ -9,13 +9,12 @@ SET(RIPPLE_INCLUDE_DIRECTORIES
     )
 
 LIST(APPEND RIPPLE_HEADERS
-    stdafx.h
+    Globals.h
     )
 
 LIST(APPEND RIPPLE_SOURCES
-    main.cpp
-    ripple.cpp
-    stdafx.cpp
+    Main.cpp
+    Ripple.cpp
     )
 
 set(RIPPLE_MOC_HEADERS

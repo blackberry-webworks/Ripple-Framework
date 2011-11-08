@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#include "global.h"
 #include "RemoteDebugger.h"
 
 #define INSPECTOR_URL "http://localhost:$PORT/webkit/inspector/inspector.html?page=2";

@@ -22,9 +22,9 @@
 #include <QProgressBar>
 #include <QGLWidget>
 #include "ConfigData.h"
-#include <qwebinspector.h>
+#include <QWebInspector>
 #include "StageViewMsgHandler.h"
-#include "TCPChannel/tcpmessagehandler.h"
+#include "TCPChannel/TCPMessageHandler.h"
 #include "QtStageWebView.h"
 
 using namespace BlackBerry::Ripple::TCPChannel;

@@ -7,33 +7,31 @@ SET(RIPPLELIBRARY_INCLUDE_DIRECTORIES
 )
 
 LIST(APPEND RIPPLELIBRARY_HEADERS
-    stdafx.h
+    Global.h
     ConfigData.h
     PortScanner.h
     RemoteDebugger.h
-    TCPChannel/tcpbridge.h
-    TCPChannel/tcpbridgeworker.h
-    TCPChannel/message.h
-    TCPChannel/messagehandler.h
-    TCPChannel/tcpmessagehandler.h
+    TCPChannel/TCPBridge.h
+    TCPChannel/TCPBridgeWorker.h
+    TCPChannel/Message.h
+    TCPChannel/MessageHandler.h
+    TCPChannel/TCPMessageHandler.h
 )
 
 LIST(APPEND RIPPLELIBRARY_SOURCES
-    stdafx.cpp
     ConfigData.cpp
     QtStageWebView.cpp
     StageViewMsgHandler.cpp
-    stdafx.cpp
 #   RequestObject.cpp
 #   BuildServerManager.cpp
     PortScanner.cpp
     ScrollHandler.cpp
     RemoteDebugger.cpp
-    TCPChannel/tcpbridge.cpp
-    TCPChannel/tcpbridgeworker.cpp
-    TCPChannel/message.cpp
-    TCPChannel/messagehandler.cpp
-    TCPChannel/tcpmessagehandler.cpp
+    TCPChannel/TCPBridge.cpp
+    TCPChannel/TCPBridgeworker.cpp
+    TCPChannel/Message.cpp
+    TCPChannel/MessageHandler.cpp
+    TCPChannel/TCPMessageHandler.cpp
 )
 
 SET(RIPPLELIBRARY_MOC_HEADERS
@@ -43,11 +41,11 @@ SET(RIPPLELIBRARY_MOC_HEADERS
  #  BuildServerManager.h
     ScrollHandler.h
     RemoteDebugger.h
-    TCPChannel/tcpbridge.h
-    TCPChannel/tcpbridgeworker.h
-    TCPChannel/message.h
-    TCPChannel/messagehandler.h
-    TCPChannel/tcpmessagehandler.h
+    TCPChannel/TCPBridge.h
+    TCPChannel/TCPBridgeWorker.h
+    TCPChannel/Message.h
+    TCPChannel/MessageHandler.h
+    TCPChannel/TCPMessageHandler.h
 )
 
 QT4_WRAP_CPP(RIPPLELIBRARY_MOC_SRCS ${RIPPLELIBRARY_MOC_HEADERS})

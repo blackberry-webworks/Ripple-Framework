@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#include "Global.h"
 #include "QtStageWebView.h"
 #include "ScrollHandler.h"
 #include <QMenu> 

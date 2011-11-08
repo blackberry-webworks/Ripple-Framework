@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#include "global.h"
 #include "StageViewMsgHandler.h"
 
 using namespace BlackBerry::Ripple;

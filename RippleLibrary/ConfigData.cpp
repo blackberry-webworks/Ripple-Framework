@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#include "global.h"
 #include "ConfigData.h"
 
 bool ConfigData::_instanceFlag = false;
