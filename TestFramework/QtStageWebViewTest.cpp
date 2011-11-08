@@ -319,8 +319,8 @@ TEST (QtStageWebView, CanAddCustomHeader){
 
     char** returnArray = webview.customHTTPHeaders();
     
-    //EXPECT_EQ(*returnArray[0], *key);
-    //EXPECT_EQ(*returnArray[1], *value);
+    EXPECT_EQ(*returnArray[0], *key);
+    EXPECT_EQ(*returnArray[1], *value);
 }
 
 TEST (QtStageWebView, CanAddCustomHeaderArray){

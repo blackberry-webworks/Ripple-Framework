@@ -13,7 +13,7 @@ SET(TESTFRAMEWORK_INCLUDE_DIRECTORIES
 )
 
 LIST(APPEND TESTFRAMEWORK_HEADERS
-    main.cpp
+    Main.cpp
     MessageHandlerTest.h
     QtStageWebViewTest.h
 )
@@ -21,7 +21,7 @@ LIST(APPEND TESTFRAMEWORK_HEADERS
 LIST(APPEND TESTFRAMEWORK_SOURCES
     gmock-1.6.0/src/gmock-all.cc
     gmock-1.6.0/gtest/src/gtest-all.cc
-    main.cpp
+    Main.cpp
     MessageHandlerTest.cpp
     QtStageWebViewTest.cpp
 )
