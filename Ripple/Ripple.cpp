@@ -14,12 +14,11 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
-#include "ripple.h"
+#include "Global.h"
+#include "Ripple.h"
 #include "BuildServerManager.h"
-#include <QGLWidget>
 #include "ScrollHandler.h"
-#include "TCPChannel/tcpbridge.h"
+#include "TCPChannel/TCPBridge.h"
 
 using namespace BlackBerry::Ripple;
 
@@ -152,7 +151,7 @@ void Ripple::resizeEvent(QResizeEvent * e )
     QRect vRect(QPoint(0, 0), size());
     webViewInternal->scene()->setSceneRect(vRect);
     webViewInternal->qtStageWebView()->setGeometry(vRect);
-	progressBar->setGeometry(QRect(0, (e->size().height() - PROGRESS_BAR_HEIGHT), e->size().width(), PROGRESS_BAR_HEIGHT));
+    progressBar->setGeometry(QRect(0, (e->size().height() - PROGRESS_BAR_HEIGHT), e->size().width(), PROGRESS_BAR_HEIGHT));
     e->accept();
 }
 

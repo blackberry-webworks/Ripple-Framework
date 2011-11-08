@@ -14,10 +14,10 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
-#include "tcpbridge.h"
-#include "messagehandler.h"
-#include "tcpbridgeworker.h"
+#include "Global.h"
+#include "MessageHandler.h"
+#include "TCPBridge.h"
+#include "TCPBridgeWorker.h"
 
 using namespace BlackBerry::Ripple::TCPChannel;
 

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#include "global.h"
 #include "BuildServerManager.h"
 #include "PortScanner.h"
 #ifdef Q_WS_WIN

@@ -17,13 +17,11 @@
 #ifndef QTSTAGEWEBVIEW_H
 #define QTSTAGEWEBVIEW_H
 
+#include "Global.h"
 #include <QWidget>
-#include <QString>
 #include <QRect>
 #include <QPoint>
 #include <QNetworkRequest>
-#include <QTimer>
-#include <QObject>
 #include <QWebView>
 #include <QWebHistory>
 #include <QWebFrame>
@@ -34,16 +32,16 @@
 #include <QPaintEvent>
 #include <QWebInspector>
 #include <QProcess>
-#include "irimstagewebview.h"
+#include "IRIMStageWebView.h"
 
 class ScrollHandler;
 class RemoteDebugger;
 
 using namespace BlackBerry::Ripple::TCPChannel;
 
-class QtStageWebView :	public QGraphicsWebView, public IRippleWebView
+class QtStageWebView : public QGraphicsWebView, public IRippleWebView
 {
-	Q_OBJECT
+    Q_OBJECT
     ScrollHandler *m_pScrollHandler;
     RemoteDebugger *m_pRemoteDebugger;
     QWebInspector *m_inspector;
@@ -52,58 +50,47 @@ class QtStageWebView :	public QGraphicsWebView, public IRippleWebView
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 public:
-	QtStageWebView(QWidget *parent = 0);
-	~QtStageWebView(void);
+    QtStageWebView(QWidget *parent = 0);
+    ~QtStageWebView(void);
     QMutex lock;
-	void loadURL(QString url);
-	void reload();
-	bool isHistoryBackEnabled();
-	void historyBack();
-	bool isHistoryForwardEnabled();
-	void historyForward();
-	QString location();
+    void loadURL(QString url);
+    void reload();
+    bool isHistoryBackEnabled();
+    void historyBack();
+    bool isHistoryForwardEnabled();
+    void historyForward();
+    QString location();
     void setWindowGeometry(int x, int y, int w, int h)
     {
         QGraphicsWidget::setGeometry(x, y, w, h);
     }
-	QString title();	
-	int historyLength();
-	int historyPosition();
-	void historyPosition(int position);
-	bool enableCrossSiteXHR();
-	void enableCrossSiteXHR(bool crossSiteXHR);
-	void customHTTPHeaders(char *headers[], unsigned int headersSize);
-	void customHTTPHeaders(QString key, QString value);
-	char** customHTTPHeaders();
-	QVariant executeJavaScript(QString script);
-	bool visible();
-	void visible(bool enable);
-  void setZoom(float zoom);
-  float zoom ();
-
-	//certificateInfo
-	//fullscreenClientGet
-	//fullscreenClientRelease
-	//fullscreenNativeInit
-	//fullscreenExited
+    QString title();    
+    int historyLength();
+    int historyPosition();
+    void historyPosition(int position);
+    bool enableCrossSiteXHR();
+    void enableCrossSiteXHR(bool crossSiteXHR);
+    void customHTTPHeaders(char *headers[], unsigned int headersSize);
+    void customHTTPHeaders(QString key, QString value);
+    char** customHTTPHeaders();
+    QVariant executeJavaScript(QString script);
+    bool visible();
+    void visible(bool enable);
+    void setZoom(float zoom);
+    float zoom();
 signals:
-	void urlChanged(QString);
-	void javaScriptWindowObjectCleared();
+    void urlChanged(QString);
+    void javaScriptWindowObjectCleared();
     void jsLoaded();
 private:
-//	QObject *locationChangeListenerObj;
-//	char *locationChangeListenerMethod;
     char **_headers;
     unsigned int _headersSize;
     bool waitForJsLoad;
-  
-//  void registerEventbus();
-
-  public slots:
+public slots:
     void continueLoad();
 private slots:
-	void notifyUrlChanged(const QUrl& url);
-	void notifyJavaScriptWindowObjectCleared();
+    void notifyUrlChanged(const QUrl& url);
+    void notifyJavaScriptWindowObjectCleared();
 };
 
 class QtGraphicsStageWebView : public QGraphicsView
@@ -122,7 +109,11 @@ public:
     
     };
     QtStageWebView *qtStageWebView() const { return m_pWebView; };
-    void paintEvent(QPaintEvent *pe) { QGraphicsView::paintEvent(pe); qtStageWebView()->lock.unlock(); };
+    void paintEvent(QPaintEvent *pe)
+    {
+        QGraphicsView::paintEvent(pe);
+        qtStageWebView()->lock.unlock();
+    };
 private:
     QtStageWebView *m_pWebView;
 };

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#include "Global.h"
 #include "RequestObject.h"
 
 using namespace BlackBerry::Ripple;

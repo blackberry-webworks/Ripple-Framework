@@ -19,7 +19,7 @@
 
 #include <QObject>
 #include <Message.h>
-#include "messagehandler.h"
+#include "MessageHandler.h"
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include <boost/interprocess/containers/deque.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>

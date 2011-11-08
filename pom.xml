@@ -111,7 +111,7 @@
             </executions>
           </plugin>
           <!-- update QtLibrary -->
-		  <!--
+          <!--
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <version>2.5</version>
@@ -176,8 +176,8 @@
               </execution>
             </executions>
           </plugin>
-		  -->
-		  
+          -->
+          
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
@@ -257,7 +257,7 @@
     </profile>
 
     <!-- CIBuildOnWindows profile triggers the corresponding build on Mac machine -->
-	<profile>
+    <profile>
       <id>CI_Build_on_Windows</id>
       <activation>
         <property>
@@ -294,7 +294,7 @@
     </profile>
 
     <!-- IntegrationBuildOnWindows profile defines the special assembly descriptor and checks the availability of Mac build artifacts-->
-	<profile>
+    <profile>
       <id>Integration_Build_on_Windows</id>
       <activation>
         <property>
@@ -331,8 +331,8 @@
         </plugins>
       </build>
     </profile>
-	
-	<profile>
+    
+    <profile>
       <id>mac</id>
       <activation>
         <os>
@@ -373,9 +373,9 @@
               </execution>
             </executions>
           </plugin>
-		  
+          
           <!-- update QtLibrary -->
-		  <!--
+          <!--
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <version>2.5</version>
@@ -420,14 +420,29 @@
               </execution>
             </executions>
           </plugin>
-		  -->
-		  
+          -->
+          
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <version>1.1</version>
             <executions>
-              <execution>
+            <execution>
+                <id>runCppLint</id>
+                <goals>
+                    <goal>exec</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                    <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
+                    <executable>sh</executable>
+                    <arguments>
+                        <argument>lint.sh</argument>
+                        <argument>.</argument>                            
+                    </arguments>
+                </configuration>
+            </execution>
+            <execution>
                 <id>runCMake</id>
                 <goals>
                   <goal>exec</goal>
@@ -467,7 +482,7 @@
                   </arguments>
                 </configuration>
               </execution>
-			  <!-- run macdeployqt-->
+              <!-- run macdeployqt-->
               <execution>
                 <id>runMacdeployqt</id>
                 <goals>
@@ -492,14 +507,14 @@
                         <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
                         <executable>TestFramework/TestFramework</executable>
                     </configuration>
-                </execution>			  
+                </execution>              
             </executions>
           </plugin>
         </plugins>
       </build>
     </profile>
 
-	<!-- IntegrationBuildOnMac profile copies the build artifacts in Mac machine to the shared folder-->
+    <!-- IntegrationBuildOnMac profile copies the build artifacts in Mac machine to the shared folder-->
     <profile>
       <id>IntegrationBuildOnMac</id>
       <activation>

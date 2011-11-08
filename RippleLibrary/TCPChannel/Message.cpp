@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#include "StdAfx.h"
-#include "message.h"
+#include "Global.h"
+#include "Message.h"
 
 using namespace BlackBerry::Ripple::TCPChannel;
 

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
+#include "Global.h"
 #include "ConfigData.h"
 
 bool ConfigData::_instanceFlag = false;
@@ -45,25 +45,25 @@ const unsigned int ConfigData::WEBGL_ENABLED_DEFAULT = 1;
 ConfigData::ConfigData(void)
 {
 #ifdef Q_WS_WIN
-	_applicationStoragePath = QString(getenv("APPDATA"));
-	_applicationStoragePath += (QDir::separator() + QCoreApplication::organizationName());
-	_applicationStoragePath += (QDir::separator() + QCoreApplication::applicationName());
+    _applicationStoragePath = QString(getenv("APPDATA"));
+    _applicationStoragePath += (QDir::separator() + QCoreApplication::organizationName());
+    _applicationStoragePath += (QDir::separator() + QCoreApplication::applicationName());
 #else
-	_applicationStoragePath = QCoreApplication::applicationDirPath();
+    _applicationStoragePath = QCoreApplication::applicationDirPath();
 #endif
 
-	QString config_path(_applicationStoragePath + QDir::separator() + CONFIGURATION_FILE_NAME);
-	_settings = new QSettings(config_path, QSettings::IniFormat);
+    QString config_path(_applicationStoragePath + QDir::separator() + CONFIGURATION_FILE_NAME);
+    _settings = new QSettings(config_path, QSettings::IniFormat);
 
     readSettings();
 }
 
 ConfigData::~ConfigData(void)
 {
-	_instanceFlag = false;	
-	_instance = NULL;
+    _instanceFlag = false;  
+    _instance = NULL;
 
-	delete _settings;
+    delete _settings;
 }
 
 ConfigData* ConfigData::getInstance(void)
@@ -82,32 +82,32 @@ ConfigData* ConfigData::getInstance(void)
 
 void ConfigData::writeSettings()
 {
-	_settings->beginGroup(APPLICATION_NAME_IN_SETTINGS);
-	_settings->setValue(MAIN_WINDOW_SIZE_NAME_IN_SETTINGS, _mainWindowSize);
-	_settings->setValue(MAIN_WINDOW_POSITION_NAME_IN_SETTINGS, _mainWindowPosition);
+    _settings->beginGroup(APPLICATION_NAME_IN_SETTINGS);
+    _settings->setValue(MAIN_WINDOW_SIZE_NAME_IN_SETTINGS, _mainWindowSize);
+    _settings->setValue(MAIN_WINDOW_POSITION_NAME_IN_SETTINGS, _mainWindowPosition);
     _settings->setValue(MAIN_WINDOW_STATE_NAME_IN_SETTINGS, _mainWindowState);
-	_settings->setValue(TOOLING_CONTENT_NAME_IN_SETTINGS, _toolingContent);
-	_settings->setValue(LOCAL_STORAGE_PATH_IN_SETTINGS, _localStoragePath);
+    _settings->setValue(TOOLING_CONTENT_NAME_IN_SETTINGS, _toolingContent);
+    _settings->setValue(LOCAL_STORAGE_PATH_IN_SETTINGS, _localStoragePath);
     _settings->setValue(BUILD_SERVICE_COMMAND_IN_SETTINGS, _buildServiceCommand);
     _settings->setValue(BUILD_SERVICE_PORT_IN_SETTINGS, _buildServicePort);
     _settings->setValue(HARDWARE_ACCELERATION_IN_SETTINGS, _hardwareAccelerationEnabled);
     _settings->setValue(WEBGL_ENABLED_IN_SETTINGS, _webGLEnabled);    
-	_settings->endGroup();
+    _settings->endGroup();
 }
 
 void ConfigData::readSettings()
 {
-	_settings->beginGroup(APPLICATION_NAME_IN_SETTINGS);
-	_mainWindowSize = _settings->value(MAIN_WINDOW_SIZE_NAME_IN_SETTINGS, MAIN_WINDOW_SIZE_DEFAULT).toSize();
-	_mainWindowPosition = _settings->value(MAIN_WINDOW_POSITION_NAME_IN_SETTINGS, MAIN_WINDOW_POSITION_DEFAULT).toPoint();
+    _settings->beginGroup(APPLICATION_NAME_IN_SETTINGS);
+    _mainWindowSize = _settings->value(MAIN_WINDOW_SIZE_NAME_IN_SETTINGS, MAIN_WINDOW_SIZE_DEFAULT).toSize();
+    _mainWindowPosition = _settings->value(MAIN_WINDOW_POSITION_NAME_IN_SETTINGS, MAIN_WINDOW_POSITION_DEFAULT).toPoint();
     _mainWindowState = _settings->value(MAIN_WINDOW_STATE_NAME_IN_SETTINGS, MAIN_WINDOW_STATE_DEFAULT).toUInt();
-	_toolingContent = _settings->value(TOOLING_CONTENT_NAME_IN_SETTINGS, TOOLING_CONTENT_DEFAULT).toString();
-	_localStoragePath = _settings->value(LOCAL_STORAGE_PATH_IN_SETTINGS, LOCAL_STORAGE_PATH_DEFAULT).toString();
-	_buildServiceCommand = _settings->value(BUILD_SERVICE_COMMAND_IN_SETTINGS, BUILD_SERVICE_COMMAND_DEFAULT).toString();
-	_buildServicePort = _settings->value(BUILD_SERVICE_PORT_IN_SETTINGS, BUILD_SERVICE_PORT_DEFAULT).toString();
+    _toolingContent = _settings->value(TOOLING_CONTENT_NAME_IN_SETTINGS, TOOLING_CONTENT_DEFAULT).toString();
+    _localStoragePath = _settings->value(LOCAL_STORAGE_PATH_IN_SETTINGS, LOCAL_STORAGE_PATH_DEFAULT).toString();
+    _buildServiceCommand = _settings->value(BUILD_SERVICE_COMMAND_IN_SETTINGS, BUILD_SERVICE_COMMAND_DEFAULT).toString();
+    _buildServicePort = _settings->value(BUILD_SERVICE_PORT_IN_SETTINGS, BUILD_SERVICE_PORT_DEFAULT).toString();
     _hardwareAccelerationEnabled = _settings->value(HARDWARE_ACCELERATION_IN_SETTINGS, HARDWARE_ACCELERATION_DEFAULT).toUInt();
     _webGLEnabled = _settings->value(WEBGL_ENABLED_IN_SETTINGS, WEBGL_ENABLED_DEFAULT).toUInt();
-	_settings->endGroup();
+    _settings->endGroup();
 }
 
 QString ConfigData::toolingContent()

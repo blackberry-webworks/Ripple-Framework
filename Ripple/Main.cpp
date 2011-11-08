@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#include "stdafx.h"
-#include "ripple.h"
+#include "Global.h"
+#include "Ripple.h"
 #include <QtGui/QApplication>
 #include "RemoteDebugger.h"
 #ifdef Q_WS_WIN

@@ -9,17 +9,16 @@ SET(RIPPLE_INCLUDE_DIRECTORIES
     )
 
 LIST(APPEND RIPPLE_HEADERS
-    stdafx.h
+    Global.h
     )
 
 LIST(APPEND RIPPLE_SOURCES
-    main.cpp
-    ripple.cpp
-    stdafx.cpp
+    Main.cpp
+    Ripple.cpp
     )
 
 set(RIPPLE_MOC_HEADERS
-    ripple.h   
+    Ripple.h   
     )
 
 QT4_WRAP_CPP(RIPPLE_MOC_SRCS ${RIPPLE_MOC_HEADERS})
@@ -57,7 +56,7 @@ SET_SOURCE_FILES_PROPERTIES(
     SET(APPS ${CMAKE_BINARY_DIR}/bin/Ripple.app)
 
 ELSEIF (WTF_OS_WINDOWS)
-	ADD_EXECUTABLE(Ripple WIN32 ${RIPPLE_SOURCES} Ripple.rc)
+    ADD_EXECUTABLE(Ripple WIN32 ${RIPPLE_SOURCES} Ripple.rc)
 ELSE ()
     ADD_EXECUTABLE(Ripple ${RIPPLE_SOURCES})
 ENDIF()
