@@ -43,4 +43,20 @@ void MessageHandler::sendMessage(int id, const QString& msg)
   EmitMessage(pMsg);
   qDebug() << "Message:" << msg << " sent!";
   delete pMsg;
-}    
+}
+
+void MessageHandler::sendMessage(const QString& json, QTcpSocket* tcpSocket)
+{
+   if ( tcpSocket )
+   {
+        QByteArray a;
+        QBuffer b(&a);
+        b.open(QIODevice::WriteOnly);
+        QDataStream out(&b);
+        out << json;
+        if ( tcpSocket->write(a) == -1 )
+        {
+            qDebug() << "Error to write: " << json; 
+        }
+   }
+}

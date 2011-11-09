@@ -28,7 +28,11 @@ TCPBridgeworker::TCPBridgeworker(MessageHandler* pHandler, QHostAddress* host, i
 TCPBridgeworker::~TCPBridgeworker()
 {
     if ( m_pTcpServer )
+    {
+        m_pTcpServer->close();
         delete m_pTcpServer;
+        m_pTcpServer = 0;
+    }
     if ( m_pHostAddress )
         delete m_pHostAddress;
 }
@@ -40,6 +44,7 @@ void TCPBridgeworker::run()
     if ( !m_pTcpServer->listen( *m_pHostAddress, port) )
     {
         QMessageBox::critical(0, tr("WebView TCP Server"), tr("Unable to start the server: %1.").arg(m_pTcpServer->errorString()));
+        m_pTcpServer->close();
         delete m_pTcpServer;
         m_pTcpServer = 0;
         return;
@@ -50,6 +55,8 @@ void TCPBridgeworker::run()
 void TCPBridgeworker::newConnection()
 {
     m_pClientConnection = m_pTcpServer->nextPendingConnection();
+    TcpMessagehandler* tcpMsghandler = dynamic_cast<TcpMessagehandler*>(m_pMsgHandler);
+    tcpMsghandler->setTcpConnection(m_pClientConnection);
     connect(m_pClientConnection, SIGNAL(disconnected()), m_pClientConnection, SLOT(deleteLater()));
     connect(m_pClientConnection, SIGNAL(readyRead()), this, SLOT(readData()));
     
@@ -63,7 +70,7 @@ void TCPBridgeworker::readData()
     if (m_pClientConnection && m_pClientConnection->bytesAvailable())
     {
         QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
-        qint32 msgId = TCPChannel_MESSAGE_SETURL;
+        qint32 msgId = 256;
         Message* pMsg = new Message(msgId, data.length(), &data);
         m_pMsgHandler->processMessage(pMsg);
     }

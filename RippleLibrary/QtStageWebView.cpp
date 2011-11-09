@@ -83,7 +83,6 @@ void QtStageWebView::loadURL(QString url)
     //Add custom headers
     for (unsigned int i = 0; i + 1 < _headersSize; i += 2)
         request.setRawHeader(_headers[i], _headers[i + 1]);
-
     load(request);
 }
 

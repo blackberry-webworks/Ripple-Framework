@@ -20,7 +20,7 @@
 using namespace BlackBerry::Ripple::TCPChannel;
 
 TcpMessagehandler::TcpMessagehandler(QObject *parent)
-  : MessageHandler(parent)
+  : MessageHandler(parent),m_pTcpConnection(0)
 {
 
 }
@@ -32,34 +32,23 @@ TcpMessagehandler::~TcpMessagehandler()
 
 void TcpMessagehandler::processMessage(Message* pMsg)
 {
-   //Process message
-   int msgID = pMsg->ID();
-   
-   switch(msgID)
-   {
-   case TCPChannel_MESSAGE_SETURL:
-     {
-       //QString data;
-       //QBuffer b(pMsg->Data());
-       //b.open(QIODevice::ReadOnly);
-       //QDataStream in(&b);
-       //in >> data;
-       QString url( *pMsg->Data());
-       qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << url << " received!";
-       m_pWebView->loadURL(url);
-       delete pMsg;
-       break;
-     }
-   case TCPChannel_MESSAGE_TEST2:
-     {
-       QString data;
-       QBuffer b(pMsg->Data());
-       b.open(QIODevice::ReadOnly);
-       QDataStream in(&b);
-       in >> data;
-       qDebug() << "Message TEST2 received, ID:" << msgID << "Data:" << data << " received!";
-       break;
-     }
-   }   
-   emit messageProcessed(pMsg);
+    int msgID = pMsg->ID();
+    QString url( *pMsg->Data());
+    qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << url << " received!";
+    m_pWebView->loadURL(url);
+    delete pMsg;
+}
+
+void TcpMessagehandler::registerEvents()
+{
+    connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
+    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), this, SLOT(onResourcerequested(QNetworkRequest*)));
+}
+
+void TcpMessagehandler::urlChanged(QString url) 
+{
+}
+
+void TcpMessagehandler::onResourcerequested(QNetworkRequest* req)
+{
 }
