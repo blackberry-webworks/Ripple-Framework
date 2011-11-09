@@ -43,6 +43,7 @@ ENDIF ()
 # -----------------------------------------------------------------------------
 SET(WebKit_LIBRARY_NAME WebKit)
 SET(RIPPLELIBRARY_LIBRARY_NAME RippleLibrary)
+SET(QJSON_LIBRARY_NAME qjson)
 
 
 # -----------------------------------------------------------------------------
@@ -67,15 +68,16 @@ ADD_SUBDIRECTORY(RippleLibrary)
 ADD_SUBDIRECTORY(Ripple)
 ADD_SUBDIRECTORY(TestFramework)
 ADD_SUBDIRECTORY(TCPClientTest)
+ADD_SUBDIRECTORY(qjson)
 
 
 ADD_DEPENDENCIES(Ripple
+    ${QJSON_LIBRARY_NAME}
     ${RIPPLELIBRARY_LIBRARY_NAME} 
 )
 
 ADD_DEPENDENCIES(TestFramework
-    ${RIPPLELIBRARY_LIBRARY_NAME} 
-#    ${IPC_LIBRARY_NAME} 
+    ${RIPPLELIBRARY_LIBRARY_NAME}
     ${WebKit_LIBRARY_NAME}
 )
 
