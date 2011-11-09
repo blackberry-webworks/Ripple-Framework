@@ -16,11 +16,12 @@
 
 #include "Global.h"
 #include "TCPMessageHandler.h"
+#include <qjson/Serializer.h>
 
 using namespace BlackBerry::Ripple::TCPChannel;
 
 TcpMessagehandler::TcpMessagehandler(QObject *parent)
-  : MessageHandler(parent),m_pTcpConnection(0)
+  : MessageHandler(parent),m_pTcpConnection(0),bWaitForRequestresponse(false)
 {
 
 }
@@ -39,6 +40,29 @@ void TcpMessagehandler::processMessage(Message* pMsg)
     delete pMsg;
 }
 
+void TcpMessagehandler::processMessage(QVariantMap msg)
+{
+    QString event = msg["event"].toString();
+    if ( bWaitForRequestresponse && event == "ResourceRequestedResponse" )
+    {
+        qDebug() << "event:" << event << "not what we expected, keep waiting";
+        m_pTcpConnection->waitForReadyRead();
+        return;
+    }
+    if ( event == "ResourceRequestedResponse" )
+    {
+        QVariantMap payload = msg["payload"].toMap();
+        QString url = payload["url"].toString();
+        QString response = payload["response"].toString();        
+        graphicsWebview()->page()->mainFrame()->setAllowAccess(response != "deny");
+    }
+    else if ( event == "WebviewUrlChangeRequest" )
+    {
+        QString payload = msg["payload"].toString();
+        m_pWebView->loadURL(payload);
+    }
+}
+
 void TcpMessagehandler::registerEvents()
 {
     connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
@@ -51,4 +75,17 @@ void TcpMessagehandler::urlChanged(QString url)
 
 void TcpMessagehandler::onResourcerequested(QNetworkRequest* req)
 {
+    if ( m_pTcpConnection )
+    {
+        QString url = req->url().toString();
+        QVariantMap msgToSend;
+        msgToSend.insert("event", "ResourceRequested");
+        msgToSend.insert("payload", url);
+        QJson::Serializer serializer;
+        QByteArray json = serializer.serialize(msgToSend); 
+        qDebug() << json;
+        sendMessage(json, m_pTcpConnection);
+        bWaitForRequestresponse = true;
+        m_pTcpConnection->waitForReadyRead();
+    }
 }

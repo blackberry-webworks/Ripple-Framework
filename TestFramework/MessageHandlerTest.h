@@ -67,4 +67,5 @@ public:
     TestTcpMsgHandler() {}
     virtual ~TestTcpMsgHandler() {}
     MOCK_METHOD1(processMessage, void(Message*));
+    MOCK_METHOD1(processMessage, void(QVariantMap));
 };

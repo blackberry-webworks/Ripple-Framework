@@ -71,19 +71,20 @@ void TCPBridgeworker::readData()
     if (m_pClientConnection && m_pClientConnection->bytesAvailable())
     {
         QJson::Parser parser;
-
         bool ok;
-        QVariant result = parser.parse("[1,2,3]", &ok);
+
+        QVariantMap result; // = parser.parse("[1,2,3]", &ok);
+
+
+        QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
+
+        result = parser.parse(data, &ok).toMap();
 
         if (!ok)
             qDebug() << "something went wrong during the conversion";
         else
             qDebug() << "converted to" << result;
 
-
-        QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
-        qint32 msgId = 256;
-        Message* pMsg = new Message(msgId, data.length(), &data);
-        m_pMsgHandler->processMessage(pMsg);
+        m_pMsgHandler->processMessage(result);
     }
 }

@@ -17,9 +17,6 @@
 #include "Global.h"
 #include "MessageHandler.h"
 
-//static const int IPCChannel_MESSAGE_TEST1                 = 0x0100;
-//static const int IPCChannel_MESSAGE_TEST2                 = 0x0101;
-
 using namespace BlackBerry::Ripple::TCPChannel;
 
 MessageHandler::MessageHandler(QObject *parent)
@@ -33,16 +30,16 @@ MessageHandler::~MessageHandler()
 
 void MessageHandler::sendMessage(int id, const QString& msg)
 {
-  QByteArray a;
-  QBuffer b(&a);
-  b.open(QIODevice::WriteOnly);
-  QDataStream out(&b);
-  out << msg;
-  int size = a.size();
-  Message* pMsg = new Message(id, size, &a);
-  EmitMessage(pMsg);
-  qDebug() << "Message:" << msg << " sent!";
-  delete pMsg;
+    QByteArray a;
+    QBuffer b(&a);
+    b.open(QIODevice::WriteOnly);
+    QDataStream out(&b);
+    out << msg;
+    int size = a.size();
+    Message* pMsg = new Message(id, size, &a);
+    EmitMessage(pMsg);
+    qDebug() << "Message:" << msg << " sent!";
+    delete pMsg;
 }
 
 void MessageHandler::sendMessage(const QString& json, QTcpSocket* tcpSocket)
@@ -50,10 +47,12 @@ void MessageHandler::sendMessage(const QString& json, QTcpSocket* tcpSocket)
    if ( tcpSocket )
    {
         QByteArray a;
-        QBuffer b(&a);
-        b.open(QIODevice::WriteOnly);
-        QDataStream out(&b);
-        out << json;
+    //    QBuffer b(&a);
+    //    b.open(QIODevice::WriteOnly);
+    //    QDataStream out(&b);
+    //    out << json;
+        qDebug() << "sendMessage json: " << json;
+        a.append(json);
         if ( tcpSocket->write(a) == -1 )
         {
             qDebug() << "Error to write: " << json; 

@@ -33,6 +33,7 @@ class TcpMessagehandler : public MessageHandler
 
 private:
     QTcpSocket* m_pTcpConnection;
+    bool bWaitForRequestresponse;
 
 public:
     TcpMessagehandler(QObject *parent = 0);
@@ -44,6 +45,7 @@ public:
     }
 
     void processMessage(Message* pMsg);
+    void processMessage(QVariantMap msg);
 
 protected:
     void registerEvents();
