@@ -433,14 +433,14 @@ TEST(QtStageWebView, CanReloadPage)
 
 TEST(QtStageWebView, CanBlockResourcRequest)
 {
-	QtStageWebView webview;
-	webview.continueLoad();
+    QtStageWebView webview;
+    webview.continueLoad();
 
     webview.page()->mainFrame()->setAllowAccess(false);
-	webview.loadURL("http://www.google.ca");
+    webview.loadURL("http://www.google.ca");
 
     // Create an event loop to wait for the loadFinished when loading webpages
-	QEventLoop loop;
+    QEventLoop loop;
     QTimer::singleShot(5000, &loop, SLOT(quit()));
 
     quint64 bytes = webview.page()->bytesReceived();

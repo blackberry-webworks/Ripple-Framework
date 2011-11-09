@@ -42,7 +42,6 @@ SET(RIPPLELIBRARY_MOC_HEADERS
     RemoteDebugger.h
     TCPChannel/TCPBridge.h
     TCPChannel/TCPBridgeWorker.h
- #  TCPChannel/Message.h
     TCPChannel/MessageHandler.h
     TCPChannel/TCPMessageHandler.h
 )

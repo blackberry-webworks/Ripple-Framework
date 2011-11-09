@@ -70,7 +70,7 @@ void TCPBridgeworker::readData()
     if (m_pClientConnection && m_pClientConnection->bytesAvailable())
     {
         QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
-        qint32 msgId = TCPChannel_MESSAGE_SETURL;
+        qint32 msgId = 256;
         Message* pMsg = new Message(msgId, data.length(), &data);
         m_pMsgHandler->processMessage(pMsg);
     }

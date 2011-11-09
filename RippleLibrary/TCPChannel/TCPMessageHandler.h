@@ -27,9 +27,6 @@ namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
-static const int TCPChannel_MESSAGE_SETURL                = 0x0100;
-static const int TCPChannel_MESSAGE_TEST2                 = 0x0101;
-
 class TcpMessagehandler : public MessageHandler
 {
     Q_OBJECT
@@ -61,10 +58,10 @@ private:
         return dynamic_cast<IRippleWebView*>(m_pWebView);
     }
 
-  	virtual QtStageWebView* rimStageWebview()
-	{
-		return dynamic_cast<QtStageWebView*>(m_pWebView);
-	}
+    virtual QtStageWebView* rimStageWebview()
+    {
+        return dynamic_cast<QtStageWebView*>(m_pWebView);
+    }
 
     virtual QGraphicsWebView* graphicsWebview()
     {

@@ -32,11 +32,16 @@ TcpMessagehandler::~TcpMessagehandler()
 
 void TcpMessagehandler::processMessage(Message* pMsg)
 {
+    int msgID = pMsg->ID();
+    QString url( *pMsg->Data());
+    qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << url << " received!";
+    m_pWebView->loadURL(url);
+    delete pMsg;
 }
 
 void TcpMessagehandler::registerEvents()
 {
-	connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
+    connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
     connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), this, SLOT(onResourcerequested(QNetworkRequest*)));
 }
 
