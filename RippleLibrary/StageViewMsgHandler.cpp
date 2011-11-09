@@ -31,32 +31,6 @@ StageViewMsgHandler::~StageViewMsgHandler()
 
 void StageViewMsgHandler::processMessage(Message* pMsg)
 {
-   //Process message
-   int msgID = pMsg->ID();   
-   switch(msgID)
-   {
-   //case IPCChannel_MESSAGE_TEST1:
-   //  {
-   //    QString data;
-   //    QBuffer b(pMsg->Data());
-   //    b.open(QIODevice::ReadOnly);
-   //    QDataStream in(&b);
-   //    in >> data;
-   //    qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << data << " received!";
-   //    break;
-   //  }
-   //case IPCChannel_MESSAGE_TEST2:
-   //  {
-   //    QString data;
-   //    QBuffer b(pMsg->Data());
-   //    b.open(QIODevice::ReadOnly);
-   //    QDataStream in(&b);
-   //    in >> data;
-   //    qDebug() << "Message TEST2 received, ID:" << msgID << "Data:" << data << " received!";
-   //    break;
-   //  }
-   }   
-   emit messageProcessed(pMsg);
 }
 
 void StageViewMsgHandler::registerEvents()

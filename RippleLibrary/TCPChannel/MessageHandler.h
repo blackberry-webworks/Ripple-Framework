@@ -18,6 +18,7 @@
 #define MESSAGEHANDLER_H
 
 #include <QObject>
+#include <QTcpSocket>
 #include "Message.h"
 #include "IRIMStageWebView.h"
 
@@ -49,6 +50,7 @@ public slots:
 protected:
     virtual void registerEvents() = 0;
     virtual void sendMessage(int id, const QString& msg);
+    virtual void sendMessage(const QString& json, QTcpSocket* tcpSocket);
   
 signals:
     void messageProcessed(Message* pMsg);

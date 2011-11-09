@@ -17,7 +17,11 @@
 #ifndef TCPMESSAGEHANDLER_H
 #define TCPMESSAGEHANDLER_H
 
-#include "MessageHandler.h"
+#include <QNetworkRequest>
+#include <QGraphicsWebView>
+
+#include "messagehandler.h"
+#include "qtstagewebview.h"
 
 namespace BlackBerry { 
 namespace Ripple {
@@ -28,19 +32,45 @@ static const int TCPChannel_MESSAGE_TEST2                 = 0x0101;
 
 class TcpMessagehandler : public MessageHandler
 {
-  Q_OBJECT
+    Q_OBJECT
+
+private:
+    QTcpSocket* m_pTcpConnection;
 
 public:
     TcpMessagehandler(QObject *parent = 0);
     ~TcpMessagehandler();
+    
+    void setTcpConnection(QTcpSocket* conn)
+    {
+        m_pTcpConnection = conn;
+    }
 
-  void processMessage(Message* pMsg);
+    void processMessage(Message* pMsg);
 
 protected:
-  void registerEvents(){};
+    void registerEvents();
+
+private slots:
+    void urlChanged(QString url);
+    void onResourcerequested(QNetworkRequest* request);
 
 private:
-    
+    virtual IRippleWebView* stageWebview()
+    {
+        return dynamic_cast<IRippleWebView*>(m_pWebView);
+    }
+
+  	virtual QtStageWebView* rimStageWebview()
+	{
+		return dynamic_cast<QtStageWebView*>(m_pWebView);
+	}
+
+    virtual QGraphicsWebView* graphicsWebview()
+    {
+        return dynamic_cast<QGraphicsWebView*>(m_pWebView);
+    }
 };
 }}}
 #endif // TCPMESSAGEHANDLER_H
+
