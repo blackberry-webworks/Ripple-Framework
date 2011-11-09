@@ -49,8 +49,6 @@ void Ripple::init(void)
     webViewInternal = new QtGraphicsStageWebView(this);
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
     webViewInternal->qtStageWebView()->settings()->enablePersistentStorage(_config->localStoragePath());
-    webViewInternal->qtStageWebView()->settings()->setOfflineStoragePath(_config->localStoragePath());
-    webViewInternal->qtStageWebView()->settings()->setOfflineWebApplicationCachePath(_config->localStoragePath());
     webViewInternal->qtStageWebView()->settings()->setOfflineStorageDefaultQuota(512000000);
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
@@ -104,7 +102,7 @@ void Ripple::init(void)
 
     move(_config->windowPosition());
 
-    webViewInternal->qtStageWebView()->load(QUrl(_config->toolingContent()));
+    webViewInternal->qtStageWebView()->loadURL(_config->toolingContent());
     
     setCentralWidget(webViewInternal);
 
