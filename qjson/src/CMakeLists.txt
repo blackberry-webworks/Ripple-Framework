@@ -1,44 +1,39 @@
-# add_custom_command (OUTPUT ${qjson_SOURCE_DIR}/lib/json_parser.cc
-#                    PRE_BUILD
-#                    COMMAND bison -t -o json_parser.cc -d json_parser.yy
-#                    DEPENDS json_parser.yy
-#                    WORKING_DIRECTORY ${qjson_SOURCE_DIR}/lib/
-#                    )
+find_package(Qt4 COMPONENTS QtCore REQUIRED)
+include(${QT_USE_FILE})
 
-install(FILES
-        parser.h
-        parserrunnable.h
-        qobjecthelper.h
-        serializer.h
-        serializerrunnable.h
-        qjson_export.h
-        DESTINATION ${INCLUDE_INSTALL_DIR}/qjson 
+SET(QJSON_INCLUDE_DIRECTORIES
+    "${CMAKE_BINARY_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_SOURCE_DIR}/qjson/include"
 )
 
-set(qjson_MOC_HDRS
-  parserrunnable.h
-  serializerrunnable.h
+LIST(APPEND QJSON_HEADERS
 )
 
-qt4_wrap_cpp(qjson_MOC_SRCS ${qjson_MOC_HDRS})
-
-set (qjson_SRCS parser.cpp qobjecthelper.cpp json_scanner.cpp json_parser.cc parserrunnable.cpp serializer.cpp serializerrunnable.cpp)
-
-add_library (qjson SHARED ${qjson_SRCS} ${qjson_MOC_SRCS})
-target_link_libraries( qjson ${QT_LIBRARIES})
-
-if(NOT android)
-	set_target_properties(qjson PROPERTIES
-	                      VERSION ${QJSON_LIB_MAJOR_VERSION}.${QJSON_LIB_MINOR_VERSION}.${QJSON_LIB_PATCH_VERSION}
-                              SOVERSION ${QJSON_LIB_MAJOR_VERSION}
-	                      )
-endif()
-set_target_properties(qjson PROPERTIES
-                      DEFINE_SYMBOL QJSON_MAKEDLL
-                      )
-
-INSTALL(TARGETS qjson EXPORT qjson-export
-   LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
-   RUNTIME DESTINATION ${CMAKE_BINARY_DIR}
-   ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+LIST(APPEND QJSON_SOURCES
+    parser.cpp
+    qobjecthelper.cpp
+    json_scanner.cpp
+    json_parser.cc
+    parserrunnable.cpp
+    serializer.cpp
+    serializerrunnable.cpp
 )
+
+SET(QJSON_MOC_HEADERS
+    parserrunnable.h
+    serializerrunnable.h
+)
+
+QT4_WRAP_CPP(QJSON_MOC_SRCS ${QJSON_MOC_HEADERS})
+
+LIST(APPEND QJSON_SOURCES ${QJSON_HEADERS})
+LIST(APPEND QJSON_SOURCES ${QJSON_MOC_HEADERS})
+LIST(APPEND QJSON_SOURCES ${QJSON_MOC_SRCS})
+
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${QJSON_INCLUDE_DIRECTORIES})
+include_directories(${QT_INCLUDE_DIR})
+
+ADD_LIBRARY(${QJSON_LIBRARY_NAME} ${QJSON_SOURCES})
+TARGET_LINK_LIBRARIES(${QJSON_LIBRARY_NAME} ${QT_LIBRARIES})
