@@ -43,7 +43,7 @@ void TcpMessagehandler::processMessage(Message* pMsg)
 void TcpMessagehandler::processMessage(QVariantMap msg)
 {
     QString event = msg["event"].toString();
-    if ( bWaitForRequestresponse && event == "ResourceRequestedResponse" )
+    if ( bWaitForRequestresponse && event != "ResourceRequestedResponse" )
     {
         qDebug() << "event:" << event << "not what we expected, keep waiting";
         m_pTcpConnection->waitForReadyRead();
