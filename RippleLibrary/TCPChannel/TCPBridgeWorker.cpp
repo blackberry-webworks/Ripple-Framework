@@ -17,6 +17,7 @@
 #include "Global.h"
 #include "TCPBridgeWorker.h"
 #include "TCPMessageHandler.h"
+#include <qjson/Parser.h>
 
 using namespace BlackBerry::Ripple::TCPChannel;
 
@@ -69,9 +70,20 @@ void TCPBridgeworker::readData()
 {
     if (m_pClientConnection && m_pClientConnection->bytesAvailable())
     {
+        QJson::Parser parser;
+        bool ok;
+
+        QVariantMap result;
+
         QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
-        qint32 msgId = 256;
-        Message* pMsg = new Message(msgId, data.length(), &data);
-        m_pMsgHandler->processMessage(pMsg);
+
+        result = parser.parse(data, &ok).toMap();
+
+        if (!ok)
+            qDebug() << "something went wrong during the conversion";
+        else
+            qDebug() << "converted to" << result;
+
+        m_pMsgHandler->processMessage(result);
     }
 }
