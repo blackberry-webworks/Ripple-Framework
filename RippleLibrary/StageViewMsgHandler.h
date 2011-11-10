@@ -55,6 +55,8 @@ public slots:
     float zoomFactor();
   
    void processMessage(Message* pMsg);
+   void processMessage(QVariantMap msg){};
+
  
     //following slots are used internal for emit signals which will be connected from js side
     void urlChanged(const QString& url);

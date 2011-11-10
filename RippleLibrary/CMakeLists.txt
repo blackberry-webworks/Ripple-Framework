@@ -4,6 +4,7 @@ include(${QT_USE_FILE})
 SET(RIPPLELIBRARY_INCLUDE_DIRECTORIES
     "${CMAKE_BINARY_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_SOURCE_DIR}/qjson/include"
 )
 
 LIST(APPEND RIPPLELIBRARY_HEADERS
@@ -21,8 +22,6 @@ LIST(APPEND RIPPLELIBRARY_SOURCES
     ConfigData.cpp
     QtStageWebView.cpp
     StageViewMsgHandler.cpp
-#   RequestObject.cpp
-#   BuildServerManager.cpp
     PortScanner.cpp
     ScrollHandler.cpp
     RemoteDebugger.cpp
@@ -36,8 +35,6 @@ LIST(APPEND RIPPLELIBRARY_SOURCES
 SET(RIPPLELIBRARY_MOC_HEADERS
     QtStageWebView.h
     StageViewMsgHandler.h
- #  RequestObject.h
- #  BuildServerManager.h
     ScrollHandler.h
     RemoteDebugger.h
     TCPChannel/TCPBridge.h

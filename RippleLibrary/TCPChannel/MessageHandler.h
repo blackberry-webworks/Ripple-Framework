@@ -46,6 +46,7 @@ public:
 
 public slots:
     virtual void processMessage(Message* pMsg) = 0;
+    virtual void processMessage(QVariantMap msg) = 0;
 
 protected:
     virtual void registerEvents() = 0;

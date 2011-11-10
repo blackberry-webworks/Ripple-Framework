@@ -112,10 +112,15 @@ void Ripple::init(void)
     m_pStageViewHandler = new StageViewMsgHandler(this);
     m_pStageViewHandler->Register(webViewInternal->qtStageWebView());   
     startTCP();
+    
+    
+   
+
 }
 
 void Ripple::startTCP() 
 {
+
     if ( !isTcpServerUp )
     {
         m_pTcpMessageHandler = new TcpMessagehandler(this);
