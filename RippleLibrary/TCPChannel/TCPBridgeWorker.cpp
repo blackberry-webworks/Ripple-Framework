@@ -73,8 +73,7 @@ void TCPBridgeworker::readData()
         QJson::Parser parser;
         bool ok;
 
-        QVariantMap result; // = parser.parse("[1,2,3]", &ok);
-
+        QVariantMap result;
 
         QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
 

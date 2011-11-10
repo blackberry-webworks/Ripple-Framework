@@ -47,10 +47,6 @@ void MessageHandler::sendMessage(const QString& json, QTcpSocket* tcpSocket)
    if ( tcpSocket )
    {
         QByteArray a;
-    //    QBuffer b(&a);
-    //    b.open(QIODevice::WriteOnly);
-    //    QDataStream out(&b);
-    //    out << json;
         qDebug() << "sendMessage json: " << json;
         a.append(json);
         if ( tcpSocket->write(a) == -1 )
