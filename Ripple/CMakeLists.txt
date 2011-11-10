@@ -34,7 +34,7 @@ include_directories(${QT_INCLUDE_DIR})
 
 set(RIPPLE_LIBRARIES
     "${RIPPLELIBRARY_LIBRARY_NAME}"
-    "${CMAKE_SOURCE_DIR}/build/lib/qjson.lib"
+    "${QJSON_LIBRARY_NAME}"
     )
 
 IF (WTF_OS_MAC_OS_X)

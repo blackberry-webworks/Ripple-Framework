@@ -42,23 +42,23 @@ void TcpMessagehandler::processMessage(Message* pMsg)
 
 void TcpMessagehandler::processMessage(QVariantMap msg)
 {
-    QString event = msg["event"].toString();
-    if ( bWaitForRequestresponse && event != "ResourceRequestedResponse" )
+    QString event = msg[EVENT].toString();
+    if ( bWaitForRequestresponse && event != RESOURCEREQUESTEDRESPONSE )
     {
         qDebug() << "event:" << event << "not what we expected, keep waiting";
         m_pTcpConnection->waitForReadyRead();
         return;
     }
-    if ( event == "ResourceRequestedResponse" )
+    if ( event == RESOURCEREQUESTEDRESPONSE )
     {
-        QVariantMap payload = msg["payload"].toMap();
+        QVariantMap payload = msg[PAYLOAD].toMap();
         QString url = payload["url"].toString();
         QString response = payload["response"].toString();        
         graphicsWebview()->page()->mainFrame()->setAllowAccess(response != "deny");
     }
-    else if ( event == "WebviewUrlChangeRequest" )
+    else if ( event == WEBVIEWURLCHANGEREQUEST )
     {
-        QString payload = msg["payload"].toString();
+        QString payload = msg[PAYLOAD].toString();
         m_pWebView->loadURL(payload);
     }
 }

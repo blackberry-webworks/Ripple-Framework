@@ -27,6 +27,11 @@ namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
+const static QString EVENT = "event";
+const static QString PAYLOAD = "payload";
+const static QString RESOURCEREQUESTEDRESPONSE = "ResourceRequestedResponse";
+const static QString WEBVIEWURLCHANGEREQUEST = "WebviewUrlChangeRequest";
+
 class TcpMessagehandler : public MessageHandler
 {
     Q_OBJECT

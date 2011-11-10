@@ -12,7 +12,7 @@ install(FILES
         serializer.h
         serializerrunnable.h
         qjson_export.h
-        DESTINATION ${INCLUDE_INSTALL_DIR}/qjson COMPONENT Devel
+        DESTINATION ${INCLUDE_INSTALL_DIR}/qjson 
 )
 
 set(qjson_MOC_HDRS
@@ -38,7 +38,7 @@ set_target_properties(qjson PROPERTIES
                       )
 
 INSTALL(TARGETS qjson EXPORT qjson-export
-   LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-   RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+   LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
+   RUNTIME DESTINATION ${CMAKE_BINARY_DIR}
    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )

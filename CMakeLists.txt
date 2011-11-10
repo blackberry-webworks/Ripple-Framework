@@ -79,6 +79,7 @@ ADD_DEPENDENCIES(Ripple
 ADD_DEPENDENCIES(TestFramework
     ${RIPPLELIBRARY_LIBRARY_NAME}
     ${WebKit_LIBRARY_NAME}
+    ${QJSON_LIBRARY_NAME}
 )
 
 #install olympia output to target
