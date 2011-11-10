@@ -45,12 +45,6 @@ SET(WebKit_LIBRARY_NAME WebKit)
 SET(RIPPLELIBRARY_LIBRARY_NAME RippleLibrary)
 SET(QJSON_LIBRARY_NAME qjson)
 
-
-# -----------------------------------------------------------------------------
-# Default library types (can be overrriden in Options${PORT}.cmake file)
-# -----------------------------------------------------------------------------
-SET(RIPPLELIBRARY_LIBRARY_TYPE STATIC)
-
 # -----------------------------------------------------------------------------
 # Port-specific options
 # -----------------------------------------------------------------------------
@@ -63,12 +57,11 @@ SET(CMAKE_SOURCE_DIR ${CMAKE_SRC})
 # -----------------------------------------------------------------------------
 # Add module directories
 # -----------------------------------------------------------------------------
-#ADD_SUBDIRECTORY(IPC)
 ADD_SUBDIRECTORY(RippleLibrary)
 ADD_SUBDIRECTORY(Ripple)
 ADD_SUBDIRECTORY(TestFramework)
 ADD_SUBDIRECTORY(TCPClientTest)
-ADD_SUBDIRECTORY(qjson)
+ADD_SUBDIRECTORY(qjson/src)
 
 
 ADD_DEPENDENCIES(Ripple
@@ -81,20 +74,3 @@ ADD_DEPENDENCIES(TestFramework
     ${WebKit_LIBRARY_NAME}
     ${QJSON_LIBRARY_NAME}
 )
-
-#install olympia output to target
-#INSTALL(DIRECTORY ${OLYMPIA_DIR}/build/bin DESTINATION ${CMAKE_BINARY_DIR})   
-
-#install windows necessary libraries
-IF (CMAKE_SYSTEM_NAME MATCHES "Windows")
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/libxml2/bin/libxml2.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/jpeg/bin/jpeg62.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/png/bin/libpng12.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/pthread/lib/pthreadvc2.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/iconv/bin/iconv.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/zlib/bin/zlib1.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/sqlite3/lib/sqlite3.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/icu/bin/icuuc36.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/icu/bin/icudt36.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-#  INSTALL(FILES ${OLYMPIA_DIR}/../webkitsupport/windows/msvcr71.dll DESTINATION ${CMAKE_BINARY_DIR}/bin)
-ENDIF()    
