@@ -53,8 +53,9 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
     {
         QVariantMap payload = msg[PAYLOAD].toMap();
         QString url = payload["url"].toString();
-        QString response = payload["response"].toString();        
-        graphicsWebview()->page()->mainFrame()->setAllowAccess(response != "deny");
+        QVariantMap response = payload["response"].toMap();
+        QString resonseText = response["responseText"].toString();
+        graphicsWebview()->page()->mainFrame()->setAllowAccess(resonseText != "deny");
     }
     else if ( event == WEBVIEWURLCHANGEREQUEST )
     {
