@@ -439,12 +439,12 @@ TEST(QtStageWebView, CanBlockResourcRequest)
     webview.continueLoad();
 
     webview.page()->mainFrame()->setAllowAccess(false);
-    webview.loadURL("http://www.google.ca");
+    webview.loadURL("https://github.com");
 
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
-    QTimer::singleShot(5000, &loop, SLOT(quit()));
-
+    QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
+    loop.exec();
     quint64 bytes = webview.page()->bytesReceived();
     EXPECT_EQ(0, bytes);
 }
