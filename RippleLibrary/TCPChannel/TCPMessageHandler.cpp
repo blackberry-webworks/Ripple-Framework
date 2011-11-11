@@ -21,7 +21,8 @@
 using namespace BlackBerry::Ripple::TCPChannel;
 
 TcpMessagehandler::TcpMessagehandler(QObject *parent)
-  : MessageHandler(parent),m_pTcpConnection(0),bWaitForRequestresponse(false)
+  : MessageHandler(parent),m_pTcpConnection(0),bWaitForRequestresponse(false),
+  m_lastReqSent(0)
 {
 
 }
@@ -45,8 +46,8 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
     QString event = msg[EVENT].toString();
     if ( bWaitForRequestresponse && event != RESOURCEREQUESTEDRESPONSE )
     {
-        qDebug() << "event:" << event << "not what we expected, keep waiting";
-        m_pTcpConnection->waitForReadyRead();
+        qDebug() << "event:" << event << " Resend request";
+        onResourceRequested(m_lastReqSent);
         return;
     }
     if ( event == RESOURCEREQUESTEDRESPONSE )
@@ -67,17 +68,18 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
 void TcpMessagehandler::registerEvents()
 {
     connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), this, SLOT(onResourcerequested(QNetworkRequest*)));
+    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), this, SLOT(onResourceRequested(QNetworkRequest*)));
 }
 
 void TcpMessagehandler::urlChanged(QString url) 
 {
 }
 
-void TcpMessagehandler::onResourcerequested(QNetworkRequest* req)
+void TcpMessagehandler::onResourceRequested(QNetworkRequest* req)
 {
     if ( m_pTcpConnection )
     {
+        m_lastReqSent = req;
         QString url = req->url().toString();
         QVariantMap msgToSend;
         msgToSend.insert("event", "ResourceRequested");

@@ -39,6 +39,7 @@ class TcpMessagehandler : public MessageHandler
 private:
     QTcpSocket* m_pTcpConnection;
     bool bWaitForRequestresponse;
+    QNetworkRequest* m_lastReqSent;
 
 public:
     TcpMessagehandler(QObject *parent = 0);
@@ -57,7 +58,7 @@ protected:
 
 private slots:
     void urlChanged(QString url);
-    void onResourcerequested(QNetworkRequest* request);
+    void onResourceRequested(QNetworkRequest* request);
 
 private:
     virtual IRippleWebView* stageWebview()
