@@ -8,6 +8,14 @@ SET(QJSON_INCLUDE_DIRECTORIES
 )
 
 LIST(APPEND QJSON_HEADERS
+    json_scanner.h
+    parser.h
+    parserrunnable.h
+    parser_p.h
+    qjson_export.h
+    qobjecthelper.h
+    serializer.h
+    serializerrunnable.h
 )
 
 LIST(APPEND QJSON_SOURCES
