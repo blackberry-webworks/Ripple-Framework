@@ -16,15 +16,14 @@
 
 #include "Global.h"
 #include "Ripple.h"
-#include "BuildServerManager.h"
 #include "ScrollHandler.h"
-#include "TCPChannel/TCPBridge.h"
+#include "TCPChannel/TCPBridgeworker.h"
 
 using namespace BlackBerry::Ripple;
 
 const int Ripple::PROGRESS_BAR_HEIGHT = 23;
 
-Ripple::Ripple(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags), m_pStageViewHandler(0),m_pTcpMessageHandler(0),isTcpServerUp(false)
+Ripple::Ripple(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags), m_pStageViewHandler(0)
 {
     init();
 }
@@ -112,24 +111,13 @@ void Ripple::init(void)
     m_pStageViewHandler = new StageViewMsgHandler(this);
     m_pStageViewHandler->Register(webViewInternal->qtStageWebView());   
     startTCP();
-    
-    
-   
-
 }
 
 void Ripple::startTCP() 
 {
-
-    if ( !isTcpServerUp )
-    {
-        m_pTcpMessageHandler = new TcpMessagehandler(this);
-        m_pTcpMessageHandler->Register(webViewInternal->qtStageWebView());
-        TCPBridge* tcpbridge = new TCPBridge(this);
-        tcpbridge->RegisterMessageHandler(m_pTcpMessageHandler);
-        tcpbridge->Start();
-        isTcpServerUp = true;
-    }
+    TCPBridgeworker* worker = TCPBridgeworker::server();
+    worker->setWebView(webViewInternal->qtStageWebView());
+    worker->listen();
 }
 
 void Ripple::closeEvent(QCloseEvent *event)

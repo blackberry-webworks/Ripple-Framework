@@ -11,7 +11,6 @@ LIST(APPEND RIPPLELIBRARY_HEADERS
     ConfigData.h
     PortScanner.h
     RemoteDebugger.h
-    TCPChannel/TCPBridge.h
     TCPChannel/TCPBridgeWorker.h
     TCPChannel/Message.h
     TCPChannel/MessageHandler.h
@@ -25,7 +24,6 @@ LIST(APPEND RIPPLELIBRARY_SOURCES
     PortScanner.cpp
     ScrollHandler.cpp
     RemoteDebugger.cpp
-    TCPChannel/TCPBridge.cpp
     TCPChannel/TCPBridgeWorker.cpp
     TCPChannel/Message.cpp
     TCPChannel/MessageHandler.cpp
@@ -37,7 +35,6 @@ SET(RIPPLELIBRARY_MOC_HEADERS
     StageViewMsgHandler.h
     ScrollHandler.h
     RemoteDebugger.h
-    TCPChannel/TCPBridge.h
     TCPChannel/TCPBridgeWorker.h
     TCPChannel/MessageHandler.h
     TCPChannel/TCPMessageHandler.h
