@@ -89,6 +89,7 @@ import string
 import sys
 import unicodedata
 import glob
+import os.path
 
 
 _USAGE = """
@@ -499,11 +500,16 @@ class _CppLintState(object):
     self.filters = _DEFAULT_FILTERS[:]
     self.counting = 'total'  # In what way are we counting errors?
     self.errors_by_category = {}  # string to int dict storing error counts
+    self.recursive_mode = False
 
     # output format:
     # "emacs" - format that emacs can parse (default)
     # "vs7" - format that Microsoft Visual Studio 7 can parse
     self.output_format = 'emacs'
+
+  def SetRecursiveMode(self, recursive_mode):
+    """Sets the search mode to recursive"""
+    self.recursive_mode = recursive_mode
 
   def SetOutputFormat(self, output_format):
     """Sets the output format for errors."""
@@ -568,6 +574,14 @@ class _CppLintState(object):
 
 _cpplint_state = _CppLintState()
 
+def _RecursiveMode():
+  """Gets the module's recursive mode."""
+  return _cpplint_state.recursive_mode
+
+def _SetRecursiveMode(recursive_mode):
+  """Sets the module's recursive mode"""
+  print "in _SetRecursiveMode: ", recursive_mode
+  _cpplint_state.SetRecursiveMode(recursive_mode)
 
 def _OutputFormat():
   """Gets the module's output format."""
@@ -3286,7 +3300,7 @@ def ParseArguments(args):
     The list of filenames to lint.
   """
   try:
-    (opts, filenames) = getopt.getopt(args, '', ['help', 'output=', 'verbose=',
+    (opts, filenames) = getopt.getopt(args, '', ['help', 'R','output=', 'verbose=',
                                                  'counting=',
                                                  'filter='])
   except getopt.GetoptError:
@@ -3296,10 +3310,13 @@ def ParseArguments(args):
   output_format = _OutputFormat()
   filters = ''
   counting_style = ''
+  recursive_mode = False
 
   for (opt, val) in opts:
     if opt == '--help':
       PrintUsage(None)
+    elif opt == '--R':
+        recursive_mode = True 
     elif opt == '--output':
       if not val in ('emacs', 'vs7'):
         PrintUsage('The only allowed output formats are emacs and vs7.')
@@ -3322,15 +3339,15 @@ def ParseArguments(args):
   _SetVerboseLevel(verbosity)
   _SetFilters(filters)
   _SetCountingStyle(counting_style)
+  _SetRecursiveMode(recursive_mode)
 
   return filenames
 
 
 def main():
+  import os.path
   filenames = ParseArguments(sys.argv[1:])
-  if (len(filenames)== 1):
-    filenames = glob.glob(filenames[0])
-
+  print _cpplint_state.recursive_mode 
   # Change stderr to write with replacement characters so we don't die
   # if we try to print something containing non-ASCII characters.
   sys.stderr = codecs.StreamReaderWriter(sys.stderr,
@@ -3340,6 +3357,12 @@ def main():
 
   _cpplint_state.ResetErrorCounts()
   for filename in filenames:
+    if(_cpplint_state.recursive_mode and os.path.isdir(filename)):
+      dirList = os.listdir(filename)
+      subfiles = []
+      for subfile in dirList:  
+        subfiles.append(filename + '/'+ subfile)
+      filenames.extend(subfiles)
     ProcessFile(filename, _cpplint_state.verbose_level)
   _cpplint_state.PrintErrorCounts()
 
