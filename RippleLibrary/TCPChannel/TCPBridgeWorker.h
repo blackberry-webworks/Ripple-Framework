@@ -17,36 +17,38 @@
 #ifndef TCPBRIDGEWORKER_H
 #define TCPBRIDGEWORKER_H
 
-#include <QThread>
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QHostAddress>
 
 #include "MessageHandler.h"
+#include "QtStageWebView.h"
 
 namespace BlackBerry { 
 namespace Ripple {
 namespace TCPChannel {
 
-class TCPBridgeworker : public QThread
+class TCPBridgeworker : public QObject
 {
   Q_OBJECT
   public:
-      TCPBridgeworker(MessageHandler* pHandler, QHostAddress* host, int pn = 53533 ,QObject* parent = 0);
+      TCPBridgeworker(QObject* parent = 0);
       virtual ~TCPBridgeworker();
+ 
+      static TCPBridgeworker* server();
+      void setWebView(QtStageWebView* pView) { m_pWebView = pView;}
+      void listen(int port = 53533);
+  protected:
+     void close();
 
-protected:
-     void run();
-
-private slots:
+  private slots:
      void newConnection();
-     void readData();
-private:
-    MessageHandler* m_pMsgHandler;
+  private:
     QTcpServer* m_pTcpServer;
-    QTcpSocket *m_pClientConnection;
-    QHostAddress*  m_pHostAddress;
-    int port;
+    QtStageWebView* m_pWebView;
 };
+
+static TCPBridgeworker* s_tcpServer;
+
 }}}
 #endif // TCPBRIDGEWORKER_H

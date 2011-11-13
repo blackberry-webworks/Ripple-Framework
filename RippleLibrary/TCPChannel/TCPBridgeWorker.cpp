@@ -17,73 +17,56 @@
 #include "Global.h"
 #include "TCPBridgeWorker.h"
 #include "TCPMessageHandler.h"
-#include <qjson/Parser.h>
 
 using namespace BlackBerry::Ripple::TCPChannel;
 
-TCPBridgeworker::TCPBridgeworker(MessageHandler* pHandler, QHostAddress* host, int pn, QObject* parent) 
-    : QThread(parent), m_pMsgHandler(pHandler), m_pTcpServer(0), m_pClientConnection(0), m_pHostAddress(host), port(pn)
+TCPBridgeworker* TCPBridgeworker::server()
+{
+    if (!s_tcpServer)
+        s_tcpServer = new TCPBridgeworker();
+    return s_tcpServer;
+}
+
+TCPBridgeworker::TCPBridgeworker(QObject* parent) 
+    : QObject(parent), m_pTcpServer(0), m_pWebView(0)
 {
 }
 
 TCPBridgeworker::~TCPBridgeworker()
 {
-    if ( m_pTcpServer )
-    {
-        m_pTcpServer->close();
-        delete m_pTcpServer;
-        m_pTcpServer = 0;
-    }
-    if ( m_pHostAddress )
-        delete m_pHostAddress;
+    close();
 }
 
-void TCPBridgeworker::run()
+void TCPBridgeworker::listen(int port)
 {
-    m_pTcpServer = new QTcpServer(0);
-    connect(m_pTcpServer, SIGNAL( newConnection()), this, SLOT(newConnection()));
-    if ( !m_pTcpServer->listen( *m_pHostAddress, port) )
+    if (m_pTcpServer)
+        return;
+    m_pTcpServer = new QTcpServer();
+    if ( !m_pTcpServer->listen(QHostAddress::LocalHost, port) )
     {
         QMessageBox::critical(0, tr("WebView TCP Server"), tr("Unable to start the server: %1.").arg(m_pTcpServer->errorString()));
-        m_pTcpServer->close();
-        delete m_pTcpServer;
-        m_pTcpServer = 0;
+        close();
         return;
     }
-    exec();
+    connect(m_pTcpServer, SIGNAL( newConnection()), this, SLOT(newConnection()));
 }
 
 void TCPBridgeworker::newConnection()
 {
-    m_pClientConnection = m_pTcpServer->nextPendingConnection();
-    TcpMessagehandler* tcpMsghandler = dynamic_cast<TcpMessagehandler*>(m_pMsgHandler);
-    tcpMsghandler->setTcpConnection(m_pClientConnection);
-    connect(m_pClientConnection, SIGNAL(disconnected()), m_pClientConnection, SLOT(deleteLater()));
-    connect(m_pClientConnection, SIGNAL(readyRead()), this, SLOT(readData()));
-    
-    //We might have already misses the readyRead signal
-    //call readData just to make sure
-    readData();
+    QTcpSocket* tcpConnection = m_pTcpServer->nextPendingConnection();
+    TcpMessagehandler* handler = new TcpMessagehandler(tcpConnection, this);
+    Q_ASSERT(m_pWebView);
+    handler->Register(m_pWebView);
 }
 
-void TCPBridgeworker::readData()
+void TCPBridgeworker::close()
 {
-    if (m_pClientConnection && m_pClientConnection->bytesAvailable())
+    if (m_pTcpServer) 
     {
-        QJson::Parser parser;
-        bool ok;
-
-        QVariantMap result;
-
-        QByteArray data = m_pClientConnection->read(m_pClientConnection->bytesAvailable());
-
-        result = parser.parse(data, &ok).toMap();
-
-        if (!ok)
-            qDebug() << "something went wrong during the conversion";
-        else
-            qDebug() << "converted to" << result;
-
-        m_pMsgHandler->processMessage(result);
+        m_pTcpServer->close();
+        delete m_pTcpServer;
     }
+    m_pTcpServer = 0;
+    s_tcpServer = 0;
+    deleteLater();
 }

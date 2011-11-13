@@ -16,40 +16,50 @@
 
 #include "Global.h"
 #include "TCPMessageHandler.h"
-#include <qjson/Serializer.h>
 
 using namespace BlackBerry::Ripple::TCPChannel;
 
-TcpMessagehandler::TcpMessagehandler(QObject *parent)
-  : MessageHandler(parent),m_pTcpConnection(0),bWaitForRequestresponse(false),
-  m_lastReqSent(0)
+TcpMessagehandler::TcpMessagehandler(QTcpSocket* conn, QObject *parent)
+  : MessageHandler(parent), m_pTcpConnection(conn)
 {
-
+    connect(m_pTcpConnection, SIGNAL(readyRead()), SLOT(tcpReadyRead()));
+    connect(m_pTcpConnection, SIGNAL(disconnected()), SLOT(tcpConnectionDisconnected()));
+    tcpReadyRead();
 }
 
 TcpMessagehandler::~TcpMessagehandler()
 {
-
 }
 
-void TcpMessagehandler::processMessage(Message* pMsg)
+void TcpMessagehandler::tcpReadyRead() 
 {
-    int msgID = pMsg->ID();
-    QString url( *pMsg->Data());
-    qDebug() << "Message TEST1 received, ID:" << msgID << "Data:" << url << " received!";
-    m_pWebView->loadURL(url);
-    delete pMsg;
+    if (m_pTcpConnection && m_pTcpConnection->bytesAvailable())
+    {
+        bool ok;
+        QVariantMap result;
+        QByteArray data = m_pTcpConnection->read(m_pTcpConnection->bytesAvailable());
+        result = parser.parse(data, &ok).toMap();
+
+        if (!ok)
+            qDebug() << "something went wrong during the conversion";
+        else
+            qDebug() << "converted to" << result;
+        processMessage(result);
+    }
+}
+
+void TcpMessagehandler::tcpConnectionDisconnected()
+{
+    if ( m_pTcpConnection )
+    {
+        m_pTcpConnection->deleteLater();
+        m_pTcpConnection = 0;
+    }
 }
 
 void TcpMessagehandler::processMessage(QVariantMap msg)
 {
     QString event = msg[EVENT].toString();
-    if ( bWaitForRequestresponse && event != RESOURCEREQUESTEDRESPONSE )
-    {
-        qDebug() << "event:" << event << " Resend request";
-        onResourceRequested(m_lastReqSent);
-        return;
-    }
     if ( event == RESOURCEREQUESTEDRESPONSE )
     {
         QVariantMap payload = msg[PAYLOAD].toMap();
@@ -68,7 +78,8 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
 void TcpMessagehandler::registerEvents()
 {
     connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), this, SLOT(onResourceRequested(QNetworkRequest*)));
+    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), 
+        this, SLOT(onResourceRequested(QNetworkRequest*)));
 }
 
 void TcpMessagehandler::urlChanged(QString url) 
@@ -79,7 +90,7 @@ void TcpMessagehandler::onResourceRequested(QNetworkRequest* req)
 {
     if ( m_pTcpConnection )
     {
-        m_lastReqSent = req;
+        m_pTcpConnection->disconnect(SIGNAL(readyRead()));
         QString url = req->url().toString();
         QVariantMap msgToSend;
         msgToSend.insert("event", "ResourceRequested");
@@ -88,7 +99,11 @@ void TcpMessagehandler::onResourceRequested(QNetworkRequest* req)
         QByteArray json = serializer.serialize(msgToSend); 
         qDebug() << json;
         sendMessage(json, m_pTcpConnection);
-        bWaitForRequestresponse = true;
-        m_pTcpConnection->waitForReadyRead();
+        m_pTcpConnection->waitForBytesWritten();
+        if ( m_pTcpConnection->waitForReadyRead())
+        {
+            tcpReadyRead();
+        }
+        connect(m_pTcpConnection, SIGNAL(readyRead()), SLOT(tcpReadyRead()));
     }
 }

@@ -53,5 +53,6 @@ void MessageHandler::sendMessage(const QString& json, QTcpSocket* tcpSocket)
         {
             qDebug() << "Error to write: " << json; 
         }
+        tcpSocket->flush();
    }
 }
