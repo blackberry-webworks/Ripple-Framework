@@ -59,6 +59,9 @@ private slots:
     void tcpConnectionDisconnected();
 
 private:
+
+    QJson::Parser parser;
+
     virtual IRippleWebView* stageWebview()
     {
         return dynamic_cast<IRippleWebView*>(m_pWebView);

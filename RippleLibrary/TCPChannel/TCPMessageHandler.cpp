@@ -35,7 +35,6 @@ void TcpMessagehandler::tcpReadyRead()
 {
     if (m_pTcpConnection && m_pTcpConnection->bytesAvailable())
     {
-        QJson::Parser parser;
         bool ok;
         QVariantMap result;
         QByteArray data = m_pTcpConnection->read(m_pTcpConnection->bytesAvailable());
@@ -91,6 +90,7 @@ void TcpMessagehandler::onResourceRequested(QNetworkRequest* req)
 {
     if ( m_pTcpConnection )
     {
+        m_pTcpConnection->disconnect(SIGNAL(readyRead()));
         QString url = req->url().toString();
         QVariantMap msgToSend;
         msgToSend.insert("event", "ResourceRequested");
@@ -100,6 +100,10 @@ void TcpMessagehandler::onResourceRequested(QNetworkRequest* req)
         qDebug() << json;
         sendMessage(json, m_pTcpConnection);
         m_pTcpConnection->waitForBytesWritten();
-        m_pTcpConnection->waitForReadyRead();
+        if ( m_pTcpConnection->waitForReadyRead())
+        {
+            tcpReadyRead();
+        }
+        connect(m_pTcpConnection, SIGNAL(readyRead()), SLOT(tcpReadyRead()));
     }
 }
