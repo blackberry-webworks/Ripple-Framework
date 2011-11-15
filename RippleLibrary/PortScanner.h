@@ -14,7 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef PORTSCANNER_H
+#ifndef RIPPLELIBRARY_PORTSCANNER_H_
+#define RIPPLELIBRARY_PORTSCANNER_H_
 
 #include <QObject>
 #include <QTcpServer>
@@ -27,4 +28,4 @@ public:
     static unsigned short findUsablePort(unsigned short port);
 };
 
-#endif
+#endif  // RIPPLELIBRARY_PORTSCANNER_H_

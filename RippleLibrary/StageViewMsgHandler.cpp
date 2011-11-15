@@ -17,8 +17,9 @@
 #include "Global.h"
 #include "StageViewMsgHandler.h"
 
-using namespace BlackBerry::Ripple;
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::StageViewMsgHandler;
+using BlackBerry::Ripple::TCPChannel::Message;
+using BlackBerry::Ripple::TCPChannel::MessageHandler;
 
 StageViewMsgHandler::StageViewMsgHandler(QObject *parent)
     : MessageHandler(parent),  _buildServerPort(0)

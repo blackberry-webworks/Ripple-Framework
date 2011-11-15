@@ -18,7 +18,7 @@
 #include "TCPBridgeWorker.h"
 #include "TCPMessageHandler.h"
 
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::TCPChannel::TCPBridgeworker;
 
 TCPBridgeworker* TCPBridgeworker::server()
 {

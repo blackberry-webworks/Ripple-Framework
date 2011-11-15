@@ -17,7 +17,7 @@
 #include "Global.h"
 #include "Message.h"
 
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::TCPChannel::Message;
 
 Message::Message(int id, int size, QByteArray* pData)
   : m_iID(id), m_iSize(size), m_pData(pData)

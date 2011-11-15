@@ -14,13 +14,13 @@
 * limitations under the License.
 */
 
-#ifndef MESSAGESPY_H
-#define MESSAGESPY_H
+#ifndef TESTFRAMEWORK_MESSAGESIGNALSPY_H_
+#define TESTFRAMEWORK_MESSAGESIGNALSPY_H_
 
 #include "TCPChannel/message.h"
 #include <QSignalSpy>
 
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::TCPChannel::Message;
 
 class MessageSignalSpy : public QObject
 {
@@ -63,4 +63,4 @@ private:
     QSignalSpy spy;
 };
 
-#endif //MESSAGESPY_H
+#endif  // TESTFRAMEWORK_MESSAGESIGNALSPY_H_

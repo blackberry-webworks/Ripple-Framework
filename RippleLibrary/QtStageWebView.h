@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef QTSTAGEWEBVIEW_H
-#define QTSTAGEWEBVIEW_H
+#ifndef RIPPLELIBRARY_QTSTAGEWEBVIEW_H_
+#define RIPPLELIBRARY_QTSTAGEWEBVIEW_H_
 
 #include "Global.h"
 #include <QWidget>
@@ -37,7 +37,7 @@
 class ScrollHandler;
 class RemoteDebugger;
 
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::TCPChannel::IRippleWebView;
 
 class QtStageWebView : public QGraphicsWebView, public IRippleWebView
 {
@@ -50,7 +50,7 @@ class QtStageWebView : public QGraphicsWebView, public IRippleWebView
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 public:
-    QtStageWebView(QWidget *parent = 0);
+    explicit QtStageWebView(QWidget *parent = 0);
     ~QtStageWebView(void);
     QMutex lock;
     void loadURL(QString url);
@@ -97,7 +97,7 @@ class QtGraphicsStageWebView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    QtGraphicsStageWebView(QWidget *parent) : QGraphicsView(parent)
+    explicit QtGraphicsStageWebView(QWidget *parent) : QGraphicsView(parent)
     {
         m_pWebView = new QtStageWebView;
         setScene(new QGraphicsScene());
@@ -108,7 +108,7 @@ public:
         setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     
     };
-    QtStageWebView *qtStageWebView() const { return m_pWebView; };
+    QtStageWebView *qtStageWebView() const { return m_pWebView; }
     void paintEvent(QPaintEvent *pe)
     {
         QGraphicsView::paintEvent(pe);
@@ -118,4 +118,4 @@ private:
     QtStageWebView *m_pWebView;
 };
 
-#endif //QTSTAGEWEBVIEW_H
+#endif  // RIPPLELIBRARY_QTSTAGEWEBVIEW_H_

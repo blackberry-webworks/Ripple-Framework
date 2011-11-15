@@ -14,12 +14,14 @@
 * limitations under the License.
 */
 
-#ifndef STAGEVIEWMSGHANDLER_H
-#define STAGEVIEWMSGHANDLER_H
+#ifndef RIPPLELIBRARY_STAGEVIEWMSGHANDLER_H_
+#define RIPPLELIBRARY_STAGEVIEWMSGHANDLER_H_
+
 #include "QtStageWebView.h"
 #include "TCPChannel/MessageHandler.h"
 
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::TCPChannel::MessageHandler;
+using BlackBerry::Ripple::TCPChannel::Message;
 
 namespace BlackBerry {
 namespace Ripple {
@@ -30,7 +32,7 @@ class StageViewMsgHandler : public MessageHandler
   Q_PROPERTY(int serverPort READ getServerPort)
 
 public:
-    StageViewMsgHandler(QObject *parent = 0);
+    explicit StageViewMsgHandler(QObject *parent = 0);
     ~StageViewMsgHandler();
    
 
@@ -55,7 +57,7 @@ public slots:
     float zoomFactor();
   
    void processMessage(Message* pMsg);
-   void processMessage(QVariantMap msg){};
+   void processMessage(QVariantMap msg){}
 
  
     //following slots are used internal for emit signals which will be connected from js side
@@ -94,4 +96,4 @@ private:
     int _buildServerPort;
 };
 }}
-#endif // STAGEVIEWMSGHANDLER_H
+#endif  // RIPPLELIBRARY_STAGEVIEWMSGHANDLER_H_

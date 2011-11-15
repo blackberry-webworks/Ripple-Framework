@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef MESSAGEHANDLER_H
-#define MESSAGEHANDLER_H
+#ifndef RIPPLELIBRARY_TCPCHANNEL_MESSAGEHANDLER_H_
+#define RIPPLELIBRARY_TCPCHANNEL_MESSAGEHANDLER_H_
 
 #include <QObject>
 #include <QTcpSocket>
@@ -30,7 +30,7 @@ class MessageHandler : public QObject
 {
   Q_OBJECT
 public:
-    MessageHandler(QObject *parent);
+    explicit MessageHandler(QObject *parent);
     virtual ~MessageHandler(); 
 
     void EmitMessage(Message* pMsg)
@@ -64,4 +64,4 @@ private:
 
 };
 }}}
-#endif // MESSAGEHANDLER_H
+#endif  // RIPPLELIBRARY_TCPCHANNEL_MESSAGEHANDLER_H_

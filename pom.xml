@@ -183,25 +183,36 @@
             <artifactId>exec-maven-plugin</artifactId>
             <version>1.1</version>
             <executions>
-              <execution>
-                <id>runCMake</id>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
-                  <environmentVariables>
-                    <MSVS_HOME>${env.MSVS_HOME}</MSVS_HOME>
-                  </environmentVariables>
-                  <executable>${basedir}/runWithVCContext.bat</executable>
-                  <arguments>
-                    <argument>cmake</argument>
-                    <argument>..</argument>
-                    <argument>-DCMAKE_BUILD_TYPE=Release</argument>
-                    <argument>-G</argument>
-                    <argument>NMake Makefiles</argument>
-                  </arguments>
+                <execution>
+                    <id>runCppLint</id>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <phase>process-sources</phase>
+                    <configuration>
+                        <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
+                        <executable>lintFiles.bat</executable>
+                    </configuration>
+                </execution>
+                <execution>
+                  <id>runCMake</id>
+                  <goals>
+                    <goal>exec</goal>
+                  </goals>
+                  <phase>generate-resources</phase>
+                  <configuration>
+                    <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
+                    <environmentVariables>
+                      <MSVS_HOME>${env.MSVS_HOME}</MSVS_HOME>
+                    </environmentVariables>
+                    <executable>${basedir}/runWithVCContext.bat</executable>
+                    <arguments>
+                      <argument>cmake</argument>
+                      <argument>..</argument>
+                      <argument>-DCMAKE_BUILD_TYPE=Release</argument>
+                      <argument>-G</argument>
+                      <argument>NMake Makefiles</argument>
+                    </arguments>
                 </configuration>
               </execution>
               <execution>

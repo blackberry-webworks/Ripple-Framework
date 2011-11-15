@@ -14,6 +14,9 @@
 * limitations under the License.
 */
 
+#ifndef RIPPLE_GLOBAL_H_
+#define RIPPLE_GLOBAL_H_
+
 #include <QtGui>
 #include <QString>
 #include <QObject>
@@ -21,4 +24,5 @@
 #include <QWebElement>
 #include <QWebFrame>
 #include <QWebPage>
+#endif  // RIPPLE_GLOBAL_H_
 

@@ -14,6 +14,9 @@
 * limitations under the License.
 */
 
+#ifndef TESTFRAMEWORK_MESSAGEHANDLERTEST_H_
+#define TESTFRAMEWORK_MESSAGEHANDLERTEST_H_
+
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "MessageSignalSpy.h"
@@ -25,8 +28,8 @@
 using ::testing::Return;
 using ::testing::Invoke;
 
-using namespace BlackBerry::Ripple;
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::StageViewMsgHandler;
+using BlackBerry::Ripple::TCPChannel::TcpMessagehandler;
 
 //Q_DECLARE_METATYPE(Message *);
 
@@ -69,3 +72,4 @@ public:
     MOCK_METHOD1(processMessage, void(Message*));
     MOCK_METHOD1(processMessage, void(QVariantMap));
 };
+#endif  // TESTFRAMEWORK_MESSAGEHANDLERTEST_H_

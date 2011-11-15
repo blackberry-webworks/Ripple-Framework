@@ -14,8 +14,13 @@
 * limitations under the License.
 */
 
+#ifndef TESTFRAMEWORK_QTSTAGEWEBVIEWTEST_H_
+#define TESTFRAMEWORK_QTSTAGEWEBVIEWTEST_H_
+
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include <QEventLoop>
 #include <QSignalSpy>
 #include "QtStageWebView.h"
+
+#endif  // TESTFRAMEWORK_QTSTAGEWEBVIEWTEST_H_
