@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef Ripple_ScrollHandler_h
-#define Ripple_ScrollHandler_h
+#ifndef RIPPLELIBRARY_SCROLLHANDLER_H_
+#define RIPPLELIBRARY_SCROLLHANDLER_H_
 
 #include "Global.h"
 #include <QMutex>
@@ -29,7 +29,7 @@ class ScrollHandler : public QObject {
     QMutex *m_pMutex;
     bool m_flag;
 public:
-    ScrollHandler(QtStageWebView *parent);
+    explicit ScrollHandler(QtStageWebView *parent);
     ~ScrollHandler();
 public slots:
     void unlock();
@@ -38,4 +38,4 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
 };
 
-#endif
+#endif  // RIPPLELIBRARY_SCROLLHANDLER_H_

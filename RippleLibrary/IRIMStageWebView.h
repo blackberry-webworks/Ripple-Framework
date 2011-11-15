@@ -14,7 +14,8 @@
 * limitations under the License.
 */
 
-#pragma once
+#ifndef RIPPLELIBRARY_IRIMSTAGEWEBVIEW_H_
+#define RIPPLELIBRARY_IRIMSTAGEWEBVIEW_H_
 
 namespace BlackBerry {
 namespace Ripple {
@@ -37,5 +38,7 @@ public:
     virtual void reload() = 0;
     virtual void setZoom(float zoom) = 0;
     virtual float zoom() = 0;
+    virtual ~IRippleWebView() {}
 };
 }}}
+#endif  // RIPPLELIBRARY_IRIMSTAGEWEBVIEW_H_

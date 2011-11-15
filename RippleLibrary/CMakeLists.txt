@@ -11,6 +11,7 @@ LIST(APPEND RIPPLELIBRARY_HEADERS
     ConfigData.h
     PortScanner.h
     RemoteDebugger.h
+    IRIMStageWebView.h
     TCPChannel/TCPBridgeWorker.h
     TCPChannel/Message.h
     TCPChannel/MessageHandler.h

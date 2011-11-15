@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#ifndef RIPPLELIBRARY_TCPCHANNEL_MESSAGE_H_
+#define RIPPLELIBRARY_TCPCHANNEL_MESSAGE_H_
 
 #include <QByteArray>
 
@@ -41,8 +41,5 @@ private:
   int m_iSize;
   QByteArray* m_pData; 
 };
-
-}
-}
-}
-#endif // MESSAGE_H
+}}}
+#endif  // RIPPLELIBRARY_TCPCHANNEL_MESSAGE_H_

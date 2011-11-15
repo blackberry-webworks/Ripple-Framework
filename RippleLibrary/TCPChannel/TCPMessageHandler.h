@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef TCPMESSAGEHANDLER_H
-#define TCPMESSAGEHANDLER_H
+#ifndef RIPPLELIBRARY_TCPCHANNEL_TCPMESSAGEHANDLER_H_
+#define RIPPLELIBRARY_TCPCHANNEL_TCPMESSAGEHANDLER_H_
 
 #include <QNetworkRequest>
 #include <QGraphicsWebView>
@@ -29,10 +29,10 @@ namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
-const static QString EVENT = "event";
-const static QString PAYLOAD = "payload";
-const static QString RESOURCEREQUESTEDRESPONSE = "ResourceRequestedResponse";
-const static QString WEBVIEWURLCHANGEREQUEST = "WebviewUrlChangeRequest";
+static const QString EVENT = "event";
+static const QString PAYLOAD = "payload";
+static const QString RESOURCEREQUESTEDRESPONSE = "ResourceRequestedResponse";
+static const QString WEBVIEWURLCHANGEREQUEST = "WebviewUrlChangeRequest";
 
 
 class TcpMessagehandler : public MessageHandler
@@ -45,7 +45,7 @@ private:
 public:
     TcpMessagehandler(QTcpSocket* conn = 0, QObject *parent = 0);
     ~TcpMessagehandler();
-    void processMessage(Message* pMsg) {};
+    void processMessage(Message* pMsg) {}
     void processMessage(QVariantMap msg);
 
 protected:
@@ -64,12 +64,12 @@ private:
 
     virtual IRippleWebView* stageWebview()
     {
-        return dynamic_cast<IRippleWebView*>(m_pWebView);
+        return static_cast<IRippleWebView*>(m_pWebView);
     }
 
     virtual QtStageWebView* rimStageWebview()
     {
-        return dynamic_cast<QtStageWebView*>(m_pWebView);
+        return static_cast<QtStageWebView*>(m_pWebView);
     }
 
     virtual QGraphicsWebView* graphicsWebview()
@@ -78,5 +78,5 @@ private:
     }
 };
 }}}
-#endif // TCPMESSAGEHANDLER_H
+#endif  // RIPPLELIBRARY_TCPCHANNEL_TCPMESSAGEHANDLER_H_
 

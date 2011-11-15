@@ -17,7 +17,8 @@
 #include "Global.h"
 #include "MessageHandler.h"
 
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::TCPChannel::Message;
+using BlackBerry::Ripple::TCPChannel::MessageHandler;
 
 MessageHandler::MessageHandler(QObject *parent)
   : QObject(parent), m_pWebView(0)

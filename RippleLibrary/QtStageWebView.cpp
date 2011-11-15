@@ -23,8 +23,6 @@
 #include "RemoteDebugger.h"
 #include "PortScanner.h"
 
-using namespace BlackBerry::Ripple;
-
 QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false),_headersSize(0), m_inspector(0), m_inspectorProcess(0)
 {
     // Connect signals for events
