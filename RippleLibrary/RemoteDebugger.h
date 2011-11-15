@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef REMOTEDEBUGGER_H
-#define REMOTEDEBUGGER_H
+#ifndef RIPPLELIBRARY_REMOTEDEBUGGER_H_
+#define RIPPLELIBRARY_REMOTEDEBUGGER_H_
 
 #include <QMainWindow>
 #include <QWebView>
@@ -35,4 +35,4 @@ private:
     void init(void);
 };
 
-#endif // REMOTEDEBUGGER_H
+#endif  // RIPPLELIBRARY_REMOTEDEBUGGER_H_

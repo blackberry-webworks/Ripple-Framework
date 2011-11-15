@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef TCPBRIDGEWORKER_H
-#define TCPBRIDGEWORKER_H
+#ifndef RIPPLELIBRARY_TCPCHANNEL_TCPBRIDGEWORKER_H_
+#define RIPPLELIBRARY_TCPCHANNEL_TCPBRIDGEWORKER_H_
 
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -32,7 +32,7 @@ class TCPBridgeworker : public QObject
 {
   Q_OBJECT
   public:
-      TCPBridgeworker(QObject* parent = 0);
+      explicit TCPBridgeworker(QObject* parent = 0);
       virtual ~TCPBridgeworker();
  
       static TCPBridgeworker* server();
@@ -51,4 +51,4 @@ class TCPBridgeworker : public QObject
 static TCPBridgeworker* s_tcpServer;
 
 }}}
-#endif // TCPBRIDGEWORKER_H
+#endif  // RIPPLELIBRARY_TCPCHANNEL_TCPBRIDGEWORKER_H_

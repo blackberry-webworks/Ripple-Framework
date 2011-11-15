@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef RIPPLE_H
-#define RIPPLE_H
+#ifndef RIPPLE_RIPPLE_H_
+#define RIPPLE_RIPPLE_H_
 
 #include <QGLWidget>
 #include <QMainWindow>
@@ -25,8 +25,6 @@
 #include "ConfigData.h"
 #include "StageViewMsgHandler.h"
 #include "QtStageWebView.h"
-
-using namespace BlackBerry::Ripple::TCPChannel;
 
 namespace BlackBerry 
 {
@@ -46,7 +44,6 @@ namespace BlackBerry
 
     private slots:
         void registerAPIs();
-        void urlChanged(QUrl &url);
         void startTCP();
 
     private:
@@ -62,4 +59,4 @@ namespace BlackBerry
     };
   }
 }
-#endif // RIPPLE_H
+#endif  // RIPPLE_RIPPLE_H_

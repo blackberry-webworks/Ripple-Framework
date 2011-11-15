@@ -19,7 +19,8 @@
 #include "ScrollHandler.h"
 #include "TCPChannel/TCPBridgeworker.h"
 
-using namespace BlackBerry::Ripple;
+using BlackBerry::Ripple::Ripple;
+using BlackBerry::Ripple::TCPChannel::TCPBridgeworker;
 
 const int Ripple::PROGRESS_BAR_HEIGHT = 23;
 
@@ -144,9 +145,4 @@ void Ripple::resizeEvent(QResizeEvent * e )
     webViewInternal->qtStageWebView()->setGeometry(vRect);
     progressBar->setGeometry(QRect(0, (e->size().height() - PROGRESS_BAR_HEIGHT), e->size().width(), PROGRESS_BAR_HEIGHT));
     e->accept();
-}
-
-void Ripple::urlChanged(QUrl &url)
-{
-  
 }

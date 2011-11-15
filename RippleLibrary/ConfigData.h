@@ -14,7 +14,8 @@
 * limitations under the License.
 */
 
-#pragma once
+#ifndef RIPPLELIBRARY_CONFIGDATA_H_
+#define RIPPLELIBRARY_CONFIGDATA_H_
 
 #include <QSettings>
 
@@ -95,3 +96,4 @@ private:
     unsigned int _hardwareAccelerationEnabled;
     unsigned int _webGLEnabled;
 };
+#endif  // RIPPLELIBRARY_CONFIGDATA_H_

@@ -17,7 +17,7 @@
 #include "Global.h"
 #include "TCPMessageHandler.h"
 
-using namespace BlackBerry::Ripple::TCPChannel;
+using BlackBerry::Ripple::TCPChannel::TcpMessagehandler;
 
 TcpMessagehandler::TcpMessagehandler(QTcpSocket* conn, QObject *parent)
   : MessageHandler(parent), m_pTcpConnection(conn)

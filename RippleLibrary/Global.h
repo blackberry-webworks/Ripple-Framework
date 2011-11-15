@@ -13,6 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+#ifndef RIPPLELIBRARY_GLOBAL_H_
+#define RIPPLELIBRARY_GLOBAL_H_
 
 #include <QtGui>
 #include <QString>
@@ -23,3 +25,5 @@
 #include <QBuffer>
 #include <QDataStream>
 #include <QStringList>
+
+#endif  // RIPPLELIBRARY_GLOBAL_H_

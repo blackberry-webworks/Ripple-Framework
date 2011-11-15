@@ -23,7 +23,7 @@
 #include <tchar.h>
 #endif
 
-using namespace BlackBerry::Ripple;
+using BlackBerry::Ripple::Ripple;
 
 
 void write(const char * msg, QString type)
