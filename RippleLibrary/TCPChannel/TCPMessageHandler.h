@@ -20,10 +20,10 @@
 #include <QNetworkRequest>
 #include <QGraphicsWebView>
 
-#include "messagehandler.h"
-#include "qtstagewebview.h"
-#include <qjson/Parser.h>
-#include <qjson/Serializer.h>
+#include "MessageHandler.h"
+#include "QtStageWebView.h"
+#include "../qjson/src/parser.h"
+#include "../qjson/src/serializer.h"
 
 namespace BlackBerry {
 namespace Ripple {
