@@ -26,9 +26,9 @@
 #include "StageViewMsgHandler.h"
 #include "QtStageWebView.h"
 
-namespace BlackBerry 
+namespace BlackBerry
 {
-  namespace Ripple 
+  namespace Ripple
   {
     class Ripple : public QMainWindow
     {
@@ -37,15 +37,12 @@ namespace BlackBerry
     public:
       Ripple(QWidget *parent = 0, Qt::WFlags flags = 0);
       ~Ripple();
-
     protected:
         void closeEvent(QCloseEvent *event);
         void resizeEvent(QResizeEvent * e );
-
     private slots:
         void registerAPIs();
         void startTCP();
-
     private:
         QGLWidget *_GLWidget;
         ScrollHandler *_scrollHandler;
@@ -55,7 +52,7 @@ namespace BlackBerry
         ConfigData *_config;
         StageViewMsgHandler* m_pStageViewHandler;
     private:
-        void init(void);    
+        void init(void);
     };
   }
 }

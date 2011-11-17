@@ -22,7 +22,7 @@ TEST(QtStageWebView, CanRetrieveEmptyLocation)
     webview.continueLoad();
 
     QString location("");
-    
+
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
     QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
@@ -76,11 +76,11 @@ TEST(QtStageWebView, CanGoBackWhenMultiplePagesLoaded)
 
     QString location_0("http://www.google.ca/");
     QString location_1("http://www.thestar.com/mobile");
-    
+
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
     QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
- 
+
     // Create a timer to ensure the event loop quits
     QTimer timer;
     QObject::connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
@@ -131,7 +131,7 @@ TEST(QtStageWebView, CanGoForwardWhenMultiplePagesLoaded)
 
     QString location_0("http://www.thestar.com/mobile");
     QString location_1("http://www.google.ca/");
-    
+
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
     QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
@@ -203,7 +203,7 @@ TEST(QtStageWebView, CanRetrieveHistoryPosition)
     QString location_0("http://www.thestar.com/mobile");
     QString location_1("http://www.google.ca/");
     QString location_2("http://www.wikipedia.org/");
-    
+
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
     QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
@@ -250,7 +250,7 @@ TEST(QtStageWebView, CanGoToSpecificHistoryLocation)
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
     QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));
-    
+
     QTimer timer;
     QObject::connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
 
@@ -295,7 +295,7 @@ TEST (QtStageWebView, CanSetVisable){
     webview.continueLoad();
 
     webview.loadURL("http://www.google.ca/");
-    
+
     webview.visible(true);
     EXPECT_TRUE(webview.isVisible());
 }
@@ -330,10 +330,10 @@ TEST (QtStageWebView, CanAddCustomHeaderArray){
     char *headersArray[2];
     headersArray[0] = "MyHeaderKey";
     headersArray[1] = "MyHeaderValue";
-    
+
     webview.customHTTPHeaders(headersArray, 2);
     char** returnArray = webview.customHTTPHeaders();
-    
+
     EXPECT_EQ(*returnArray[0], *headersArray[0]);
     EXPECT_EQ(*returnArray[1], *headersArray[1]);
 }
@@ -385,7 +385,7 @@ TEST (QtStageWebView, CanSignalUrlChanged){
     webview.loadURL(location);
     QTimer::singleShot(5000, &loop, SLOT(quit()));
     loop.exec();
-    
+
     ASSERT_EQ(1, spy.count());
     QList<QVariant> arguments = spy.takeFirst();
     QString sent_url = qvariant_cast<QString>(arguments.at(0));
@@ -400,7 +400,7 @@ TEST(QtStageWebView, CanSignalJavaScriptWindowCleared)
     QString location("http://www.google.ca/");
 
     QSignalSpy spy(&webview, SIGNAL(javaScriptWindowObjectCleared()));
-        
+
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
     QObject::connect(&webview, SIGNAL(loadFinished(bool)), &loop, SLOT(quit()));

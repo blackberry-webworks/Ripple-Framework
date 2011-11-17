@@ -74,7 +74,7 @@ void StageViewMsgHandler::setVisable(const bool isVisible)
 
 void StageViewMsgHandler::setWindowGeometry(int x, int y, int w, int h)
 {
-    stageWebview()->setWindowGeometry(x,y,w,h);
+    stageWebview()->setWindowGeometry(x, y, w, h);
 }
 
 QString StageViewMsgHandler::location()

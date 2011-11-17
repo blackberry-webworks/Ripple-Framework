@@ -26,7 +26,6 @@ RemoteDebugger::RemoteDebugger()
 
 RemoteDebugger::~RemoteDebugger()
 {
-    
 }
 
 void RemoteDebugger::init(void)

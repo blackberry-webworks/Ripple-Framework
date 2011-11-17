@@ -25,7 +25,7 @@
 #include <qjson/Parser.h>
 #include <qjson/Serializer.h>
 
-namespace BlackBerry { 
+namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
@@ -34,34 +34,25 @@ static const QString PAYLOAD = "payload";
 static const QString RESOURCEREQUESTEDRESPONSE = "ResourceRequestedResponse";
 static const QString WEBVIEWURLCHANGEREQUEST = "WebviewUrlChangeRequest";
 
-
 class TcpMessagehandler : public MessageHandler
 {
     Q_OBJECT
-
 private:
     QTcpSocket* m_pTcpConnection;
-
 public:
     TcpMessagehandler(QTcpSocket* conn = 0, QObject *parent = 0);
     ~TcpMessagehandler();
     void processMessage(Message* pMsg) {}
     void processMessage(QVariantMap msg);
-
 protected:
     void registerEvents();
-
 private slots:
     void urlChanged(QString url);
     void onResourceRequested(QNetworkRequest* request);
-
-    void tcpReadyRead(); 
+    void tcpReadyRead();
     void tcpConnectionDisconnected();
-
 private:
-
     QJson::Parser parser;
-
     virtual IRippleWebView* stageWebview()
     {
         return static_cast<IRippleWebView*>(m_pWebView);
@@ -79,4 +70,3 @@ private:
 };
 }}}
 #endif  // RIPPLELIBRARY_TCPCHANNEL_TCPMESSAGEHANDLER_H_
-

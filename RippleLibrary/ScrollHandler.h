@@ -33,9 +33,7 @@ public:
     ~ScrollHandler();
 public slots:
     void unlock();
-    
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 };
-
 #endif  // RIPPLELIBRARY_SCROLLHANDLER_H_

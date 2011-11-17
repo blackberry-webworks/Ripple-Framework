@@ -25,4 +25,3 @@
 #include <QWebFrame>
 #include <QWebPage>
 #endif  // RIPPLE_GLOBAL_H_
-

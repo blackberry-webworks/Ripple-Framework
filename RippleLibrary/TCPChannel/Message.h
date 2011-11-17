@@ -23,23 +23,20 @@ namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
-class Message 
+class Message
 {
 public:
-  Message(int id, int size, QByteArray* pData);
-  Message(const Message& m);
-  virtual ~Message();
-
+    Message(int id, int size, QByteArray* pData);
+    Message(const Message& m);
+    virtual ~Message();
 public:
-  int ID() const;
-  int Size() const;
-  QByteArray* Data() const;
-
-private:  
-
-  int m_iID;
-  int m_iSize;
-  QByteArray* m_pData; 
+    int ID() const;
+    int Size() const;
+    QByteArray* Data() const;
+private:
+    int m_iID;
+    int m_iSize;
+    QByteArray* m_pData;
 };
 }}}
 #endif  // RIPPLELIBRARY_TCPCHANNEL_MESSAGE_H_

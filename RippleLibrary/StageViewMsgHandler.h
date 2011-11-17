@@ -34,9 +34,7 @@ class StageViewMsgHandler : public MessageHandler
 public:
     explicit StageViewMsgHandler(QObject *parent = 0);
     ~StageViewMsgHandler();
-   
 
-//stagewebview APIs
 public slots:
     void loadUrl(const QString& url);
     void executeJavaScript(const QString& script);
@@ -55,17 +53,15 @@ public slots:
     void setServerPort(int port);
     void setZoomFactor(float zoom);
     float zoomFactor();
-  
-   void processMessage(Message* pMsg);
-   void processMessage(QVariantMap msg){}
 
- 
-    //following slots are used internal for emit signals which will be connected from js side
+    void processMessage(Message* pMsg);
+    void processMessage(QVariantMap msg){}
+
+    // following slots are used internal for emit signals which will be connected from js side
     void urlChanged(const QString& url);
     void javaScriptWindowObjectCleared();
     void reload();
- 
-//stagewebview events
+
 signals:
     void locationChanged(const QString& url);
     void javaScriptWindowCleared();

@@ -31,7 +31,7 @@ TcpMessagehandler::~TcpMessagehandler()
 {
 }
 
-void TcpMessagehandler::tcpReadyRead() 
+void TcpMessagehandler::tcpReadyRead()
 {
     if (m_pTcpConnection && m_pTcpConnection->bytesAvailable())
     {
@@ -78,11 +78,11 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
 void TcpMessagehandler::registerEvents()
 {
     connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), 
+    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)),
         this, SLOT(onResourceRequested(QNetworkRequest*)));
 }
 
-void TcpMessagehandler::urlChanged(QString url) 
+void TcpMessagehandler::urlChanged(QString url)
 {
 }
 
@@ -96,7 +96,7 @@ void TcpMessagehandler::onResourceRequested(QNetworkRequest* req)
         msgToSend.insert("event", "ResourceRequested");
         msgToSend.insert("payload", url);
         QJson::Serializer serializer;
-        QByteArray json = serializer.serialize(msgToSend); 
+        QByteArray json = serializer.serialize(msgToSend);
         qDebug() << json;
         sendMessage(json, m_pTcpConnection);
         m_pTcpConnection->waitForBytesWritten();

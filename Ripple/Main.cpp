@@ -43,20 +43,24 @@ void write(const char * msg, QString type)
 
 void fileDbgMsgOutput(QtMsgType type, const char *msg)
 {
-    switch (type) {
-    case QtDebugMsg:
-        write(msg, "Debug");
-        break;
-    case QtWarningMsg:
-        write(msg, "Warning");
-        break;
-    case QtCriticalMsg:
-        write(msg, "Critical");
-        break;
-    case QtFatalMsg:
-        write(msg, "Fatal");
-        abort();
-   }
+    switch (type)
+    {
+        case QtDebugMsg:
+            write(msg, "Debug");
+            break;
+        case QtWarningMsg:
+            write(msg, "Warning");
+            break;
+        case QtCriticalMsg:
+            write(msg, "Critical");
+            break;
+        case QtFatalMsg:
+            write(msg, "Fatal");
+            abort();
+            break;
+        default:
+            break;
+    }
 }
 
 #ifdef Q_WS_WIN
@@ -79,25 +83,25 @@ int main(int argc, char *argv[])
     argv[argc] = _tcstok(cmdline, TEXT(" \t"));
     while(argv[argc] != 0)
     {
-        argc++ ;
+        argc++;
         argv[argc] = _tcstok(0, TEXT(" \t"));
     }
-#endif    
+#endif
     QApplication app(argc, argv);
     app.setStyle("plastique");
     app.setApplicationName("Ripple");
     app.setOrganizationName("Research in Motion");
     app.setOrganizationDomain("blackberry.com");
-    
+
     RemoteDebugger *remoteDebugger = new RemoteDebugger();
 
-#ifdef Q_WS_WIN    
-    if (argc == 2 )
+#ifdef Q_WS_WIN
+    if (argc == 2)
     {
         QString paramName = argv[0];
         QString paramVal = argv[1];
 #else
-    if ( argc == 3 )
+    if (argc == 3)
     {
         QString paramName = argv[1];
         QString paramVal = argv[2];
