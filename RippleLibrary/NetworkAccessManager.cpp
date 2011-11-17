@@ -58,15 +58,20 @@ void NetworkAccessManager::response(QVariantMap payload) {
     }
     else if (responseText == "deny" || responseText == "substitute") {
         ResourceRequestedReply *reply = new ResourceRequestedReply(id, url);
+        connect(reply, SIGNAL(destroyed(QObject*)), this, SLOT(removeFromPending(QObject*)));
         pendingRequests.insert(id, reply);
         reply->respond(response);
-    } else {
+    }
+    else
+    {
         ResourceRequestedReply *reply = pendingRequests.value(id);
         if (reply && reply->isSubstitute())
-        {
             reply->respond(response);
-            pendingRequests.remove(id);
-        }
     }
 }
 
+void NetworkAccessManager::removeFromPending(QObject* destroyed) {
+    ResourceRequestedReply *reply = static_cast<ResourceRequestedReply*>(destroyed);
+    if (reply)
+        pendingRequests.remove(reply->getID());
+}
