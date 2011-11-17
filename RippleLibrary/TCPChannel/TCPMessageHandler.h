@@ -24,6 +24,7 @@
 #include "qtstagewebview.h"
 #include <qjson/Parser.h>
 #include <qjson/Serializer.h>
+#include "ResourceRequestedReply.h"
 
 namespace BlackBerry { 
 namespace Ripple {
@@ -53,7 +54,7 @@ protected:
 
 private slots:
     void urlChanged(QString url);
-    void onResourceRequested(QNetworkRequest* request);
+    void onResourceRequested(QUuid id, const QNetworkRequest &request);
 
     void tcpReadyRead(); 
     void tcpConnectionDisconnected();

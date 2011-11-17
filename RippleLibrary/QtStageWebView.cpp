@@ -22,9 +22,14 @@
 #include <QMessageBox>
 #include "RemoteDebugger.h"
 #include "PortScanner.h"
+#include "NetworkAccessManager.h"
 
 QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false),_headersSize(0), m_inspector(0), m_inspectorProcess(0)
 {
+    QNetworkAccessManager *oldManager = page()->networkAccessManager();
+    NetworkAccessManager *newManager = new NetworkAccessManager(oldManager, this);
+    page()->setNetworkAccessManager(newManager);
+
     // Connect signals for events
     connect(this, SIGNAL(urlChanged(const QUrl&)), this, SLOT(notifyUrlChanged(const QUrl&)));
 
