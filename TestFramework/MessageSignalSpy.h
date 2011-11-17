@@ -32,7 +32,7 @@ public:
         connect(obj, aSignal, this, SLOT(getArguments(Message *)));
     }
 
-    virtual ~MessageSignalSpy() 
+    virtual ~MessageSignalSpy()
     {
     }
 
