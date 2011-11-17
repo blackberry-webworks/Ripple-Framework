@@ -580,7 +580,6 @@ def _RecursiveMode():
 
 def _SetRecursiveMode(recursive_mode):
   """Sets the module's recursive mode"""
-  print "in _SetRecursiveMode: ", recursive_mode
   _cpplint_state.SetRecursiveMode(recursive_mode)
 
 def _OutputFormat():
@@ -3241,8 +3240,6 @@ def ProcessFile(filename, vlevel, extra_check_functions=[]):
         carriage_return_found = True
 
   except IOError:
-    sys.stderr.write(
-        "Skipping input '%s': Can't open for reading\n" % filename)
     return
 
   # Note, if no dot is found, this will give the entire filename as the ext.
@@ -3250,10 +3247,8 @@ def ProcessFile(filename, vlevel, extra_check_functions=[]):
 
   # When reading from stdin, the extension is unknown, so no cpplint tests
   # should rely on the extension.
-  if (filename != '-' and file_extension != 'cc' and file_extension != 'h'
-      and file_extension != 'cpp'):
-    sys.stderr.write('Ignoring %s; not a .cc or .h file\n' % filename)
-  else:
+  if (filename == '-' or file_extension == 'cc' or file_extension == 'h'
+      or file_extension == 'cpp'):
     ProcessFileData(filename, file_extension, lines, Error,
                     extra_check_functions)
     if carriage_return_found and os.linesep != '\r\n':
@@ -3262,8 +3257,6 @@ def ProcessFile(filename, vlevel, extra_check_functions=[]):
       Error(filename, 0, 'whitespace/newline', 1,
             'One or more unexpected \\r (^M) found;'
             'better to use only a \\n')
-
-  sys.stderr.write('Done processing %s\n' % filename)
 
 
 def PrintUsage(message):
@@ -3347,7 +3340,6 @@ def ParseArguments(args):
 def main():
   import os.path
   filenames = ParseArguments(sys.argv[1:])
-  print _cpplint_state.recursive_mode 
   # Change stderr to write with replacement characters so we don't die
   # if we try to print something containing non-ASCII characters.
   sys.stderr = codecs.StreamReaderWriter(sys.stderr,
