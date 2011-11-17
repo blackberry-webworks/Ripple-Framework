@@ -21,13 +21,12 @@
 
 class ConfigData
 {
-
 public:
-    static ConfigData* getInstance();   
+    static ConfigData* getInstance();
     ~ConfigData(void);
-    
+
     void writeSettings();
-    
+
     QString toolingContent();
     void toolingContent(QString content);
 
@@ -48,15 +47,14 @@ public:
 
     unsigned short buildServicePort();
     void buildServicePort(unsigned short port);
-    
+
     unsigned int hardwareAccelerationEnabled();
     void hardwareAccelerationEnabled(unsigned int hwEnabled);
-    
+
     unsigned int webGLEnabled();
     void webGLEnabled(unsigned int glEnabled);
 
 private:
-
     ConfigData(void);
     void readSettings();
 
@@ -96,4 +94,5 @@ private:
     unsigned int _hardwareAccelerationEnabled;
     unsigned int _webGLEnabled;
 };
+
 #endif  // RIPPLELIBRARY_CONFIGDATA_H_

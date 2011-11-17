@@ -17,14 +17,14 @@
 #include "Global.h"
 #include "QtStageWebView.h"
 #include "ScrollHandler.h"
-#include <QMenu> 
+#include <QMenu>
 #include <QAction>
 #include <QMessageBox>
 #include "RemoteDebugger.h"
 #include "PortScanner.h"
 #include "NetworkAccessManager.h"
 
-QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false),_headersSize(0), m_inspector(0), m_inspectorProcess(0)
+QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false), _headersSize(0), m_inspector(0), m_inspectorProcess(0)
 {
     QNetworkAccessManager *oldManager = page()->networkAccessManager();
     NetworkAccessManager *newManager = new NetworkAccessManager(oldManager, this);
@@ -70,13 +70,11 @@ QtStageWebView::~QtStageWebView(void)
 
 void QtStageWebView::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
-  QMenu menu;
-  QAction *inspectAction = menu.addAction("Inspect");
-  QAction *selectedAction = menu.exec(event->screenPos());
-  if (inspectAction == selectedAction) {
-    this->page()->triggerAction(QWebPage::InspectElement);
-  }
-
+    QMenu menu;
+    QAction *inspectAction = menu.addAction("Inspect");
+    QAction *selectedAction = menu.exec(event->screenPos());
+    if (inspectAction == selectedAction)
+        this->page()->triggerAction(QWebPage::InspectElement);
 }
 
 void QtStageWebView::loadURL(QString url)
@@ -200,7 +198,7 @@ char** QtStageWebView::customHTTPHeaders()
 void QtStageWebView::customHTTPHeaders(char *headers[], unsigned int headersSize)
 {
     _headers = new char*[headersSize];
-    
+
     for (unsigned int i = 0; i < headersSize; i++)
     {
         _headers[i] = new char[strlen(headers[i]) + 1];
@@ -214,11 +212,11 @@ void QtStageWebView::customHTTPHeaders(QString key, QString value)
 {
     QByteArray mKey = key.toAscii();
     QByteArray mValue = value.toAscii();
-    
+
     char *headersArray[2];
     headersArray[0] = mKey.data();
     headersArray[1] = mValue.data();
-    
+
     customHTTPHeaders( headersArray, 2);
 }
 
@@ -230,10 +228,12 @@ void QtStageWebView::visible(bool enable)
     (enable) ? this->show():this->hide();
 }
 
-void QtStageWebView::setZoom(float zoom) {
-  this->setZoomFactor(zoom);
+void QtStageWebView::setZoom(float zoom)
+{
+    this->setZoomFactor(zoom);
 }
 
-float QtStageWebView::zoom() {
-  return this->zoomFactor();
+float QtStageWebView::zoom()
+{
+    return this->zoomFactor();
 }

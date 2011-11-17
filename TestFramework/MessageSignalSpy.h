@@ -27,9 +27,7 @@ class MessageSignalSpy : public QObject
     Q_OBJECT
 
 public:
-
-    MessageSignalSpy(QObject *obj, const char *aSignal)
-        : spy(obj, aSignal)
+    MessageSignalSpy(QObject *obj, const char *aSignal) : spy(obj, aSignal)
     {
         connect(obj, aSignal, this, SLOT(getArguments(Message *)));
     }
@@ -62,5 +60,4 @@ private:
 
     QSignalSpy spy;
 };
-
 #endif  // TESTFRAMEWORK_MESSAGESIGNALSPY_H_

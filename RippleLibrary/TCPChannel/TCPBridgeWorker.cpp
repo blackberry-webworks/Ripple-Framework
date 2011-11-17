@@ -27,8 +27,7 @@ TCPBridgeworker* TCPBridgeworker::server()
     return s_tcpServer;
 }
 
-TCPBridgeworker::TCPBridgeworker(QObject* parent) 
-    : QObject(parent), m_pTcpServer(0), m_pWebView(0)
+TCPBridgeworker::TCPBridgeworker(QObject* parent) : QObject(parent), m_pTcpServer(0), m_pWebView(0)
 {
 }
 
@@ -61,7 +60,7 @@ void TCPBridgeworker::newConnection()
 
 void TCPBridgeworker::close()
 {
-    if (m_pTcpServer) 
+    if (m_pTcpServer)
     {
         m_pTcpServer->close();
         delete m_pTcpServer;

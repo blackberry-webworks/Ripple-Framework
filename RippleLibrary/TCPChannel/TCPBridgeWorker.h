@@ -24,31 +24,27 @@
 #include "MessageHandler.h"
 #include "QtStageWebView.h"
 
-namespace BlackBerry { 
+namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
 class TCPBridgeworker : public QObject
 {
-  Q_OBJECT
-  public:
-      explicit TCPBridgeworker(QObject* parent = 0);
-      virtual ~TCPBridgeworker();
- 
-      static TCPBridgeworker* server();
-      void setWebView(QtStageWebView* pView) { m_pWebView = pView;}
-      void listen(int port = 53533);
-  protected:
-     void close();
-
-  private slots:
-     void newConnection();
-  private:
+    Q_OBJECT
+public:
+    explicit TCPBridgeworker(QObject* parent = 0);
+    virtual ~TCPBridgeworker();
+    static TCPBridgeworker* server();
+    void setWebView(QtStageWebView* pView) { m_pWebView = pView;}
+    void listen(int port = 53533);
+protected:
+    void close();
+private slots:
+    void newConnection();
+private:
     QTcpServer* m_pTcpServer;
     QtStageWebView* m_pWebView;
 };
-
 static TCPBridgeworker* s_tcpServer;
-
 }}}
 #endif  // RIPPLELIBRARY_TCPCHANNEL_TCPBRIDGEWORKER_H_

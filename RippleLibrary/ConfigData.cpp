@@ -25,7 +25,7 @@ const QString ConfigData::CONFIGURATION_FILE_NAME = "config.ini";
 const QString ConfigData::APPLICATION_NAME_IN_SETTINGS = "Ripple";
 const QString ConfigData::TOOLING_CONTENT_NAME_IN_SETTINGS = "windowContent";
 const QString ConfigData::MAIN_WINDOW_SIZE_NAME_IN_SETTINGS = "windowSize";
-const QString ConfigData::MAIN_WINDOW_POSITION_NAME_IN_SETTINGS = "windowPos"; 
+const QString ConfigData::MAIN_WINDOW_POSITION_NAME_IN_SETTINGS = "windowPos";
 const QString ConfigData::MAIN_WINDOW_STATE_NAME_IN_SETTINGS = "windowState";
 const QString ConfigData::LOCAL_STORAGE_PATH_IN_SETTINGS = "localStoragePath";
 const QString ConfigData::BUILD_SERVICE_COMMAND_IN_SETTINGS = "buildServiceCommand";
@@ -60,7 +60,7 @@ ConfigData::ConfigData(void)
 
 ConfigData::~ConfigData(void)
 {
-    _instanceFlag = false;  
+    _instanceFlag = false;
     _instance = NULL;
 
     delete _settings;
@@ -91,7 +91,7 @@ void ConfigData::writeSettings()
     _settings->setValue(BUILD_SERVICE_COMMAND_IN_SETTINGS, _buildServiceCommand);
     _settings->setValue(BUILD_SERVICE_PORT_IN_SETTINGS, _buildServicePort);
     _settings->setValue(HARDWARE_ACCELERATION_IN_SETTINGS, _hardwareAccelerationEnabled);
-    _settings->setValue(WEBGL_ENABLED_IN_SETTINGS, _webGLEnabled);    
+    _settings->setValue(WEBGL_ENABLED_IN_SETTINGS, _webGLEnabled);
     _settings->endGroup();
 }
 

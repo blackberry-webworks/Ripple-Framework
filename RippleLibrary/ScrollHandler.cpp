@@ -28,7 +28,6 @@ ScrollHandler::ScrollHandler(QtStageWebView *parent)
 
 ScrollHandler::~ScrollHandler()
 {
-
 }
 
 void ScrollHandler::unlock()
@@ -56,9 +55,7 @@ bool ScrollHandler::eventFilter(QObject *obj, QEvent *event)
         }
         else
             return true;
-    } else {
-        
+    }
+    else
         return QObject::eventFilter(obj, event);
-    }    
-    
 }

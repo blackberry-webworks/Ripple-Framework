@@ -32,7 +32,7 @@ TcpMessagehandler::~TcpMessagehandler()
 {
 }
 
-void TcpMessagehandler::tcpReadyRead() 
+void TcpMessagehandler::tcpReadyRead()
 {
     if (m_pTcpConnection && m_pTcpConnection->bytesAvailable())
     {
@@ -76,11 +76,10 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
 void TcpMessagehandler::registerEvents()
 {
     connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-    connect(graphicsWebview()->page()->networkAccessManager(), SIGNAL(onResourceRequest(QUuid, QNetworkRequest)), 
-        this, SLOT(onResourceRequested(QUuid, QNetworkRequest)));
+    connect(graphicsWebview()->page()->networkAccessManager(), SIGNAL(onResourceRequest(QUuid, QNetworkRequest)), this, SLOT(onResourceRequested(QUuid, QNetworkRequest)));
 }
 
-void TcpMessagehandler::urlChanged(QString url) 
+void TcpMessagehandler::urlChanged(QString url)
 {
 }
 

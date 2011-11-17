@@ -20,13 +20,13 @@
 #include <QNetworkRequest>
 #include <QGraphicsWebView>
 
-#include "messagehandler.h"
-#include "qtstagewebview.h"
-#include <qjson/Parser.h>
-#include <qjson/Serializer.h>
+#include "MessageHandler.h"
+#include "QtStageWebView.h"
+#include "../qjson/src/parser.h"
+#include "../qjson/src/serializer.h"
 #include "ResourceRequestedReply.h"
 
-namespace BlackBerry { 
+namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
@@ -56,13 +56,10 @@ private slots:
     void urlChanged(QString url);
     void onResourceRequested(QUuid id, const QNetworkRequest &request);
 
-    void tcpReadyRead(); 
+    void tcpReadyRead();
     void tcpConnectionDisconnected();
-
 private:
-
     QJson::Parser parser;
-
     virtual IRippleWebView* stageWebview()
     {
         return static_cast<IRippleWebView*>(m_pWebView);
@@ -80,4 +77,3 @@ private:
 };
 }}}
 #endif  // RIPPLELIBRARY_TCPCHANNEL_TCPMESSAGEHANDLER_H_
-

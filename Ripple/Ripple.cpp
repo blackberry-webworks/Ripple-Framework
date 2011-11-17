@@ -54,7 +54,7 @@ void Ripple::init(void)
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
 #if QT_VERSION >= 0x040800
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::AcceleratedCompositingEnabled, true);
-#endif    
+#endif
     webViewInternal->qtStageWebView()->settings()->setWebSecurityEnabled(false);
 
     if (QGLFormat::hasOpenGL())
@@ -63,14 +63,14 @@ void Ripple::init(void)
         {
             webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::WebGLEnabled, true);
         }
-        
+
         if (_config->hardwareAccelerationEnabled() == 1)
         {
             QGLFormat format;
             format.setSampleBuffers(true);
             webViewInternal->setViewport(new QGLWidget(format));
             webViewInternal->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-            
+
             // init scroll handler
             _scrollHandler = new ScrollHandler(webViewInternal->qtStageWebView());
             webViewInternal->viewport()->installEventFilter(_scrollHandler);
@@ -84,7 +84,7 @@ void Ripple::init(void)
     connect(webViewInternal, SIGNAL(loadStarted()), progressBar, SLOT( show() ));
     connect(webViewInternal, SIGNAL(loadStarted()), progressBar, SLOT( reset()));
     //Increment the progress bar as the page loads
-    connect(webViewInternal, SIGNAL(loadProgress(int)), progressBar, SLOT(setValue(int))); 
+    connect(webViewInternal, SIGNAL(loadProgress(int)), progressBar, SLOT(setValue(int)));
     //When page is finished loading, hide the progress bar
     connect(webViewInternal, SIGNAL(loadFinished(bool)), progressBar, SLOT( hide() ));
     //--------------------------------------
@@ -103,18 +103,18 @@ void Ripple::init(void)
     move(_config->windowPosition());
 
     webViewInternal->qtStageWebView()->loadURL(_config->toolingContent());
-    
+
     setCentralWidget(webViewInternal);
 
     //register webview
     connect(webViewInternal->qtStageWebView()->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(registerAPIs()));
     //stagewebview interfaces
     m_pStageViewHandler = new StageViewMsgHandler(this);
-    m_pStageViewHandler->Register(webViewInternal->qtStageWebView());   
+    m_pStageViewHandler->Register(webViewInternal->qtStageWebView());
     startTCP();
 }
 
-void Ripple::startTCP() 
+void Ripple::startTCP()
 {
     TCPBridgeworker* worker = TCPBridgeworker::server();
     worker->setWebView(webViewInternal->qtStageWebView());

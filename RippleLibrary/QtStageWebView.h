@@ -64,7 +64,7 @@ public:
     {
         QGraphicsWidget::setGeometry(x, y, w, h);
     }
-    QString title();    
+    QString title();
     int historyLength();
     int historyPosition();
     void historyPosition(int position);
@@ -106,7 +106,6 @@ public:
         setFrameShape(QFrame::NoFrame);
         setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    
     };
     QtStageWebView *qtStageWebView() const { return m_pWebView; }
     void paintEvent(QPaintEvent *pe)
@@ -117,5 +116,4 @@ public:
 private:
     QtStageWebView *m_pWebView;
 };
-
 #endif  // RIPPLELIBRARY_QTSTAGEWEBVIEW_H_

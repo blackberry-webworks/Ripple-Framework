@@ -25,7 +25,6 @@ PortScanner::PortScanner()
 
 PortScanner::~PortScanner()
 {
-
 }
 
 // simple function to find open port on system

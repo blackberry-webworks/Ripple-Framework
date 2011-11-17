@@ -24,27 +24,27 @@ Message::Message(int id, int size, QByteArray* pData)
 {
 }
 
-Message::Message( const Message& m)
+Message::Message(const Message& m)
 {
-  m_iID = m.ID();
-  m_iSize = m.Size();
-  m_pData = new QByteArray(*m.Data()); 
+    m_iID = m.ID();
+    m_iSize = m.Size();
+    m_pData = new QByteArray(*m.Data());
 }
 
-Message::~Message() 
+Message::~Message()
 {
-  //if ( m_pData != 0 )
-  //  delete m_pData; must be released outside the class after the data was used, in processMessage() of the messagehandler
 }
 
 int Message::ID() const
 {
     return m_iID;
 }
+
 int Message::Size() const
 {
     return m_iSize;
 }
+
 QByteArray* Message::Data() const
 {
     return m_pData;
