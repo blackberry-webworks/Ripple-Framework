@@ -27,5 +27,4 @@ public:
     ~PortScanner();
     static unsigned short findUsablePort(unsigned short port);
 };
-
 #endif  // RIPPLELIBRARY_PORTSCANNER_H_

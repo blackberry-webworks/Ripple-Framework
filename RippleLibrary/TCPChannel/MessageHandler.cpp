@@ -44,14 +44,14 @@ void MessageHandler::sendMessage(int id, const QString& msg)
 
 void MessageHandler::sendMessage(const QString& json, QTcpSocket* tcpSocket)
 {
-   if ( tcpSocket )
-   {
+    if (tcpSocket)
+    {
         QByteArray a;
         a.append(json);
-        if ( tcpSocket->write(a) == -1 )
+        if (tcpSocket->write(a) == -1)
         {
-            qDebug() << "Error to write: " << json; 
+            qDebug() << "Error to write: " << json;
         }
         tcpSocket->flush();
-   }
+    }
 }

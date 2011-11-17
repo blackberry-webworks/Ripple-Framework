@@ -22,7 +22,7 @@
 #include "Message.h"
 #include "IRIMStageWebView.h"
 
-namespace BlackBerry { 
+namespace BlackBerry {
 namespace Ripple {
 namespace TCPChannel {
 
@@ -31,37 +31,28 @@ class MessageHandler : public QObject
   Q_OBJECT
 public:
     explicit MessageHandler(QObject *parent);
-    virtual ~MessageHandler(); 
-
+    virtual ~MessageHandler();
     void EmitMessage(Message* pMsg)
     {
        emit messageSent(pMsg);
     }
-
     void Register(IRippleWebView* pWebView)
     {
       m_pWebView = pWebView;
       registerEvents();
     }
-
 public slots:
     virtual void processMessage(Message* pMsg) = 0;
     virtual void processMessage(QVariantMap msg) = 0;
-
 protected:
     virtual void registerEvents() = 0;
     virtual void sendMessage(int id, const QString& msg);
     virtual void sendMessage(const QString& json, QTcpSocket* tcpSocket);
-  
 signals:
     void messageProcessed(Message* pMsg);
     void messageSent(Message*);
-
 protected:
     IRippleWebView* m_pWebView;
-
-private:
-
 };
 }}}
 #endif  // RIPPLELIBRARY_TCPCHANNEL_MESSAGEHANDLER_H_
