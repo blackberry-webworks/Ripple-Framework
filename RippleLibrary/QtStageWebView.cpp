@@ -95,8 +95,8 @@ void QtStageWebView::reload()
 void QtStageWebView::notifyUrlChanged(const QUrl& url)
 {
     emit urlChanged(url.toString());
-  if(m_inspector)
-    m_inspector->setPage(page());
+    if (m_inspector)
+        m_inspector->setPage(page());
 }
 
 void QtStageWebView::notifyJavaScriptWindowObjectCleared()
@@ -118,7 +118,7 @@ void QtStageWebView::registerEventbus()
     frame->evaluateJavaScript(BlackBerry::Ripple::eventbusSource);
 
     // check for iframes, if found add to window object
-    for(int i = 0; i < frame->childFrames().length(); i++)
+    for (int i = 0; i < frame->childFrames().length(); i++)
     {
         frame->childFrames()[i]->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame->childFrames()[i]));
         frame->childFrames()[i]->evaluateJavaScript(BlackBerry::Ripple::eventbusSource);
@@ -217,7 +217,7 @@ void QtStageWebView::customHTTPHeaders(QString key, QString value)
     headersArray[0] = mKey.data();
     headersArray[1] = mValue.data();
 
-    customHTTPHeaders( headersArray, 2);
+    customHTTPHeaders(headersArray, 2);
 }
 
 void QtStageWebView::visible(bool enable)

@@ -62,7 +62,7 @@ void NetworkAccessManager::response(QVariantMap payload) {
         reply->respond(response);
     } else {
         ResourceRequestedReply *reply = pendingRequests.value(id);
-        if(reply && reply->isSubstitute())
+        if (reply && reply->isSubstitute())
         {
             reply->respond(response);
             pendingRequests.remove(id);
