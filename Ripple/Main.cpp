@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     int argc = 0;
     _tcscpy(cmdline, lpCmdLine);
     argv[argc] = _tcstok(cmdline, TEXT(" \t"));
-    while(argv[argc] != 0)
+    while (argv[argc] != 0)
     {
         argc++;
         argv[argc] = _tcstok(0, TEXT(" \t"));

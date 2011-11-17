@@ -29,7 +29,7 @@ public:
     void show(QString port);
 protected:
     void closeEvent(QCloseEvent *event);
-    void resizeEvent(QResizeEvent * e );
+    void resizeEvent(QResizeEvent *e);
 private:
     QWebView *debuggerView;
     void init(void);

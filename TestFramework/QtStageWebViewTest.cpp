@@ -290,7 +290,8 @@ TEST(QtStageWebView, CanGoToSpecificHistoryLocation)
     EXPECT_EQ(1, webview.historyPosition());
 }
 
-TEST (QtStageWebView, CanSetVisable){
+TEST(QtStageWebView, CanSetVisable)
+{
     QtStageWebView webview;
     webview.continueLoad();
 
@@ -300,7 +301,8 @@ TEST (QtStageWebView, CanSetVisable){
     EXPECT_TRUE(webview.isVisible());
 }
 
-TEST (QtStageWebView, CanSetInvisable){
+TEST(QtStageWebView, CanSetInvisable)
+{
     QtStageWebView webview;
     webview.continueLoad();
 
@@ -310,7 +312,8 @@ TEST (QtStageWebView, CanSetInvisable){
     EXPECT_FALSE(webview.isVisible());
 }
 /*
-TEST (QtStageWebView, CanAddCustomHeader){
+TEST(QtStageWebView, CanAddCustomHeader)
+{
     QtStageWebView webview;
     QString key = QString("MyHeaderKey");
     QString value = QString("MyHeaderValue");
@@ -325,7 +328,8 @@ TEST (QtStageWebView, CanAddCustomHeader){
     EXPECT_EQ(returnedValue, value);
 }
 */
-TEST (QtStageWebView, CanAddCustomHeaderArray){
+TEST(QtStageWebView, CanAddCustomHeaderArray)
+{
     QtStageWebView webview;
     char *headersArray[2];
     headersArray[0] = "MyHeaderKey";
@@ -370,7 +374,8 @@ TEST(QtStageWebView, CanExecuteJavaScript)
     EXPECT_EQ(7, webview.executeJavaScript("a=3+4").toInt());
 }
 
-TEST (QtStageWebView, CanSignalUrlChanged){
+TEST(QtStageWebView, CanSignalUrlChanged)
+{
     QtStageWebView webview;
     webview.continueLoad();
 

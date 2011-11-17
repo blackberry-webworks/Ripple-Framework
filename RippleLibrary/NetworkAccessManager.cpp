@@ -61,9 +61,11 @@ void NetworkAccessManager::response(QVariantMap payload) {
         connect(reply, SIGNAL(destroyed(QObject*)), this, SLOT(removeFromPending(QObject*)));
         pendingRequests.insert(id, reply);
         reply->respond(response);
-    } else {
+    }
+    else
+    {
         ResourceRequestedReply *reply = pendingRequests.value(id);
-        if(reply && reply->isSubstitute())
+        if (reply && reply->isSubstitute())
             reply->respond(response);
     }
 }

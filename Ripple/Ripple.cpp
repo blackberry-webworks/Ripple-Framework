@@ -81,12 +81,12 @@ void Ripple::init(void)
     progressBar->setVisible(false);
     progressBar->setObjectName(QString::fromUtf8("progressBar"));
     //When the loading of a new page has started, show and reset the progress bar
-    connect(webViewInternal, SIGNAL(loadStarted()), progressBar, SLOT( show() ));
-    connect(webViewInternal, SIGNAL(loadStarted()), progressBar, SLOT( reset()));
+    connect(webViewInternal, SIGNAL(loadStarted()), progressBar, SLOT(show()));
+    connect(webViewInternal, SIGNAL(loadStarted()), progressBar, SLOT(reset()));
     //Increment the progress bar as the page loads
     connect(webViewInternal, SIGNAL(loadProgress(int)), progressBar, SLOT(setValue(int)));
     //When page is finished loading, hide the progress bar
-    connect(webViewInternal, SIGNAL(loadFinished(bool)), progressBar, SLOT( hide() ));
+    connect(webViewInternal, SIGNAL(loadFinished(bool)), progressBar, SLOT(hide()));
     //--------------------------------------
     // init window
 
