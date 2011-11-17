@@ -25,19 +25,19 @@ class ResourceRequestedReply : public QNetworkReply
     Q_OBJECT
 
 public:
-    ResourceRequestedReply(const QString id, const QUrl &url);
+    ResourceRequestedReply(QString id, const QUrl &url);
     qint64 bytesAvailable() const;
     void abort(){}
     bool isSequential() const;
     void respond(QVariantMap response);
     bool isSubstitute() {return m_substitute;}
-    const QString id() {return m_id;}
+    QString getID() {return m_id;}
 
 protected:
     qint64 readData(char *data, qint64 maxSize);
 
 private:
-    const QString m_id;
+    QString m_id;
     qint64 offset;
     QByteArray content;
     bool m_substitute;
