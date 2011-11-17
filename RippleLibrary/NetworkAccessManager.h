@@ -38,6 +38,9 @@ protected:
 private:
     ResourceRequestedReply *reply;
     QMap<QString, ResourceRequestedReply*> pendingRequests;
+
+private slots:
+    void removeFromPending(QObject* reply);
 };
 
 #endif  // RIPPLELIBRARY_NETWORKACCESSMANAGER_H_
