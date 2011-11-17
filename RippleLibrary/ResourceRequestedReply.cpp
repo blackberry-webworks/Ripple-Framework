@@ -44,7 +44,7 @@ bool ResourceRequestedReply::isSequential() const
 
 qint64 ResourceRequestedReply::bytesAvailable() const
 {
-    //Calling QNetworkReply::bytesAvailable() is required by all QNetworkReply 
+    //Calling QNetworkReply::bytesAvailable() is required by all QNetworkReply
     //sub classes that return isSequential = true.
     //See QIODevice.cpp - bytesAvailable for documentation
     return content.size() + QNetworkReply::bytesAvailable() - offset;
