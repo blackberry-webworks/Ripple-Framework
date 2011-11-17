@@ -16,6 +16,7 @@
 
 #include "Global.h"
 #include "TCPMessageHandler.h"
+#include "NetworkAccessManager.h"
 
 using BlackBerry::Ripple::TCPChannel::TcpMessagehandler;
 
@@ -43,8 +44,7 @@ void TcpMessagehandler::tcpReadyRead()
         if (!ok)
             qDebug() << "something went wrong during the conversion";
         else
-            qDebug() << "converted to" << result;
-        processMessage(result);
+            processMessage(result);
     }
 }
 
@@ -63,10 +63,8 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
     if ( event == RESOURCEREQUESTEDRESPONSE )
     {
         QVariantMap payload = msg[PAYLOAD].toMap();
-        QString url = payload["url"].toString();
-        QVariantMap response = payload["response"].toMap();
-        QString resonseText = response["responseText"].toString();
-        graphicsWebview()->page()->mainFrame()->setAllowAccess(resonseText != "deny");
+        NetworkAccessManager *networkAccessManager = reinterpret_cast<NetworkAccessManager*>(graphicsWebview()->page()->networkAccessManager());
+        networkAccessManager->response(payload);
     }
     else if ( event == WEBVIEWURLCHANGEREQUEST )
     {
@@ -78,26 +76,27 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
 void TcpMessagehandler::registerEvents()
 {
     connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-    connect(graphicsWebview()->page()->mainFrame(), SIGNAL(onResourceRequest(QNetworkRequest*)), 
-        this, SLOT(onResourceRequested(QNetworkRequest*)));
+    connect(graphicsWebview()->page()->networkAccessManager(), SIGNAL(onResourceRequest(QUuid, QNetworkRequest)), 
+        this, SLOT(onResourceRequested(QUuid, QNetworkRequest)));
 }
 
 void TcpMessagehandler::urlChanged(QString url) 
 {
 }
 
-void TcpMessagehandler::onResourceRequested(QNetworkRequest* req)
+void TcpMessagehandler::onResourceRequested(QUuid id, const QNetworkRequest &req)
 {
     if ( m_pTcpConnection )
     {
         m_pTcpConnection->disconnect(SIGNAL(readyRead()));
-        QString url = req->url().toString();
         QVariantMap msgToSend;
+        QVariantMap payload;
+        payload.insert("id", id.toString());
+        payload.insert("url", req.url().toString());
         msgToSend.insert("event", "ResourceRequested");
-        msgToSend.insert("payload", url);
+        msgToSend.insert("payload", payload);
         QJson::Serializer serializer;
-        QByteArray json = serializer.serialize(msgToSend); 
-        qDebug() << json;
+        QByteArray json = serializer.serialize(msgToSend);
         sendMessage(json, m_pTcpConnection);
         m_pTcpConnection->waitForBytesWritten();
         if ( m_pTcpConnection->waitForReadyRead())
