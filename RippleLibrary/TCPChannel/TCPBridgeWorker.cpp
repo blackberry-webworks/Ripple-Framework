@@ -47,7 +47,7 @@ void TCPBridgeworker::listen(int port)
         close();
         return;
     }
-    connect(m_pTcpServer, SIGNAL( newConnection()), this, SLOT(newConnection()));
+    connect(m_pTcpServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
 }
 
 void TCPBridgeworker::newConnection()

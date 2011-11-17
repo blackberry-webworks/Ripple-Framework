@@ -55,8 +55,10 @@ void ResourceRequestedReply::respond(QVariantMap response)
     QString responseText = response["responseText"].toString();
     QString code = response["code"].toString();
 
-    if(!m_substitute){
-        if(responseText == "deny"){
+    if (!m_substitute)
+    {
+        if (responseText == "deny")
+        {
             open(ReadOnly | Unbuffered);
             setAttribute(QNetworkRequest::HttpStatusCodeAttribute, QVariant(403));
             setHeader(QNetworkRequest::ContentLengthHeader, QVariant(0));
@@ -64,10 +66,13 @@ void ResourceRequestedReply::respond(QVariantMap response)
             QTimer::singleShot(0, this, SIGNAL(readyRead()));
             QTimer::singleShot(0, this, SIGNAL(finished()));
         }
-        else if(responseText == "substitute"){
+        else if (responseText == "substitute")
+        {
             m_substitute =  true;
         }
-    } else {
+    }
+    else
+    {
         open(ReadOnly | Unbuffered);
         this->content = responseText.toUtf8();
         setAttribute(QNetworkRequest::HttpStatusCodeAttribute, response["code"]);
