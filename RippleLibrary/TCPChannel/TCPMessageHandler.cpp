@@ -42,7 +42,7 @@ void TcpMessagehandler::tcpReadyRead()
         result = parser.parse(data, &ok).toMap();
 
         if (!ok)
-            qDebug() << "something went wrong during the conversion";
+            qDebug() << "JSON conversion failed: " << data;
         else
             processMessage(result);
     }
