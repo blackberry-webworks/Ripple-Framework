@@ -22,9 +22,14 @@
 #include <QMessageBox>
 #include "RemoteDebugger.h"
 #include "PortScanner.h"
+#include "NetworkAccessManager.h"
 
-QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false), _headersSize(0), m_inspector(0), m_inspectorProcess()
+QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false), _headersSize(0), m_inspector(0), m_inspectorProcess(0)
 {
+    QNetworkAccessManager *oldManager = page()->networkAccessManager();
+    NetworkAccessManager *newManager = new NetworkAccessManager(oldManager, this);
+    page()->setNetworkAccessManager(newManager);
+
     // Connect signals for events
     connect(this, SIGNAL(urlChanged(const QUrl&)), this, SLOT(notifyUrlChanged(const QUrl&)));
 
@@ -68,7 +73,6 @@ void QtStageWebView::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     QMenu menu;
     QAction *inspectAction = menu.addAction("Inspect");
     QAction *selectedAction = menu.exec(event->screenPos());
-
     if (inspectAction == selectedAction)
         this->page()->triggerAction(QWebPage::InspectElement);
 }
@@ -91,21 +95,36 @@ void QtStageWebView::reload()
 void QtStageWebView::notifyUrlChanged(const QUrl& url)
 {
     emit urlChanged(url.toString());
-
-    if(m_inspector)
-        m_inspector->setPage(page());
+  if(m_inspector)
+    m_inspector->setPage(page());
 }
 
 void QtStageWebView::notifyJavaScriptWindowObjectCleared()
 {
-    QEventLoop loop;
-    QObject::connect(this, SIGNAL(jsLoaded()), &loop, SLOT(quit()));
-
+//  registerEventbus();
+  QEventLoop loop;
+  QObject::connect(this, SIGNAL(jsLoaded()), &loop, SLOT(quit()));
     emit javaScriptWindowObjectCleared();
 
   if (waitForJsLoad)
       loop.exec();
 }
+
+#if 0
+void QtStageWebView::registerEventbus()
+{
+    QWebFrame* frame = page()->mainFrame();
+    frame->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame));
+    frame->evaluateJavaScript(BlackBerry::Ripple::eventbusSource);
+
+    // check for iframes, if found add to window object
+    for(int i = 0; i < frame->childFrames().length(); i++)
+    {
+        frame->childFrames()[i]->addToJavaScriptWindowObject(QString("eventbus2"), new BlackBerryBus(this, frame->childFrames()[i]));
+        frame->childFrames()[i]->evaluateJavaScript(BlackBerry::Ripple::eventbusSource);
+  }
+}
+#endif
 
 void QtStageWebView::continueLoad()
 {
@@ -166,7 +185,9 @@ int QtStageWebView::historyPosition()
 void QtStageWebView::historyPosition(int position)
 {
     if (history() && position >= 0 && position < history()->count())
+    {
         history()->goToItem(history()->itemAt(position));
+    }
 }
 
 char** QtStageWebView::customHTTPHeaders()

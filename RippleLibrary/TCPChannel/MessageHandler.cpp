@@ -39,7 +39,6 @@ void MessageHandler::sendMessage(int id, const QString& msg)
     int size = a.size();
     Message* pMsg = new Message(id, size, &a);
     EmitMessage(pMsg);
-    qDebug() << "Message:" << msg << " sent!";
     delete pMsg;
 }
 
@@ -48,7 +47,6 @@ void MessageHandler::sendMessage(const QString& json, QTcpSocket* tcpSocket)
     if (tcpSocket)
     {
         QByteArray a;
-        qDebug() << "sendMessage json: " << json;
         a.append(json);
         if (tcpSocket->write(a) == -1)
         {

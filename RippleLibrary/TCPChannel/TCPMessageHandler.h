@@ -24,6 +24,7 @@
 #include "QtStageWebView.h"
 #include "../qjson/src/parser.h"
 #include "../qjson/src/serializer.h"
+#include "ResourceRequestedReply.h"
 
 namespace BlackBerry {
 namespace Ripple {
@@ -34,21 +35,27 @@ static const QString PAYLOAD = "payload";
 static const QString RESOURCEREQUESTEDRESPONSE = "ResourceRequestedResponse";
 static const QString WEBVIEWURLCHANGEREQUEST = "WebviewUrlChangeRequest";
 
+
 class TcpMessagehandler : public MessageHandler
 {
     Q_OBJECT
+
 private:
     QTcpSocket* m_pTcpConnection;
+
 public:
     TcpMessagehandler(QTcpSocket* conn = 0, QObject *parent = 0);
     ~TcpMessagehandler();
     void processMessage(Message* pMsg) {}
     void processMessage(QVariantMap msg);
+
 protected:
     void registerEvents();
+
 private slots:
     void urlChanged(QString url);
-    void onResourceRequested(QNetworkRequest* request);
+    void onResourceRequested(QUuid id, const QNetworkRequest &request);
+
     void tcpReadyRead();
     void tcpConnectionDisconnected();
 private:
