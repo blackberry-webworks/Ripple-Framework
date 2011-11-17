@@ -64,14 +64,12 @@ void NetworkAccessManager::response(QVariantMap payload) {
     } else {
         ResourceRequestedReply *reply = pendingRequests.value(id);
         if(reply && reply->isSubstitute())
-        {
             reply->respond(response);
-            pendingRequests.remove(id);
-        }
     }
 }
 
 void NetworkAccessManager::removeFromPending(QObject* destroyed) {
     ResourceRequestedReply *reply = static_cast<ResourceRequestedReply*>(destroyed);
-    pendingRequests.remove(reply->getID());
+    if (reply)
+        pendingRequests.remove(reply->getID());
 }
