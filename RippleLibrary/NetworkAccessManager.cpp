@@ -20,6 +20,7 @@
 #include <QNetworkRequest>
 #include <QUuid>
 #include "ResourceRequestedReply.h"
+#include "LocalRequestReply.h"
 
 NetworkAccessManager::NetworkAccessManager(QNetworkAccessManager *manager, QObject *parent)
     : QNetworkAccessManager(parent)
@@ -34,16 +35,20 @@ QNetworkReply *NetworkAccessManager::createRequest(
     QNetworkAccessManager::Operation operation, const QNetworkRequest &request,
     QIODevice *device)
 {
-    QUuid id = QUuid::createUuid();
-
-    //This is a sync call to TCPMessageHandler::onResourceRequested
-    emit onResourceRequest(id, request);
-
-    ResourceRequestedReply *reply = pendingRequests.value(id);
-    if (reply){
-        return reply;
+    if(request.url().scheme() == "local"){
+        return new LocalRequestReply(request.url());
     } else {
-        return QNetworkAccessManager::createRequest(operation, request, device);
+        QUuid id = QUuid::createUuid();
+
+        //This is a sync call to TCPMessageHandler::onResourceRequested
+        emit onResourceRequest(id, request);
+
+        ResourceRequestedReply *reply = pendingRequests.value(id);
+        if (reply){
+            return reply;
+        } else {
+            return QNetworkAccessManager::createRequest(operation, request, device);
+        }
     }
 }
 
