@@ -24,12 +24,12 @@ TEST(NetworkAccessManager, CanSignalOnResourceRequest)
     QtStageWebView webview;
     webview.continueLoad();
     NetworkAccessManager* manager = dynamic_cast<NetworkAccessManager*>(webview.page()->networkAccessManager());
-    
-    Q_ASSERT( manager != 0 );
+    Q_ASSERT(manager != 0);
 
-    QString location = "http://www.targetresource.ca";
-    
-    int id = qRegisterMetaType<QUuid>();
+    QString location = "http://www.targetresource.ca/";
+
+    int idQUuid = qRegisterMetaType<QUuid>();
+    int idNetworkRequest = qRegisterMetaType<QNetworkRequest>();
 
     QSignalSpy spy(manager, SIGNAL(onResourceRequest(QUuid, QNetworkRequest)));
 
@@ -40,11 +40,17 @@ TEST(NetworkAccessManager, CanSignalOnResourceRequest)
     loop.exec();
 
     ASSERT_EQ(1, spy.count());
+    //Verify arguments
     QList<QVariant> arguments = spy.takeFirst();
     EXPECT_EQ(2, arguments.length());
+    QVariant first = arguments.at(0);
     QVariant second = arguments.at(1);
+    std::string firsttype(first.typeName());
+    EXPECT_EQ("QUuid", firsttype);
+    std::string sectype(second.typeName());
+    EXPECT_EQ("QNetworkRequest", sectype);
     QNetworkRequest request = qvariant_cast<QNetworkRequest>(second);
     QUrl url = request.url();
-    EXPECT_EQ(location, url.toString());
+    EXPECT_EQ(location.toStdString(), url.toString().toStdString());
 }
 

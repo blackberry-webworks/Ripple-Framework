@@ -16,6 +16,7 @@
 
 #include "ResourceRequestedReplyTest.h"
 
+
 TEST(ResourceRequestedReply, CanRespond)
 {
     const QString RESPONSETEXT = "responseText";
@@ -25,6 +26,10 @@ TEST(ResourceRequestedReply, CanRespond)
     QString strurl("www.google.com");
     QUrl url(strurl);
     ResourceRequestedReply reply(id, url);
+
+    QSignalSpy spyReadRead(&reply, SIGNAL(readyRead()));
+    QSignalSpy spyFinished(&reply, SIGNAL(finished()));
+
     //Test construct
     EXPECT_EQ(id, reply.getID());
     EXPECT_EQ(strurl, reply.url().toString());
@@ -35,6 +40,13 @@ TEST(ResourceRequestedReply, CanRespond)
     deny.insert(RESPONSETEXT, QVariant("deny"));
     reply.respond(deny);
     EXPECT_EQ(QVariant(403), reply.attribute(QNetworkRequest::HttpStatusCodeAttribute));
+
+    //verify the signal
+    QEventLoop loop;
+    QObject::connect(&reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+    ASSERT_EQ(1, spyReadRead.count());
+    ASSERT_EQ(1, spyFinished.count());
 
     //response substitute
     deny[RESPONSETEXT] = QVariant("substitute");
@@ -50,5 +62,9 @@ TEST(ResourceRequestedReply, CanRespond)
     EXPECT_EQ(code, reply.attribute(QNetworkRequest::HttpStatusCodeAttribute));
     QVariant actual(reply.readAll());
     EXPECT_EQ(msg, actual);
+
+    //verify the signal
+    ASSERT_EQ(2, spyReadRead.count());
+    ASSERT_EQ(2, spyFinished.count());
 }
 

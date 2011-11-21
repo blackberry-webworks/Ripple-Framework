@@ -14,8 +14,8 @@
 * limitations under the License.
 */
 
-#ifndef TESTFRAMEWORK_RESOURCEREQUESTEDTEST_H_
-#define TESTFRAMEWORK_RESOURCEREQUESTEDTEST_H_
+#ifndef TESTFRAMEWORK_RESOURCEREQUESTEDREPLYTEST_H_
+#define TESTFRAMEWORK_RESOURCEREQUESTEDREPLYTEST_H_
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -23,4 +23,4 @@
 #include <QSignalSpy>
 #include "ResourceRequestedReply.h"
 
-#endif  // TESTFRAMEWORK_RESOURCEREQUESTEDTEST_H_
+#endif  // TESTFRAMEWORK_RESOURCEREQUESTEDREPLYTEST_H_
