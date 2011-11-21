@@ -24,6 +24,7 @@
 #include "qtstagewebview.h"
 #include <QSignalSpy>
 #include "TCPChannel/tcpmessagehandler.h"
+#include <QNetworkRequest>
 
 using ::testing::Return;
 using ::testing::Invoke;
@@ -71,5 +72,6 @@ public:
     virtual ~TestTcpMsgHandler() {}
     MOCK_METHOD1(processMessage, void(Message*));
     MOCK_METHOD1(processMessage, void(QVariantMap));
+    MOCK_METHOD2(onResourceRequested, void(QUuid, const QNetworkRequest));
 };
 #endif  // TESTFRAMEWORK_MESSAGEHANDLERTEST_H_
