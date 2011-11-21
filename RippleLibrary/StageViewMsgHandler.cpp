@@ -132,12 +132,14 @@ void StageViewMsgHandler::javaScriptWindowObjectCleared()
     emit javaScriptWindowCleared();
 }
 
-void StageViewMsgHandler::setZoomFactor(float zoom){
-  stageWebview()->setZoom(zoom);
+void StageViewMsgHandler::setZoomFactor(float zoom)
+{
+    stageWebview()->setZoom(zoom);
 }
 
-float StageViewMsgHandler::zoomFactor(){
-  return stageWebview()->zoom();
+float StageViewMsgHandler::zoomFactor()
+{
+    return stageWebview()->zoom();
 }
 
 #if 0

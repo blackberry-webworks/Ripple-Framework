@@ -2010,7 +2010,7 @@ def CheckBraces(filename, clean_lines, linenum, error):
     # just don't complain if the last non-whitespace character on the
     # previous non-blank line is ';', ':', '{', or '}'.
     prevline = GetPreviousNonBlankLine(clean_lines, linenum)[0]
-    if not Search(r'[;:}{]\s*$', prevline):
+    if Search(r'[;:}{]\s*$', prevline):
       error(filename, linenum, 'whitespace/braces', 4,
             '{ should almost always be at the end of the previous line')
 

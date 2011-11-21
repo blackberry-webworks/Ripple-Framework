@@ -31,7 +31,7 @@ class LocalRequestReply : public QNetworkReply
 public:
     explicit LocalRequestReply(const QUrl &url);
     qint64 bytesAvailable() const;
-    void abort(){}
+    void abort() {}
     bool isSequential() const;
 
 protected:
