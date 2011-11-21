@@ -223,12 +223,12 @@ void LocalRequestReply::setContent()
     QString path = this->url().toString();
     QStringList split = path.split(LOCAL_PROTOCOL);
 
-    if(split.length() == 2) {
+    if (split.length() == 2) {
         path = LOCAL_BASE_PATH + split.at(1);
         QFile file(path);
         QFileInfo fileInfo(path);
 
-        if(fileInfo.exists() && file.open(QIODevice::ReadOnly | QIODevice::Unbuffered)) {
+        if (fileInfo.exists() && file.open(QIODevice::ReadOnly | QIODevice::Unbuffered)) {
             content = file.readAll();
             file.close();
             open(ReadOnly | Unbuffered);
