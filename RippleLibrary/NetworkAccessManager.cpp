@@ -35,7 +35,7 @@ QNetworkReply *NetworkAccessManager::createRequest(
     QNetworkAccessManager::Operation operation, const QNetworkRequest &request,
     QIODevice *device)
 {
-    if(request.url().scheme() == "local"){
+    if (request.url().scheme() == "local"){
         return new LocalRequestReply(request.url());
     } else {
         QUuid id = QUuid::createUuid();
