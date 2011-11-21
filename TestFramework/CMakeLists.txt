@@ -17,6 +17,8 @@ LIST(APPEND TESTFRAMEWORK_HEADERS
     Main.cpp
     MessageHandlerTest.h
     QtStageWebViewTest.h
+    ResourceRequestedReplyTest.h
+    NetworkAccessManagerTest.h
 )
 
 LIST(APPEND TESTFRAMEWORK_SOURCES
@@ -25,6 +27,8 @@ LIST(APPEND TESTFRAMEWORK_SOURCES
     Main.cpp
     MessageHandlerTest.cpp
     QtStageWebViewTest.cpp
+    ResourceRequestedReplyTest.cpp
+    NetworkAccessManagerTest.cpp
 )
 
 set(TESTFRAMEWORK_MOC_HEADERS

@@ -17,6 +17,15 @@ call lint.bat TestFramework/QtStageWebViewTest.cpp
 if errorlevel 1 exit 1
 call lint.bat TestFramework/QtStageWebViewTest.h
 if errorlevel 1 exit 1
+call lint.bat TestFramework/NetworkAccessManagerTest.h
+if errorlevel 1 exit 1
+call lint.bat TestFramework/NetworkAccessManagerTest.cpp
+if errorlevel 1 exit 1
+call lint.bat TestFramework/ResourceRequestedReplyTest.h
+if errorlevel 1 exit 1
+call lint.bat TestFramework/ResourceRequestedReplyTest.cpp
+if errorlevel 1 exit 1
+
 @echo on
 
 
