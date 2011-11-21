@@ -35,33 +35,42 @@ QNetworkReply *NetworkAccessManager::createRequest(
     QNetworkAccessManager::Operation operation, const QNetworkRequest &request,
     QIODevice *device)
 {
-    if (request.url().scheme() == "local"){
+    if (request.url().scheme() == "local")
+    {
         return new LocalRequestReply(request.url());
-    } else {
+    }
+    else
+    {
         QUuid id = QUuid::createUuid();
 
         //This is a sync call to TCPMessageHandler::onResourceRequested
         emit onResourceRequest(id, request);
 
         ResourceRequestedReply *reply = pendingRequests.value(id);
-        if (reply){
+        if (reply)
+        {
             return reply;
-        } else {
+        }
+        else
+        {
             return QNetworkAccessManager::createRequest(operation, request, device);
         }
     }
 }
 
-void NetworkAccessManager::response(QVariantMap payload) {
+void NetworkAccessManager::response(QVariantMap payload)
+{
     QString id = payload["id"].toString();
     QString url = payload["url"].toString();
     QVariantMap response = payload["response"].toMap();
     QString responseText = response["responseText"].toString();
 
-    if (responseText == "allow"){
+    if (responseText == "allow")
+    {
         return;
     }
-    else if (responseText == "deny" || responseText == "substitute") {
+    else if (responseText == "deny" || responseText == "substitute")
+    {
         ResourceRequestedReply *reply = new ResourceRequestedReply(id, url);
         connect(reply, SIGNAL(destroyed(QObject*)), this, SLOT(removeFromPending(QObject*)));
         pendingRequests.insert(id, reply);
@@ -75,7 +84,8 @@ void NetworkAccessManager::response(QVariantMap payload) {
     }
 }
 
-void NetworkAccessManager::removeFromPending(QObject* destroyed) {
+void NetworkAccessManager::removeFromPending(QObject* destroyed)
+{
     ResourceRequestedReply *reply = static_cast<ResourceRequestedReply*>(destroyed);
     if (reply)
         pendingRequests.remove(reply->getID());

@@ -27,11 +27,11 @@ class ResourceRequestedReply : public QNetworkReply
 public:
     ResourceRequestedReply(QString id, const QUrl &url);
     qint64 bytesAvailable() const;
-    void abort(){}
+    void abort() {}
     bool isSequential() const;
     void respond(QVariantMap response);
-    bool isSubstitute() {return m_substitute;}
-    QString getID() {return m_id;}
+    bool isSubstitute() { return m_substitute; }
+    QString getID() { return m_id; }
 
 protected:
     qint64 readData(char *data, qint64 maxSize);
