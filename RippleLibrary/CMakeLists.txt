@@ -14,6 +14,7 @@ LIST(APPEND RIPPLELIBRARY_HEADERS
     IRIMStageWebView.h
     NetworkAccessManager.h
     ResourceRequestedReply.h
+    LocalRequestReply.h
     TCPChannel/TCPBridgeWorker.h
     TCPChannel/Message.h
     TCPChannel/MessageHandler.h
@@ -29,6 +30,7 @@ LIST(APPEND RIPPLELIBRARY_SOURCES
     RemoteDebugger.cpp
     NetworkAccessManager.cpp
     ResourceRequestedReply.cpp
+    LocalRequestReply.cpp
     TCPChannel/TCPBridgeWorker.cpp
     TCPChannel/Message.cpp
     TCPChannel/MessageHandler.cpp
@@ -42,6 +44,7 @@ SET(RIPPLELIBRARY_MOC_HEADERS
     RemoteDebugger.h
     NetworkAccessManager.h
     ResourceRequestedReply.h
+    LocalRequestReply.h
     TCPChannel/TCPBridgeWorker.h
     TCPChannel/MessageHandler.h
     TCPChannel/TCPMessageHandler.h
