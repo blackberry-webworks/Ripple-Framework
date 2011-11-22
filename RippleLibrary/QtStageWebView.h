@@ -26,6 +26,7 @@
 #include <QWebHistory>
 #include <QWebFrame>
 #include <QMutex>
+#include <QMap>
 #include <QGraphicsWebView>
 #include <QGraphicsView>
 #include <QGraphicsSceneContextMenuEvent>
@@ -70,9 +71,6 @@ public:
     void historyPosition(int position);
     bool enableCrossSiteXHR();
     void enableCrossSiteXHR(bool crossSiteXHR);
-    void customHTTPHeaders(char *headers[], unsigned int headersSize);
-    void customHTTPHeaders(QString key, QString value);
-    char** customHTTPHeaders();
     QVariant executeJavaScript(QString script);
     bool visible();
     void visible(bool enable);
@@ -83,8 +81,6 @@ signals:
     void javaScriptWindowObjectCleared();
     void jsLoaded();
 private:
-    char **_headers;
-    unsigned int _headersSize;
     bool waitForJsLoad;
 public slots:
     void continueLoad();

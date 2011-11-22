@@ -27,7 +27,7 @@ TEST(ResourceRequestedReply, CanRespond)
     QUrl url(strurl);
     ResourceRequestedReply reply(id, url);
 
-    QSignalSpy spyReadRead(&reply, SIGNAL(readyRead()));
+    QSignalSpy spyReadyRead(&reply, SIGNAL(readyRead()));
     QSignalSpy spyFinished(&reply, SIGNAL(finished()));
 
     //Test construct
@@ -45,7 +45,7 @@ TEST(ResourceRequestedReply, CanRespond)
     QEventLoop loop;
     QObject::connect(&reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
-    ASSERT_EQ(1, spyReadRead.count());
+    ASSERT_EQ(1, spyReadyRead.count());
     ASSERT_EQ(1, spyFinished.count());
 
     //response substitute
@@ -64,7 +64,7 @@ TEST(ResourceRequestedReply, CanRespond)
     EXPECT_EQ(msg, actual);
 
     //verify the signal
-    ASSERT_EQ(2, spyReadRead.count());
-    ASSERT_EQ(2, spyFinished.count());
+    ASSERT_EQ(1, spyReadyRead.count());
+    ASSERT_EQ(1, spyFinished.count());
 }
 

@@ -54,3 +54,43 @@ TEST(NetworkAccessManager, CanSignalOnResourceRequest)
     EXPECT_EQ(location.toStdString(), url.toString().toStdString());
 }
 
+TEST(NetworkAccessManager, CanAddCustomHeader)
+{
+    QtStageWebView webview;
+    webview.continueLoad();
+    NetworkAccessManager* manager = dynamic_cast<NetworkAccessManager*>(webview.page()->networkAccessManager());
+    QString key = QString("MyHeaderKey");
+    QString value = QString("MyHeaderValue");
+
+    manager->addCustomHeader(key, value);
+    QMap<QString, QString> headers = manager->getCustomHeaders();
+
+    QList<QString> expectedKeys;
+    expectedKeys << key;
+    QList<QString> expectedValues;
+    expectedValues << value;
+
+    EXPECT_EQ(headers.keys(), expectedKeys);
+    EXPECT_EQ(headers.values(), expectedValues);
+}
+
+TEST(NetworkAccessManager, CanClearCustomHeader)
+{
+    QtStageWebView webview;
+    webview.continueLoad();
+    NetworkAccessManager* manager = dynamic_cast<NetworkAccessManager*>(webview.page()->networkAccessManager());
+    QString key = QString("MyHeaderKey");
+    QString value = QString("MyHeaderValue");
+
+    manager->addCustomHeader(key, value);
+    manager->clearCustomHeaders();
+    QMap<QString, QString> headers = manager->getCustomHeaders();
+
+    QList<QString> expectedKeys;
+    QList<QString> expectedValues;
+
+    EXPECT_EQ(headers.keys(), expectedKeys);
+    EXPECT_EQ(headers.values(), expectedValues);
+}
+
+
