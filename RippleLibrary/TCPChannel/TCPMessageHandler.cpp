@@ -40,7 +40,7 @@ void TcpMessagehandler::tcpReadyRead()
         QByteArray data = m_pTcpConnection->read(m_pTcpConnection->bytesAvailable());
         QString payload(data);
 
-        QStringListIterator messages (payload.split("<`)))><", QString::SkipEmptyParts));
+        QStringListIterator messages(payload.split("<`)))><", QString::SkipEmptyParts));
         while (messages.hasNext()) {
             QByteArray message = messages.next().toUtf8();
 
