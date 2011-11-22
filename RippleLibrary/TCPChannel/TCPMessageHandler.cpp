@@ -37,14 +37,19 @@ void TcpMessagehandler::tcpReadyRead()
     if (m_pTcpConnection && m_pTcpConnection->bytesAvailable())
     {
         bool ok;
-        QVariantMap result;
         QByteArray data = m_pTcpConnection->read(m_pTcpConnection->bytesAvailable());
-        result = parser.parse(data, &ok).toMap();
+        QString payload(data);
 
-        if (!ok)
-            qDebug() << "JSON conversion failed: " << data;
-        else
-            processMessage(result);
+        QStringListIterator messages (payload.split("<`)))><", QString::SkipEmptyParts));
+        while (messages.hasNext()) {
+            QByteArray message = messages.next().toUtf8();
+
+            QVariantMap json = parser.parse(message, &ok).toMap();
+            if (!ok)
+                qDebug() << "JSON conversion failed: " << data;
+            else
+                processMessage(json);
+        }
     }
 }
 
