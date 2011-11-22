@@ -77,7 +77,7 @@ void ResourceRequestedReply::respond(QVariantMap response)
         this->content = responseText.toUtf8();
         setAttribute(QNetworkRequest::HttpStatusCodeAttribute, response["code"]);
         setHeader(QNetworkRequest::ContentLengthHeader, QVariant(this->content.size()));
-        emit readyRead();
-        emit finished();
+        QTimer::singleShot(0, this, SIGNAL(readyRead()));
+        QTimer::singleShot(0, this, SIGNAL(finished()));
     }
 }
