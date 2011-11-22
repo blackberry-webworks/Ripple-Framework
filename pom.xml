@@ -184,17 +184,6 @@
             <version>1.1</version>
             <executions>
                 <execution>
-                    <id>runCppLint</id>
-                    <goals>
-                        <goal>exec</goal>
-                    </goals>
-                    <phase>process-sources</phase>
-                    <configuration>
-                        <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
-                        <executable>lintFiles.bat</executable>
-                    </configuration>
-                </execution>
-                <execution>
                   <id>runCMake</id>
                   <goals>
                     <goal>exec</goal>
@@ -250,17 +239,98 @@
                   </arguments>
                 </configuration>
               </execution>
-              <execution>
-                <id>runUnitTests</id>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <phase>test</phase>
-                <configuration>
-                  <workingDirectory>${project.build.sourceDirectory}/build/bin</workingDirectory>
-                  <executable>TestFramework.exe</executable>
-                </configuration>
-              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!--Run Lint and Unit Tests for Windows-->
+    <profile>
+      <id>Lint_UnitTests_on_Windows</id>
+      <activation>
+        <property>
+          <name>runLintAndUnitTestsWin</name>
+          <value>yes</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+                <execution>
+                    <id>runCppLint</id>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <phase>process-sources</phase>
+                    <configuration>
+                        <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
+                        <executable>lintFiles.bat</executable>
+                    </configuration>
+                </execution>
+                <execution>
+                  <id>runUnitTests</id>
+                  <goals>
+                    <goal>exec</goal>
+                  </goals>
+                  <phase>test</phase>
+                  <configuration>
+                    <workingDirectory>${project.build.sourceDirectory}/build/bin</workingDirectory>
+                    <executable>TestFramework.exe</executable>
+                  </configuration>
+                </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!--Run Lint and Unit Tests for Mac-->
+    <profile>
+      <id>Lint_UnitTests_on_Mac</id>
+      <activation>
+        <property>
+          <name>runLintAndUnitTestsMac</name>
+          <value>yes</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+            <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+                <execution>
+                    <id>runCppLint</id>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <phase>generate-resources</phase>
+                    <configuration>
+                        <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
+                        <executable>sh</executable>
+                        <arguments>
+                            <argument>lint.sh</argument>
+                            <argument>.</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>runUnitTests</id>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <phase>test</phase>
+                    <configuration>
+                        <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
+                        <executable>TestFramework/TestFramework</executable>
+                    </configuration>
+                </execution>
             </executions>
           </plugin>
         </plugins>
@@ -439,21 +509,6 @@
             <version>1.1</version>
             <executions>
             <execution>
-                <id>runCppLint</id>
-                <goals>
-                    <goal>exec</goal>
-                </goals>
-                <phase>generate-resources</phase>
-                <configuration>
-                    <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
-                    <executable>sh</executable>
-                    <arguments>
-                        <argument>lint.sh</argument>
-                        <argument>.</argument>                            
-                    </arguments>
-                </configuration>
-            </execution>
-            <execution>
                 <id>runCMake</id>
                 <goals>
                   <goal>exec</goal>
@@ -508,17 +563,6 @@
                   </arguments>
                 </configuration>
               </execution>
-                <execution>
-                    <id>runUnitTests</id>
-                    <goals>
-                        <goal>exec</goal>
-                    </goals>
-                    <phase>test</phase>
-                    <configuration>
-                        <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
-                        <executable>TestFramework/TestFramework</executable>
-                    </configuration>
-                </execution>              
             </executions>
           </plugin>
         </plugins>
