@@ -249,6 +249,10 @@
     <profile>
       <id>Lint_UnitTests_on_Windows</id>
       <activation>
+        <activeByDefault>true</activeByDefault>
+        <os>
+          <family>windows</family>
+        </os>
         <property>
           <name>runLintAndUnitTestsWin</name>
           <value>yes</value>
@@ -293,6 +297,10 @@
     <profile>
       <id>Lint_UnitTests_on_Mac</id>
       <activation>
+        <activeByDefault>true</activeByDefault>
+        <os>
+          <family>mac</family>
+        </os>
         <property>
           <name>runLintAndUnitTestsMac</name>
           <value>yes</value>
