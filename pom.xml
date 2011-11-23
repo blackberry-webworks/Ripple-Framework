@@ -245,102 +245,84 @@
       </build>
     </profile>
 
-    <!--Run Lint and Unit Tests for Windows-->
-    <profile>
-      <id>Lint_UnitTests_on_Windows</id>
+      <profile>
+      <id>Lint_UnitTests</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
-        <os>
-          <family>windows</family>
-        </os>
         <property>
-          <name>runLintAndUnitTestsWin</name>
-          <value>yes</value>
+          <name>!runLintAndUnitTests</name>
         </property>
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.1</version>
-            <executions>
-                <execution>
-                    <id>runCppLint</id>
-                    <goals>
-                        <goal>exec</goal>
-                    </goals>
-                    <phase>process-sources</phase>
-                    <configuration>
-                        <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
-                        <executable>lintFiles.bat</executable>
-                    </configuration>
-                </execution>
-                <execution>
-                  <id>runUnitTests</id>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <phase>test</phase>
-                  <configuration>
-                    <workingDirectory>${project.build.sourceDirectory}/build/bin</workingDirectory>
-                    <executable>TestFramework.exe</executable>
-                  </configuration>
-                </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <!--Run Lint and Unit Tests for Mac-->
-    <profile>
-      <id>Lint_UnitTests_on_Mac</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-        <os>
-          <family>mac</family>
-        </os>
-        <property>
-          <name>runLintAndUnitTestsMac</name>
-          <value>yes</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
+           <!-- Use the Groovy scripting language detect the OS and do something OS-specific -->
             <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.1</version>
-            <executions>
-                <execution>
-                    <id>runCppLint</id>
-                    <goals>
-                        <goal>exec</goal>
-                    </goals>
-                    <phase>generate-resources</phase>
-                    <configuration>
-                        <workingDirectory>${project.build.sourceDirectory}</workingDirectory>
-                        <executable>sh</executable>
-                        <arguments>
-                            <argument>lint.sh</argument>
-                            <argument>.</argument>
-                        </arguments>
-                    </configuration>
-                </execution>
-                <execution>
-                    <id>runUnitTests</id>
-                    <goals>
-                        <goal>exec</goal>
-                    </goals>
-                    <phase>test</phase>
-                    <configuration>
-                        <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
-                        <executable>TestFramework/TestFramework</executable>
-                    </configuration>
-                </execution>
-            </executions>
-          </plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <id>runCppLint</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                // True if OS is Mac
+                                if (org.apache.commons.lang.SystemUtils.IS_OS_MAC)
+                                {
+                                    def p = "sh lint.sh .".execute()
+                                    print p.in.text
+                                    print p.err.text
+                                }
+                                // Else if Windows
+                                else if (org.apache.commons.lang.SystemUtils.IS_OS_WINDOWS )
+                                {
+                                    def p = "cmd /c lintFiles.bat".execute()
+                                    print p.in.text
+                                    print p.err.text
+                                }
+                                // Else it's an unsupported OS
+                                else
+                                {
+                                    fail("\nYou're on an unsupported operating system: " + System.properties['os.name']);
+                                }
+                            </source>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>runUnitTests</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.sourceDirectory}/build/bin</workingDirectory>
+                            <source>
+                                // True if OS is Mac
+                                if (org.apache.commons.lang.SystemUtils.IS_OS_MAC)
+                                {
+                                    def p = "TestFramework/TestFramework".execute(null, new File(System.properties.'user.dir' + "/build"))
+                                    print p.in.text
+                                    print p.err.text
+                                }
+                                // Else if Windows
+                                else if (org.apache.commons.lang.SystemUtils.IS_OS_WINDOWS )
+                                {
+                                    def p = "cmd /c TestFramework.exe".execute(null, new File(System.properties.'user.dir' + "/build/bin"))
+                                    print p.in.text
+                                    print p.err.text
+                                }
+                                // Else it's an unsupported OS
+                                else
+                                {
+                                    fail("\nYou're on an unsupported operating system: " + System.properties['os.name']);
+                                }
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
       </build>
     </profile>
