@@ -64,7 +64,8 @@ TEST(ResourceRequestedReply, CanRespond)
     EXPECT_EQ(msg, actual);
 
     //verify the signal
-    ASSERT_EQ(1, spyReadyRead.count());
-    ASSERT_EQ(1, spyFinished.count());
+    loop.exec();
+    ASSERT_EQ(2, spyReadyRead.count());
+    ASSERT_EQ(2, spyFinished.count());
 }
 
