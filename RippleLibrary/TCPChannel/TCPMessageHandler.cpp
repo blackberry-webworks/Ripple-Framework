@@ -65,16 +65,28 @@ void TcpMessagehandler::tcpConnectionDisconnected()
 void TcpMessagehandler::processMessage(QVariantMap msg)
 {
     QString event = msg[EVENT].toString();
-    if ( event == RESOURCEREQUESTEDRESPONSE )
+    if (event == RESOURCEREQUESTEDRESPONSE)
     {
         QVariantMap payload = msg[PAYLOAD].toMap();
         NetworkAccessManager *networkAccessManager = reinterpret_cast<NetworkAccessManager*>(graphicsWebview()->page()->networkAccessManager());
         networkAccessManager->response(payload);
     }
-    else if ( event == WEBVIEWURLCHANGEREQUEST )
+    else if (event == WEBVIEWURLCHANGEREQUEST)
     {
         QString payload = msg[PAYLOAD].toString();
         m_pWebView->loadURL(payload);
+    }
+    else if (event == WEBVIEWCUSTOMHEADERREQUEST)
+    {
+        QVariantMap headers = msg[PAYLOAD].toMap();
+        QMapIterator<QString, QVariant> i(headers);
+        NetworkAccessManager *networkAccessManager = reinterpret_cast<NetworkAccessManager*>(graphicsWebview()->page()->networkAccessManager());
+        networkAccessManager->clearCustomHeaders();
+        while (i.hasNext())
+        {
+            i.next();
+            networkAccessManager->addCustomHeader(i.key(), i.value().toString());
+        }
     }
 }
 
@@ -90,7 +102,7 @@ void TcpMessagehandler::urlChanged(QString url)
 
 void TcpMessagehandler::onResourceRequested(QUuid id, const QNetworkRequest &req)
 {
-    if ( m_pTcpConnection )
+    if (m_pTcpConnection)
     {
         m_pTcpConnection->disconnect(SIGNAL(readyRead()));
         QVariantMap msgToSend;
@@ -103,7 +115,7 @@ void TcpMessagehandler::onResourceRequested(QUuid id, const QNetworkRequest &req
         QByteArray json = serializer.serialize(msgToSend);
         sendMessage(json, m_pTcpConnection);
         m_pTcpConnection->waitForBytesWritten();
-        if ( m_pTcpConnection->waitForReadyRead())
+        if (m_pTcpConnection->waitForReadyRead())
         {
             tcpReadyRead();
         }

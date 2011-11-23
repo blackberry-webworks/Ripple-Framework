@@ -311,36 +311,6 @@ TEST(QtStageWebView, CanSetInvisable)
     webview.visible(false);
     EXPECT_FALSE(webview.isVisible());
 }
-/*
-TEST(QtStageWebView, CanAddCustomHeader)
-{
-    QtStageWebView webview;
-    QString key = QString("MyHeaderKey");
-    QString value = QString("MyHeaderValue");
-
-    webview.customHTTPHeaders(QString::fromStdString(key), QString::fromStdString(value));
-
-    char** returnArray = webview.customHTTPHeaders();
-    
-    QString returnedKey = QString(&returnArray[0]);
-    QString returnedValue = QString(&returnArray[1]);
-    EXPECT_EQ(returnedKey, key);
-    EXPECT_EQ(returnedValue, value);
-}
-*/
-TEST(QtStageWebView, CanAddCustomHeaderArray)
-{
-    QtStageWebView webview;
-    char *headersArray[2];
-    headersArray[0] = "MyHeaderKey";
-    headersArray[1] = "MyHeaderValue";
-
-    webview.customHTTPHeaders(headersArray, 2);
-    char** returnArray = webview.customHTTPHeaders();
-
-    EXPECT_EQ(*returnArray[0], *headersArray[0]);
-    EXPECT_EQ(*returnArray[1], *headersArray[1]);
-}
 
 TEST(QtStageWebView, CanEnableCrossOrigin)
 {

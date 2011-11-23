@@ -62,11 +62,6 @@ void StageViewMsgHandler::crossOrigin(const bool allow)
     stageWebview()->enableCrossSiteXHR(allow);
 }
 
-void StageViewMsgHandler::customHTTPHeader(const QString& key, const QString& value)
-{
-  rimStageWebview()->customHTTPHeaders(key, value);
-}
-
 void StageViewMsgHandler::setVisable(const bool isVisible)
 {
     rimStageWebview()->visible(isVisible);

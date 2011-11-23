@@ -34,7 +34,7 @@ static const QString EVENT = "event";
 static const QString PAYLOAD = "payload";
 static const QString RESOURCEREQUESTEDRESPONSE = "ResourceRequestedResponse";
 static const QString WEBVIEWURLCHANGEREQUEST = "WebviewUrlChangeRequest";
-
+static const QString WEBVIEWCUSTOMHEADERREQUEST = "WebviewCustomHeadersChangeRequest";
 
 class TcpMessagehandler : public MessageHandler
 {
