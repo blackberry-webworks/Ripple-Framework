@@ -26,6 +26,9 @@ class NetworkAccessManager : public QNetworkAccessManager
     Q_OBJECT
 public:
     NetworkAccessManager(QNetworkAccessManager *manager, QObject *parent);
+    void clearCustomHeaders();
+    void addCustomHeader(QString key, QString value);
+    const QMap<QString, QString> getCustomHeaders();
     void response(QVariantMap payload);
 
 signals:
@@ -38,6 +41,7 @@ protected:
 private:
     ResourceRequestedReply *reply;
     QMap<QString, ResourceRequestedReply*> pendingRequests;
+    QMap<QString, QString> headers;
 
 private slots:
     void removeFromPending(QObject* reply);

@@ -24,7 +24,7 @@
 #include "PortScanner.h"
 #include "NetworkAccessManager.h"
 
-QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false), _headersSize(0), m_inspector(0), m_inspectorProcess(0)
+QtStageWebView::QtStageWebView(QWidget *p) : waitForJsLoad(false), m_inspector(0), m_inspectorProcess(0)
 {
     QNetworkAccessManager *oldManager = page()->networkAccessManager();
     NetworkAccessManager *newManager = new NetworkAccessManager(oldManager, this);
@@ -80,10 +80,6 @@ void QtStageWebView::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 void QtStageWebView::loadURL(QString url)
 {
     QNetworkRequest request(url);
-
-    //Add custom headers
-    for (unsigned int i = 0; i + 1 < _headersSize; i += 2)
-        request.setRawHeader(_headers[i], _headers[i + 1]);
     load(request);
 }
 
@@ -188,36 +184,6 @@ void QtStageWebView::historyPosition(int position)
     {
         history()->goToItem(history()->itemAt(position));
     }
-}
-
-char** QtStageWebView::customHTTPHeaders()
-{
-    return _headers;
-}
-
-void QtStageWebView::customHTTPHeaders(char *headers[], unsigned int headersSize)
-{
-    _headers = new char*[headersSize];
-
-    for (unsigned int i = 0; i < headersSize; i++)
-    {
-        _headers[i] = new char[strlen(headers[i]) + 1];
-        strcpy(_headers[i], headers[i]);
-    }
-
-    _headersSize = headersSize;
-}
-
-void QtStageWebView::customHTTPHeaders(QString key, QString value)
-{
-    QByteArray mKey = key.toAscii();
-    QByteArray mValue = value.toAscii();
-
-    char *headersArray[2];
-    headersArray[0] = mKey.data();
-    headersArray[1] = mValue.data();
-
-    customHTTPHeaders(headersArray, 2);
 }
 
 void QtStageWebView::visible(bool enable)

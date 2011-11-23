@@ -21,6 +21,7 @@
 #include <QUuid>
 #include "ResourceRequestedReply.h"
 #include "LocalRequestReply.h"
+#include "QtStageWebView.h"
 
 NetworkAccessManager::NetworkAccessManager(QNetworkAccessManager *manager, QObject *parent)
     : QNetworkAccessManager(parent)
@@ -35,16 +36,27 @@ QNetworkReply *NetworkAccessManager::createRequest(
     QNetworkAccessManager::Operation operation, const QNetworkRequest &request,
     QIODevice *device)
 {
-    if (request.url().scheme() == "local")
+    QNetworkRequest cRequest(request);
+
+    if (headers.size() > 0) {
+        QMapIterator<QString, QString> i(headers);
+        while (i.hasNext())
+        {
+            i.next();
+            cRequest.setRawHeader(i.key().toUtf8(), i.value().toUtf8());
+        }
+    }
+
+    if (cRequest.url().scheme() == "local")
     {
-        return new LocalRequestReply(request.url());
+        return new LocalRequestReply(cRequest.url());
     }
     else
     {
         QUuid id = QUuid::createUuid();
 
         //This is a sync call to TCPMessageHandler::onResourceRequested
-        emit onResourceRequest(id, request);
+        emit onResourceRequest(id, cRequest);
 
         ResourceRequestedReply *reply = pendingRequests.value(id);
         if (reply)
@@ -53,7 +65,7 @@ QNetworkReply *NetworkAccessManager::createRequest(
         }
         else
         {
-            return QNetworkAccessManager::createRequest(operation, request, device);
+            return QNetworkAccessManager::createRequest(operation, cRequest, device);
         }
     }
 }
@@ -89,4 +101,19 @@ void NetworkAccessManager::removeFromPending(QObject* destroyed)
     ResourceRequestedReply *reply = static_cast<ResourceRequestedReply*>(destroyed);
     if (reply)
         pendingRequests.remove(reply->getID());
+}
+
+void NetworkAccessManager::clearCustomHeaders()
+{
+    headers.clear();
+}
+
+void NetworkAccessManager::addCustomHeader(QString key, QString value)
+{
+    headers.insert(key, value);
+}
+
+const QMap<QString, QString> NetworkAccessManager::getCustomHeaders()
+{
+    return headers;
 }

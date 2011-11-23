@@ -195,14 +195,15 @@ LocalRequestReply::LocalRequestReply(const QUrl &url)
 
 qint64 LocalRequestReply::readData(char *data, qint64 maxSize)
 {
-    if (offset < content.size()) {
+    if (offset < content.size())
+    {
         qint64 number = qMin(maxSize, content.size() - offset);
         memcpy(data, content.constData() + offset, number);
         offset += number;
         return number;
-    } else {
-        return -1;
     }
+    else
+        return -1;
 }
 
 bool LocalRequestReply::isSequential() const
@@ -223,19 +224,20 @@ void LocalRequestReply::setContent()
     QString path = this->url().toString();
     QStringList split = path.split(LOCAL_PROTOCOL);
 
-    if (split.length() == 2) {
+    if (split.length() == 2)
+    {
         path = LOCAL_BASE_PATH + split.at(1);
         QFile file(path);
         QFileInfo fileInfo(path);
 
-        if (fileInfo.exists() && file.open(QIODevice::ReadOnly | QIODevice::Unbuffered)) {
+        if (fileInfo.exists() && file.open(QIODevice::ReadOnly | QIODevice::Unbuffered))
+        {
             content = file.readAll();
             file.close();
             open(ReadOnly | Unbuffered);
             setAttribute(QNetworkRequest::HttpStatusCodeAttribute, QVariant(200));
             setHeader(QNetworkRequest::ContentLengthHeader, QVariant(content.size()));
             setHeader(QNetworkRequest::ContentTypeHeader, QVariant(types[fileInfo.completeSuffix()]));
-
             emit readyRead();
             emit finished();
             return;
