@@ -23,7 +23,7 @@ LocalRequestReply::LocalRequestReply(const QUrl &url)
 {
     offset = 0;
     setUrl(url);
-    QTimer::singleShot(0, this, SIGNAL(setContent()));
+    setContent();
 
     types.insert("3gp", "video/3gpp");
     types.insert("a", "application/octet-stream");
@@ -238,8 +238,8 @@ void LocalRequestReply::setContent()
             setAttribute(QNetworkRequest::HttpStatusCodeAttribute, QVariant(200));
             setHeader(QNetworkRequest::ContentLengthHeader, QVariant(content.size()));
             setHeader(QNetworkRequest::ContentTypeHeader, QVariant(types[fileInfo.completeSuffix()]));
-            emit readyRead();
-            emit finished();
+            QTimer::singleShot(0, this, SIGNAL(readyRead()));
+            QTimer::singleShot(0, this, SIGNAL(finished()));
             return;
         }
     }
@@ -248,6 +248,6 @@ void LocalRequestReply::setContent()
     setAttribute(QNetworkRequest::HttpStatusCodeAttribute, QVariant(404));
     setHeader(QNetworkRequest::ContentLengthHeader, QVariant(0));
 
-    emit readyRead();
-    emit finished();
+    QTimer::singleShot(0, this, SIGNAL(readyRead()));
+    QTimer::singleShot(0, this, SIGNAL(finished()));
 }
