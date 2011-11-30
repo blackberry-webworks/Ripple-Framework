@@ -32,7 +32,7 @@ public:
     void response(QVariantMap payload);
 
 signals:
-    void onResourceRequest(QUuid id, const QNetworkRequest &request);
+    void onResourceRequest(QUuid id, const QNetworkRequest &request, QIODevice *outgoingData);
 
 protected:
     QNetworkReply* createRequest(QNetworkAccessManager::Operation operation,
