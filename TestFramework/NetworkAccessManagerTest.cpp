@@ -14,6 +14,7 @@
 * limitations under the License.
 */
 
+#include <QIODevice>
 #include "NetworkAccessManagerTest.h"
 #include "QtStageWebView.h"
 
@@ -31,7 +32,7 @@ TEST(NetworkAccessManager, CanSignalOnResourceRequest)
     int idQUuid = qRegisterMetaType<QUuid>();
     int idNetworkRequest = qRegisterMetaType<QNetworkRequest>();
 
-    QSignalSpy spy(manager, SIGNAL(onResourceRequest(QUuid, QNetworkRequest)));
+    QSignalSpy spy(manager, SIGNAL(onResourceRequest(QUuid, QNetworkRequest, QIODevice*)));
 
     // Create an event loop to wait for the loadFinished when loading webpages
     QEventLoop loop;
@@ -42,7 +43,7 @@ TEST(NetworkAccessManager, CanSignalOnResourceRequest)
     ASSERT_EQ(1, spy.count());
     //Verify arguments
     QList<QVariant> arguments = spy.takeFirst();
-    EXPECT_EQ(2, arguments.length());
+    EXPECT_EQ(3, arguments.length());
     QVariant first = arguments.at(0);
     QVariant second = arguments.at(1);
     std::string firsttype(first.typeName());

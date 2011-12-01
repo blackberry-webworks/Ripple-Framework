@@ -34,7 +34,7 @@ NetworkAccessManager::NetworkAccessManager(QNetworkAccessManager *manager, QObje
 
 QNetworkReply *NetworkAccessManager::createRequest(
     QNetworkAccessManager::Operation operation, const QNetworkRequest &request,
-    QIODevice *device)
+    QIODevice *outgoingData)
 {
     QNetworkRequest cRequest(request);
 
@@ -56,7 +56,7 @@ QNetworkReply *NetworkAccessManager::createRequest(
         QUuid id = QUuid::createUuid();
 
         //This is a sync call to TCPMessageHandler::onResourceRequested
-        emit onResourceRequest(id, cRequest);
+        emit onResourceRequest(id, cRequest, outgoingData);
 
         ResourceRequestedReply *reply = pendingRequests.value(id);
         if (reply)
@@ -65,7 +65,7 @@ QNetworkReply *NetworkAccessManager::createRequest(
         }
         else
         {
-            return QNetworkAccessManager::createRequest(operation, cRequest, device);
+            return QNetworkAccessManager::createRequest(operation, cRequest, outgoingData);
         }
     }
 }

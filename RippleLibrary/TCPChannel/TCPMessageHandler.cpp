@@ -17,6 +17,7 @@
 #include "Global.h"
 #include "TCPMessageHandler.h"
 #include "NetworkAccessManager.h"
+#define MAX_POST_DATA_SIZE 1024*1024*4
 
 using BlackBerry::Ripple::TCPChannel::TcpMessagehandler;
 
@@ -93,14 +94,14 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
 void TcpMessagehandler::registerEvents()
 {
     connect(rimStageWebview(), SIGNAL(urlChanged(QString)), this, SLOT(urlChanged(QString)));
-    connect(graphicsWebview()->page()->networkAccessManager(), SIGNAL(onResourceRequest(QUuid, QNetworkRequest)), this, SLOT(onResourceRequested(QUuid, QNetworkRequest)));
+    connect(graphicsWebview()->page()->networkAccessManager(), SIGNAL(onResourceRequest(QUuid, QNetworkRequest, QIODevice*)), this, SLOT(onResourceRequested(QUuid, QNetworkRequest, QIODevice*)));
 }
 
 void TcpMessagehandler::urlChanged(QString url)
 {
 }
 
-void TcpMessagehandler::onResourceRequested(QUuid id, const QNetworkRequest &req)
+void TcpMessagehandler::onResourceRequested(QUuid id, const QNetworkRequest &req, QIODevice *outgoingData)
 {
     if (m_pTcpConnection)
     {
@@ -109,6 +110,13 @@ void TcpMessagehandler::onResourceRequested(QUuid id, const QNetworkRequest &req
         QVariantMap payload;
         payload.insert("id", id.toString());
         payload.insert("url", req.url().toString());
+
+        QWebFrame *origin = reinterpret_cast<QWebFrame*>(req.originatingObject());
+        payload.insert("origin", origin->baseUrl());
+
+        if (outgoingData)
+            payload.insert("body", outgoingData->peek(MAX_POST_DATA_SIZE));
+
         msgToSend.insert("event", "ResourceRequested");
         msgToSend.insert("payload", payload);
         QJson::Serializer serializer;
