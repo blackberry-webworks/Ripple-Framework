@@ -54,7 +54,7 @@ protected:
 
 private slots:
     void urlChanged(QString url);
-    void onResourceRequested(QUuid id, const QNetworkRequest &request);
+    void onResourceRequested(QUuid id, const QNetworkRequest &request, QIODevice* outgoingData);
 
     void tcpReadyRead();
     void tcpConnectionDisconnected();
