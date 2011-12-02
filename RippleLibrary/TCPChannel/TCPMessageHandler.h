@@ -35,6 +35,7 @@ static const QString PAYLOAD = "payload";
 static const QString RESOURCEREQUESTEDRESPONSE = "ResourceRequestedResponse";
 static const QString WEBVIEWURLCHANGEREQUEST = "WebviewUrlChangeRequest";
 static const QString WEBVIEWCUSTOMHEADERREQUEST = "WebviewCustomHeadersChangeRequest";
+static const QString WEBVIEWEXECUTEJAVASCRIPTREQUEST = "WebviewExecuteJavaScriptRequest";
 
 class TcpMessagehandler : public MessageHandler
 {
