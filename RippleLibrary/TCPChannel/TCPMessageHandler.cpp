@@ -77,6 +77,11 @@ void TcpMessagehandler::processMessage(QVariantMap msg)
         QString payload = msg[PAYLOAD].toString();
         m_pWebView->loadURL(payload);
     }
+    else if (event == WEBVIEWEXECUTEJAVASCRIPTREQUEST)
+    {
+        QString js = msg[PAYLOAD].toString();
+        m_pWebView->executeJavaScript(js);
+    }
     else if (event == WEBVIEWCUSTOMHEADERREQUEST)
     {
         QVariantMap headers = msg[PAYLOAD].toMap();
