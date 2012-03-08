@@ -47,8 +47,11 @@ namespace BlackBerry
     private slots:
         void registerAPIs();
         void urlChanged(QUrl &url);
+        void toggleHardwareAcceleration();
 
     private:
+        QMenu *_optionsMenu;
+        QAction *_hwToggleMenuItem;
         QGLWidget *_GLWidget;
         ScrollHandler *_scrollHandler;
         static const int PROGRESS_BAR_HEIGHT;
