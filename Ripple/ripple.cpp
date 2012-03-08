@@ -177,15 +177,13 @@ void Ripple::urlChanged(QUrl &url)
 
 void Ripple::toggleHardwareAcceleration()
 {
-    if (!_hwToggleMenuItem->isChecked())
+    if (_hwToggleMenuItem->isChecked())
     {
         _config->hardwareAccelerationEnabled(0);
-        _hwToggleMenuItem->setChecked(false);
     }
     else
     {
         _config->hardwareAccelerationEnabled(1);
-        _hwToggleMenuItem->setChecked(true);
     }
 
     QMessageBox::information(this, "Restart Ripple", "Please restart Ripple for changes to take effect");
