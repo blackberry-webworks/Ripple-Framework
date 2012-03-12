@@ -50,11 +50,6 @@ void Ripple::init(void)
     _config = ConfigData::getInstance();
     setAttribute(Qt::WA_DeleteOnClose);
 
-    // create menu items
-    _optionsMenu = menuBar()->addMenu("Options");
-    _hwToggleMenuItem = _optionsMenu->addAction("Enable Hardware Acceleration", this, SLOT(toggleHardwareAcceleration()));
-    _hwToggleMenuItem->setCheckable(true);
-
     bool proxyAuto = false;
 #ifdef Q_WS_WIN
 	WINHTTP_PROXY_INFO proxyConfig;
@@ -206,18 +201,4 @@ void Ripple::resizeEvent(QResizeEvent * e )
 void Ripple::urlChanged(QUrl &url)
 {
   
-}
-
-void Ripple::toggleHardwareAcceleration()
-{
-    if (_hwToggleMenuItem->isChecked())
-    {
-        _config->hardwareAccelerationEnabled(0);
-    }
-    else
-    {
-        _config->hardwareAccelerationEnabled(1);
-    }
-
-    QMessageBox::information(this, "Restart Ripple", "Please restart Ripple for changes to take effect");
 }
