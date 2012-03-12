@@ -32,6 +32,8 @@ const QString ConfigData::BUILD_SERVICE_COMMAND_IN_SETTINGS = "buildServiceComma
 const QString ConfigData::BUILD_SERVICE_PORT_IN_SETTINGS = "buildServicePort";
 const QString ConfigData::HARDWARE_ACCELERATION_IN_SETTINGS = "enableHardwareAcceleration";
 const QString ConfigData::WEBGL_ENABLED_IN_SETTINGS = "webGLEnabled";
+const QString ConfigData::PROXY_HOST_IN_SETTINGS = "proxyHost";
+const QString ConfigData::PROXY_PORT_IN_SETTINGS = "proxyPort";
 const QString ConfigData::TOOLING_CONTENT_DEFAULT = "http://developer.blackberry.com/ripple/";
 const QSize ConfigData::MAIN_WINDOW_SIZE_DEFAULT = QSize(1280, 1024);
 const QPoint ConfigData::MAIN_WINDOW_POSITION_DEFAULT = QPoint(0, 0);
@@ -92,6 +94,8 @@ void ConfigData::writeSettings()
     _settings->setValue(BUILD_SERVICE_PORT_IN_SETTINGS, _buildServicePort);
     _settings->setValue(HARDWARE_ACCELERATION_IN_SETTINGS, _hardwareAccelerationEnabled);
     _settings->setValue(WEBGL_ENABLED_IN_SETTINGS, _webGLEnabled);    
+    _settings->setValue(PROXY_HOST_IN_SETTINGS, _proxyHost);
+    _settings->setValue(PROXY_PORT_IN_SETTINGS, _proxyPort);
 	_settings->endGroup();
 }
 
@@ -205,4 +209,24 @@ unsigned int ConfigData::webGLEnabled()
 void ConfigData::webGLEnabled(unsigned int glEnabled)
 {
     _webGLEnabled = glEnabled;
+}
+
+QString ConfigData::proxyHost()
+{
+	return _proxyHost;
+}
+
+void ConfigData::proxyHost(QString host)
+{
+	_proxyHost = host;
+}
+
+QString ConfigData::proxyPort()
+{
+	return _proxyPort;
+}
+
+void ConfigData::proxyPort(QString port)
+{
+	_proxyPort = port;
 }
