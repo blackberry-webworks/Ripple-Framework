@@ -43,6 +43,8 @@ const QString ConfigData::BUILD_SERVICE_COMMAND_DEFAULT = "services/bin/rbd_serv
 const QString ConfigData::BUILD_SERVICE_PORT_DEFAULT = "9900";
 const unsigned int ConfigData::HARDWARE_ACCELERATION_DEFAULT = 1;
 const unsigned int ConfigData::WEBGL_ENABLED_DEFAULT = 1;
+const QString ConfigData::PROXY_HOST_DEFAULT = "";
+const QString ConfigData::PROXY_PORT_DEFAULT = "";
 
 ConfigData::ConfigData(void)
 {
@@ -111,6 +113,8 @@ void ConfigData::readSettings()
 	_buildServicePort = _settings->value(BUILD_SERVICE_PORT_IN_SETTINGS, BUILD_SERVICE_PORT_DEFAULT).toString();
     _hardwareAccelerationEnabled = _settings->value(HARDWARE_ACCELERATION_IN_SETTINGS, HARDWARE_ACCELERATION_DEFAULT).toUInt();
     _webGLEnabled = _settings->value(WEBGL_ENABLED_IN_SETTINGS, WEBGL_ENABLED_DEFAULT).toUInt();
+    _proxyHost = _settings->value(PROXY_HOST_IN_SETTINGS, PROXY_HOST_DEFAULT).toString();
+    _proxyPort = _settings->value(PROXY_PORT_IN_SETTINGS, PROXY_PORT_DEFAULT).toString();
 	_settings->endGroup();
 }
 
