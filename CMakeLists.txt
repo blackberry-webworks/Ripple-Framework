@@ -58,6 +58,9 @@ SET(RIPPLELIBRARY_LIBRARY_TYPE STATIC)
 SET(CMAKE_SRC ${CMAKE_SOURCE_DIR})
 SET(CMAKE_SOURCE_DIR ${CMAKE_SRC})
 
+if (MSVC)
+SET(CMAKE_CXX_FLAGS "/Zc:wchar_t-")
+endif (MSVC)
 
 # -----------------------------------------------------------------------------
 # Add module directories
