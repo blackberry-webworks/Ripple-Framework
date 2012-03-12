@@ -54,6 +54,12 @@ public:
     unsigned int webGLEnabled();
     void webGLEnabled(unsigned int glEnabled);
 
+    QString proxyHost();
+    void proxyHost(QString host);
+
+    QString proxyPort();
+    void proxyPort(QString port);
+
 private:
 
 	ConfigData(void);
@@ -79,6 +85,10 @@ private:
     static const unsigned int HARDWARE_ACCELERATION_DEFAULT;
     static const QString WEBGL_ENABLED_IN_SETTINGS;
     static const unsigned int WEBGL_ENABLED_DEFAULT;
+    static const QString PROXY_HOST_IN_SETTINGS;
+    static const QString PROXY_HOST_DEFAULT;
+    static const QString PROXY_PORT_IN_SETTINGS;
+    static const QString PROXY_PORT_DEFAULT;
 
 	static ConfigData* _instance;
 	static bool _instanceFlag;
@@ -94,4 +104,6 @@ private:
     QString _buildServicePort;
     unsigned int _hardwareAccelerationEnabled;
     unsigned int _webGLEnabled;
+    QString _proxyHost;
+    QString _proxyPort;
 };
