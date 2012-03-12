@@ -18,7 +18,11 @@
 #include "ripple.h"
 #include "BuildServerManager.h"
 #include <QGLWidget>
+#include <QNetworkProxy>
 #include "ScrollHandler.h"
+#ifdef Q_WS_WIN
+#include <winhttp.h>
+#endif
 
 using namespace BlackBerry::Ripple;
 
@@ -50,6 +54,35 @@ void Ripple::init(void)
     _optionsMenu = menuBar()->addMenu("Options");
     _hwToggleMenuItem = _optionsMenu->addAction("Enable Hardware Acceleration", this, SLOT(toggleHardwareAcceleration()));
     _hwToggleMenuItem->setCheckable(true);
+
+    bool proxyAuto = false;
+#ifdef Q_WS_WIN
+	WINHTTP_PROXY_INFO proxyConfig;
+	WinHttpGetDefaultProxyConfiguration(&proxyConfig);
+	QString proxyHost = QString::fromWCharArray(proxyConfig.lpszProxy);
+    if (!proxyHost.isEmpty())
+        proxyAuto = true;
+#else
+    QString proxyHost = _config->proxyHost();
+#endif
+
+    if (!proxyHost.isEmpty())
+    {
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::HttpProxy);
+        if (proxyAuto)
+        {
+            proxy.setHostName(proxyHost.split(":")[0]);
+            proxy.setPort(proxyHost.split(":")[1].toUShort());
+        }
+        else
+        {
+            proxy.setHostName(_config->proxyHost());
+            proxy.setPort(_config->proxyPort().toUShort());
+        }
+
+        QNetworkProxy::setApplicationProxy(proxy);
+    }
 
     webViewInternal = new QtGraphicsStageWebView(this);
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
