@@ -19,6 +19,7 @@
 
 bool ConfigData::_instanceFlag = false;
 ConfigData* ConfigData::_instance = NULL;
+bool ConfigData::_firstRun = false;
 
 const QString ConfigData::CONFIGURATION_FILE_NAME = "config.ini";
 
@@ -59,6 +60,9 @@ ConfigData::ConfigData(void)
 	QString config_path(_applicationStoragePath + QDir::separator() + CONFIGURATION_FILE_NAME);
 	_settings = new QSettings(config_path, QSettings::IniFormat);
 
+	if (_settings->allKeys().count() == 0)
+		_firstRun = true;
+
     readSettings();
 }
 
@@ -84,6 +88,10 @@ ConfigData* ConfigData::getInstance(void)
     }
 }
 
+bool ConfigData::firstRun()
+{
+	return _firstRun;
+}
 void ConfigData::writeSettings()
 {
 	_settings->beginGroup(APPLICATION_NAME_IN_SETTINGS);

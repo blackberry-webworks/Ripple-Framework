@@ -25,6 +25,8 @@ public:
 	static ConfigData* getInstance();	
 	~ConfigData(void);
 	
+	bool firstRun();
+
 	void writeSettings();
 	
 	QString toolingContent();
@@ -92,6 +94,9 @@ private:
 
 	static ConfigData* _instance;
 	static bool _instanceFlag;
+
+	static bool _firstRun;
+
 	QSettings *_settings;
 
 	QString _toolingContent;
