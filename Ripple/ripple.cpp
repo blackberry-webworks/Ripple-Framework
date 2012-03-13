@@ -48,6 +48,9 @@ Ripple::~Ripple()
 void Ripple::init(void)
 {
     _config = ConfigData::getInstance();
+    if (_config->firstRun())
+    	exit(0);
+
     setAttribute(Qt::WA_DeleteOnClose);
 
     // create menu items
