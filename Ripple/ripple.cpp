@@ -18,6 +18,7 @@
 #include "ripple.h"
 #include "BuildServerManager.h"
 #include <QGLWidget>
+#include <QSysInfo>
 #include <QNetworkProxy>
 #include "ScrollHandler.h"
 #ifdef Q_WS_WIN
@@ -48,8 +49,6 @@ Ripple::~Ripple()
 void Ripple::init(void)
 {
     _config = ConfigData::getInstance();
-    if (_config->firstRun())
-    	exit(0);
 
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -106,7 +105,20 @@ void Ripple::init(void)
         {
             webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::WebGLEnabled, true);
         }
-        
+
+#ifdef Q_WS_WIN
+        if (QSysInfo::windowsVersion() == QSysInfo::WV_XP)
+        {
+			QGLWidget *graphics = new QGLWidget();
+			graphics->makeCurrent();
+			QString vendor = (char *)glGetString(GL_VENDOR);
+			delete graphics;
+
+			if (vendor.contains("NVIDIA") && (_config->firstRun()))
+				_config->hardwareAccelerationEnabled(0);
+        }
+#endif
+
         if (_config->hardwareAccelerationEnabled() == 1)
         {
             QGLFormat format;
