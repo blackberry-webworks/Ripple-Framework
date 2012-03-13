@@ -2,7 +2,7 @@ find_package(Qt4 COMPONENTS QtCore QtGui QtXml QtSql QtNetwork QtWebKit QtOpenGL
 include(${QT_USE_FILE})
 
 if (MSVC)
-SET(CMAKE_EXE_LINKER_FLAGS "winhttp.lib")
+SET(CMAKE_EXE_LINKER_FLAGS "winhttp.lib opengl32.lib")
 endif (MSVC)
 
 SET(RIPPLE_INCLUDE_DIRECTORIES
