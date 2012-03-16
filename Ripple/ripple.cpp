@@ -20,10 +20,9 @@
 #include <QGLWidget>
 #include <QSysInfo>
 #include <QNetworkProxy>
+#include <QAuthenticator>
+#include "ProxyConfig.h"
 #include "ScrollHandler.h"
-#ifdef Q_WS_WIN
-#include <winhttp.h>
-#endif
 
 using namespace BlackBerry::Ripple;
 
@@ -52,25 +51,22 @@ void Ripple::init(void)
 
     setAttribute(Qt::WA_DeleteOnClose);
 
-    bool proxyAuto = false;
-#ifdef Q_WS_WIN
-	WINHTTP_PROXY_INFO proxyConfig;
-	WinHttpGetDefaultProxyConfiguration(&proxyConfig);
-	QString proxyHost = QString::fromWCharArray(proxyConfig.lpszProxy);
-    if (!proxyHost.isEmpty())
-        proxyAuto = true;
-#else
-    QString proxyHost = _config->proxyHost();
-#endif
+    _proxyDialog = new ProxyDialog(this);
+    ProxyConfig *proxyConfig = new ProxyConfig();
 
-    if (!proxyHost.isEmpty())
+    bool proxyAuto = false;
+
+    if (!proxyConfig->proxyHost().isEmpty())
+    	proxyAuto = true;
+
+    if (!_config->proxyHost().isEmpty())
     {
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::HttpProxy);
         if (proxyAuto)
         {
-            proxy.setHostName(proxyHost.split(":")[0]);
-            proxy.setPort(proxyHost.split(":")[1].toUShort());
+            proxy.setHostName(proxyConfig->proxyHost());
+            proxy.setPort(proxyConfig->proxyPort().toUShort());
         }
         else
         {
@@ -82,6 +78,7 @@ void Ripple::init(void)
     }
 
     webViewInternal = new QtGraphicsStageWebView(this);
+
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
     webViewInternal->qtStageWebView()->settings()->enablePersistentStorage(_config->localStoragePath());
     webViewInternal->qtStageWebView()->settings()->setOfflineStoragePath(_config->localStoragePath());
@@ -163,7 +160,7 @@ void Ripple::init(void)
 
     //register webview
     connect(webViewInternal->qtStageWebView()->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(registerAPIs()));
-  
+    connect(webViewInternal->qtStageWebView()->page()->networkAccessManager(), SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
     //stagewebview interfaces
     m_pStageViewHandler = new StageViewMsgHandler(this);
     m_pStageViewHandler->Register(webViewInternal->qtStageWebView());
@@ -213,7 +210,12 @@ void Ripple::resizeEvent(QResizeEvent * e )
     e->accept();
 }
 
-void Ripple::urlChanged(QUrl &url)
+
+void Ripple::proxyAuthenticationRequired(const QNetworkProxy& proxy, QAuthenticator *auth)
 {
-  
+	if (!_proxyDialog->didLogin())
+		_proxyDialog->exec();
+
+	auth->setUser(_proxyDialog->username());
+	auth->setPassword(_proxyDialog->password());
 }
