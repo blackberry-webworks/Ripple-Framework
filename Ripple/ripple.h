@@ -25,6 +25,7 @@
 #include <qwebinspector.h>
 #include "StageViewMsgHandler.h"
 #include "QtStageWebView.h"
+#include "ProxyDialog.h"
 
 using namespace BlackBerry::Ripple::IPCChannel;
 
@@ -46,7 +47,7 @@ namespace BlackBerry
 
     private slots:
         void registerAPIs();
-        void urlChanged(QUrl &url);
+        void proxyAuthenticationRequired(const QNetworkProxy& proxy, QAuthenticator *auth);
 
     private:
         QGLWidget *_GLWidget;
@@ -56,6 +57,7 @@ namespace BlackBerry
         QProgressBar* progressBar;
         ConfigData *_config;
         StageViewMsgHandler* m_pStageViewHandler;
+        ProxyDialog *_proxyDialog;
 
         void init(void);    
     };
