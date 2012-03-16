@@ -10,13 +10,14 @@ LIST(APPEND RIPPLELIBRARY_HEADERS
     stdafx.h
     ConfigData.h
     PortScanner.h
-    RemoteDebugger.h
 )
 
 LIST(APPEND RIPPLELIBRARY_SOURCES
     stdafx.cpp
     ConfigData.cpp
     QtStageWebView.cpp
+    ProxyConfig.cpp
+    ProxyDialog.cpp
     StageViewMsgHandler.cpp
     stdafx.cpp
     RequestObject.cpp
@@ -28,6 +29,8 @@ LIST(APPEND RIPPLELIBRARY_SOURCES
 
 SET(RIPPLELIBRARY_MOC_HEADERS
     QtStageWebView.h
+    ProxyConfig.h
+    ProxyDialog.h
     StageViewMsgHandler.h
     RequestObject.h
     BuildServerManager.h
