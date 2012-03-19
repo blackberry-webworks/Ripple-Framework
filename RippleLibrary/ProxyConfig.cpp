@@ -34,11 +34,14 @@ QString ProxyConfig::_proxyPort;
 #ifdef Q_WS_WIN
 void ProxyConfig::getProxySettingsWin()
 {
-    WINHTTP_PROXY_INFO proxyConfig;
-    WinHttpGetDefaultProxyConfiguration(&proxyConfig);
+    WINHTTP_CURRENT_USER_IE_PROXY_CONFIG proxyConfig;
+    WinHttpGetIEProxyConfigForCurrentUser(&proxyConfig);
     QString proxy = QString::fromWCharArray(proxyConfig.lpszProxy);
-    _proxyHost = proxy.split(":")[0];
-    _proxyPort = proxy.split(":")[1];
+    if (!proxy.isEmpty())
+    {
+        _proxyHost = proxy.split(":")[0];
+        _proxyPort = proxy.split(":")[1];
+    }
 }
 #endif
 

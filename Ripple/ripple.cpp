@@ -57,12 +57,15 @@ void Ripple::init(void)
     bool proxyAuto = false;
 
     if (!proxyConfig->proxyHost().isEmpty())
+    {
     	proxyAuto = true;
+    }
 
-    if (!_config->proxyHost().isEmpty())
+    if (!_config->proxyHost().isEmpty() || proxyAuto)
     {
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::HttpProxy);
+
         if (proxyAuto)
         {
             proxy.setHostName(proxyConfig->proxyHost());
@@ -82,7 +85,7 @@ void Ripple::init(void)
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
     webViewInternal->qtStageWebView()->settings()->enablePersistentStorage(_config->localStoragePath());
     webViewInternal->qtStageWebView()->settings()->setOfflineStoragePath(_config->localStoragePath());
-    webViewInternal->qtStageWebView()->settings()->setOfflineWebApplicationCachePath(_config->localStoragePath());
+    //webViewInternal->qtStageWebView()->settings()->setOfflineWebApplicationCachePath(_config->localStoragePath());
     webViewInternal->qtStageWebView()->settings()->setOfflineStorageDefaultQuota(512000000);
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
     webViewInternal->qtStageWebView()->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
