@@ -66,6 +66,7 @@ ProxyDialog::~ProxyDialog()
 void ProxyDialog::close()
 {
 	_didLogin = true;
+	QDialog::close();
 }
 
 void ProxyDialog::slotAcceptLogin()
