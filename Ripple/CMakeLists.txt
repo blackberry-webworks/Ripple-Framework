@@ -5,6 +5,10 @@ if (MSVC)
 SET(CMAKE_EXE_LINKER_FLAGS "winhttp.lib opengl32.lib")
 endif (MSVC)
 
+IF (APPLE)
+    SET(CMAKE_EXE_LINKER_FLAGS "-framework CoreFoundation -framework SystemConfiguration")
+ENDIF (APPLE)
+
 SET(RIPPLE_INCLUDE_DIRECTORIES
     "${CMAKE_BINARY_DIR}"
     "${CMAKE_SOURCE_DIR}"
