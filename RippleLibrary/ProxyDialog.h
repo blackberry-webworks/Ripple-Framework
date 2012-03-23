@@ -49,7 +49,6 @@ private:
 public:
     explicit ProxyDialog(QWidget *parent);
     ~ProxyDialog();
-    void close();
     static bool didLogin();
     static QString username();
     static QString password();
@@ -59,6 +58,7 @@ signals:
 
 public slots:
     void slotAcceptLogin();
+    void close();
 };
 
 }

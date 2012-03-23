@@ -39,6 +39,12 @@ void ProxyConfig::getProxySettingsWin()
     QString proxy = QString::fromWCharArray(proxyConfig.lpszProxy);
     if (!proxy.isEmpty())
     {
+        if (proxy.contains("http="))
+        {
+            proxy = proxy.split(";")[0];
+            proxy = proxy.split("=")[1];
+        }
+
         _proxyHost = proxy.split(":")[0];
         _proxyPort = proxy.split(":")[1];
     }
