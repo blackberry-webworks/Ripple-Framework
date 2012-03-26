@@ -98,7 +98,7 @@ void ProxyConfig::getProxySettingsMac()
     if (enable != 0)
     {
         _proxyHost = host;
-        _proxyPort = port;
+        _proxyPort = QString::number(port);
     }
     else
     {
