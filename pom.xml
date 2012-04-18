@@ -80,6 +80,7 @@
         <QT_LIB>${env.QTDIR}/lib</QT_LIB>
         <QT_SRC>${env.QTDIR}/src/3rdparty/webkit</QT_SRC>
         <QTWEBKIT_TMP>${project.build.sourceDirectory}/build/qtwebkit</QTWEBKIT_TMP>
+        <RIPPLE_UI_TMP>${project.build.sourceDirectory}/build/ripple-ui</RIPPLE_UI_TMP>
         <ASSEMBLY_DESCRIPTOR>${project.build.sourceDirectory}/dist-windows.xml</ASSEMBLY_DESCRIPTOR>
       </properties>
       <build>
@@ -108,10 +109,51 @@
                   </artifactItems>
                 </configuration>
               </execution>
+              <!-- unpack Ripple-UI -->
+              <execution>
+                <id>unpack Ripple-UI</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>net.rim.ripple</groupId>
+                      <artifactId>Ripple-UI</artifactId>
+                      <version>1.0.0.1-SNAPSHOT</version>
+                      <type>zip</type>
+                      <overWrite>true</overWrite>
+                      <outputDirectory>${RIPPLE_UI_TMP}</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+              <!-- unpack chrome key -->
+              <execution>
+                <id>unpack ChromeKey</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>net.rim.ripple</groupId>
+                      <artifactId>ChromeKey</artifactId>
+                      <version>1.0.0.1-SNAPSHOT</version>
+                      <type>zip</type>
+                      <overWrite>true</overWrite>
+                      <outputDirectory>${RIPPLE_UI_TMP}</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
             </executions>
           </plugin>
+
           <!-- update QtLibrary -->
-		  <!--
+          <!--
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <version>2.5</version>
@@ -177,7 +219,7 @@
             </executions>
           </plugin>
 		  -->
-		  
+
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
@@ -222,6 +264,22 @@
                 </configuration>
               </execution>
               <execution>
+                <id>packageRippleUI</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
+                  <executable>chrome</executable>
+                  <arguments>
+                    <argument>--pack-extension=${RIPPLE_UI_TMP}/pkg/chromium</argument>
+                    <argument>--pack-extension-key=${RIPPLE_UI_TMP}/key.pem</argument>
+                    <argument>--no-message-box</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+              <execution>
                 <id>runMakeInstall</id>
                 <goals>
                   <goal>exec</goal>
@@ -246,7 +304,7 @@
     </profile>
 
     <!-- CIBuildOnWindows profile triggers the corresponding build on Mac machine -->
-	<profile>
+    <profile>
       <id>CI_Build_on_Windows</id>
       <activation>
         <property>
@@ -283,7 +341,7 @@
     </profile>
 
     <!-- IntegrationBuildOnWindows profile defines the special assembly descriptor and checks the availability of Mac build artifacts-->
-	<profile>
+    <profile>
       <id>Integration_Build_on_Windows</id>
       <activation>
         <property>
@@ -320,8 +378,8 @@
         </plugins>
       </build>
     </profile>
-	
-	<profile>
+
+    <profile>
       <id>mac</id>
       <activation>
         <os>
@@ -362,9 +420,9 @@
               </execution>
             </executions>
           </plugin>
-		  
+
           <!-- update QtLibrary -->
-		  <!--
+          <!--
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <version>2.5</version>
@@ -410,7 +468,7 @@
             </executions>
           </plugin>
 		  -->
-		  
+
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
@@ -456,7 +514,7 @@
                   </arguments>
                 </configuration>
               </execution>
-			  <!-- run macdeployqt-->
+              <!-- run macdeployqt-->
               <execution>
                 <id>runMacdeployqt</id>
                 <goals>
@@ -471,14 +529,13 @@
                   </arguments>
                 </configuration>
               </execution>
-			  
             </executions>
           </plugin>
         </plugins>
       </build>
     </profile>
 
-	<!-- IntegrationBuildOnMac profile copies the build artifacts in Mac machine to the shared folder-->
+    <!-- IntegrationBuildOnMac profile copies the build artifacts in Mac machine to the shared folder-->
     <profile>
       <id>IntegrationBuildOnMac</id>
       <activation>
