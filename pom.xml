@@ -292,7 +292,7 @@
               </execution>
               <execution>
                 <id>packageRippleUI</id>
-                <phase>prepare-package</phase>
+                <phase>generate-resources</phase>
                 <goals>
                   <goal>exec</goal>
                 </goals>
