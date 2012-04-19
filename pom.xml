@@ -109,7 +109,7 @@
                   </artifactItems>
                 </configuration>
               </execution>
-              <!-- unpack Ripple-UI -->
+              <!-- unpack Ripple-UI
               <execution>
                 <id>unpack Ripple-UI</id>
                 <phase>generate-resources</phase>
@@ -117,6 +117,7 @@
                   <goal>unpack</goal>
                 </goals>
                 <configuration>
+                  <localRepositoryDirectory>${project.build.sourceDirectory}/dependencies</localRepositoryDirectory>
                   <artifactItems>
                     <artifactItem>
                       <groupId>net.rim.ripple</groupId>
@@ -129,6 +130,7 @@
                   </artifactItems>
                 </configuration>
               </execution>
+              -->
               <!-- unpack chrome key -->
               <execution>
                 <id>unpack ChromeKey</id>
@@ -141,7 +143,7 @@
                     <artifactItem>
                       <groupId>net.rim.ripple</groupId>
                       <artifactId>ChromeKey</artifactId>
-                      <version>1.0.0.1-SNAPSHOT</version>
+                      <version>1.0.0.1</version>
                       <type>zip</type>
                       <overWrite>true</overWrite>
                       <outputDirectory>${RIPPLE_UI_TMP}</outputDirectory>
@@ -151,6 +153,31 @@
               </execution>
             </executions>
           </plugin>
+          <!-- unpack ripple-ui -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <id>unpack ripple_ui</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <tasks>
+                    <echo message="unzip ripple_ui.zip..." />
+                    <unzip src="dependencies/ripple_ui.zip" dest="${RIPPLE_UI_TMP}" />
+                    <!-- unzip more
+                    <unzip src="more.zip" dest="output/" />
+                    -->
+                  </tasks>
+                </configuration>                
+              </execution>
+            </executions>
+          </plugin>
+
 
           <!-- update QtLibrary -->
           <!--
@@ -265,13 +292,13 @@
               </execution>
               <execution>
                 <id>packageRippleUI</id>
-                <phase>generate-resources</phase>
+                <phase>prepare-package</phase>
                 <goals>
                   <goal>exec</goal>
                 </goals>
                 <configuration>
                   <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
-                  <executable>chrome</executable>
+                  <executable>${CHROME_HOME}/chrome</executable>
                   <arguments>
                     <argument>--pack-extension=${RIPPLE_UI_TMP}/pkg/chromium</argument>
                     <argument>--pack-extension-key=${RIPPLE_UI_TMP}/key.pem</argument>
