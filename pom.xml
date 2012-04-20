@@ -108,29 +108,7 @@
                     </artifactItem>
                   </artifactItems>
                 </configuration>
-              </execution>
-              <!-- unpack Ripple-UI
-              <execution>
-                <id>unpack Ripple-UI</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>unpack</goal>
-                </goals>
-                <configuration>
-                  <localRepositoryDirectory>${project.build.sourceDirectory}/dependencies</localRepositoryDirectory>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>net.rim.ripple</groupId>
-                      <artifactId>Ripple-UI</artifactId>
-                      <version>1.0.0.1-SNAPSHOT</version>
-                      <type>zip</type>
-                      <overWrite>true</overWrite>
-                      <outputDirectory>${RIPPLE_UI_TMP}</outputDirectory>
-                    </artifactItem>
-                  </artifactItems>
-                </configuration>
-              </execution>
-              -->
+              </execution>              
               <!-- unpack chrome key -->
               <execution>
                 <id>unpack ChromeKey</id>
@@ -168,7 +146,7 @@
                 <configuration>
                   <tasks>
                     <echo message="unzip ripple_ui.zip..." />
-                    <unzip src="dependencies/ripple_ui.zip" dest="${RIPPLE_UI_TMP}" />
+                    <unzip src="${project.basedir}/../dependencies/ripple_ui.zip" dest="${RIPPLE_UI_TMP}" />
                     <!-- unzip more
                     <unzip src="more.zip" dest="output/" />
                     -->
@@ -298,7 +276,7 @@
                 </goals>
                 <configuration>
                   <workingDirectory>${project.build.sourceDirectory}/build</workingDirectory>
-                  <executable>${CHROME_HOME}/chrome</executable>
+                  <executable>${env.CHROME_HOME}/chrome</executable>
                   <arguments>
                     <argument>--pack-extension=${RIPPLE_UI_TMP}/pkg/chromium</argument>
                     <argument>--pack-extension-key=${RIPPLE_UI_TMP}/key.pem</argument>
